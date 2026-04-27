@@ -6,7 +6,7 @@ from datetime import timedelta
 from django.utils import timezone
 
 from core.domain.models import AntenaRFID, LeituraRFID
-from core.domain.services import SyncManager
+from core.domain.services import AuditoriaManager, SyncManager
 
 
 @dataclass
@@ -96,3 +96,49 @@ class TopologyClassifier:
                     payload={"warning": "tipo_antena_desconhecido", **(payload or {})},
                 )
         return processados
+
+
+class RFIDEventProcessor:
+    def __init__(self):
+        self.sync_manager = SyncManager()
+        self.classifier = TopologyClassifier(sync_manager=self.sync_manager)
+        self.auditoria_manager = AuditoriaManager()
+
+    def process_ping(self, *, antenna: AntenaRFID) -> dict:
+        now = timezone.now()
+        antenna.ultimo_ping = now
+        antenna.online = True
+        antenna.save(update_fields=["ultimo_ping", "online"])
+        return {"status": "ok", "event": "ping", "antenna_id": antenna.id}
+
+    def process_motion_detected(self, *, antenna: AntenaRFID) -> dict:
+        sensor = SensorVirtual(hardware_id=antenna.hardware_id)
+        command = sensor.on_motion_detected(antenna=antenna)
+        antenna.ativacao_expira_em = timezone.now() + timedelta(seconds=command.active_for_seconds)
+        antenna.save(update_fields=["ativacao_expira_em"])
+        return {
+            "status": "ok",
+            "event": "motion_detected",
+            "command": {
+                "hardware_id": command.hardware_id,
+                "active_for_seconds": command.active_for_seconds,
+                "expires_at": command.expires_at,
+            },
+        }
+
+    def process_tags_read(self, *, antenna: AntenaRFID, tags: list[str], payload: dict | None = None) -> dict:
+        self.deactivate_expired_antennas()
+        antenna.refresh_from_db(fields=["ativa", "ativacao_expira_em"])
+        if (not antenna.ativa) or (
+            antenna.ativacao_expira_em and antenna.ativacao_expira_em <= timezone.now()
+        ):
+            return {"status": "ignored", "reason": "antenna_window_closed", "event": "tags_read"}
+        result = self.classifier.classify_readings(antenna=antenna, tags=tags, payload=payload)
+        return {"status": "ok", "event": "tags_read", "processed": result}
+
+    def deactivate_expired_antennas(self) -> int:
+        now = timezone.now()
+        expired = AntenaRFID.objects.filter(ativa=True, ativacao_expira_em__isnull=False, ativacao_expira_em__lte=now)
+        updated = expired.update(ativa=False)
+        self.auditoria_manager.finalize_expired_jobs()
+        return updated

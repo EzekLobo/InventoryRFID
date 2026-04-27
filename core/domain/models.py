@@ -22,6 +22,9 @@ class AntenaRFID(models.Model):
     tipo = models.IntegerField(choices=TipoAntena.choices)
     ativa = models.BooleanField(default=False)
     ultimo_acionamento = models.DateTimeField(null=True, blank=True)
+    ativacao_expira_em = models.DateTimeField(null=True, blank=True)
+    ultimo_ping = models.DateTimeField(null=True, blank=True)
+    online = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.nome} ({self.hardware_id})"
@@ -114,6 +117,7 @@ class TimelineEvento(models.Model):
         null=True,
         blank=True,
     )
+    metadados = models.JSONField(default=dict, blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
 
 
@@ -138,4 +142,34 @@ class NotificacaoInconsistencia(models.Model):
         related_name="inconsistencias_fisicas",
     )
     resolvida = models.BooleanField(default=False)
+    resolvida_em = models.DateTimeField(null=True, blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
+
+
+class AuditoriaJob(models.Model):
+    class Status(models.TextChoices):
+        INICIADO = "iniciado", "Iniciado"
+        CONCLUIDO = "concluido", "Concluido"
+
+    solicitado_por = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    duracao_segundos = models.PositiveIntegerField(default=5)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.INICIADO)
+    iniciado_em = models.DateTimeField(auto_now_add=True)
+    finaliza_em = models.DateTimeField()
+    concluido_em = models.DateTimeField(null=True, blank=True)
+
+
+class AuditoriaLeitorStatus(models.Model):
+    class Status(models.TextChoices):
+        ENERGIZADO = "energizado", "Energizado"
+        ENCERRADO = "encerrado", "Encerrado"
+
+    job = models.ForeignKey(AuditoriaJob, on_delete=models.CASCADE, related_name="leitores")
+    antena = models.ForeignKey(AntenaRFID, on_delete=models.CASCADE, related_name="auditorias")
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.ENERGIZADO)
+    atualizado_em = models.DateTimeField(auto_now=True)
