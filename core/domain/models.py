@@ -14,7 +14,6 @@ class AntenaRFID(models.Model):
     class TipoAntena(models.IntegerChoices):
         DESTINO = 1, "Destino"
         FLUXO = 2, "Fluxo"
-        DESCARTE = 3, "Descarte"
 
     nome = models.CharField(max_length=120)
     hardware_id = models.CharField(max_length=100, unique=True)
@@ -65,7 +64,6 @@ class LeituraRFID(models.Model):
     class ClassificacaoLeitura(models.TextChoices):
         DESTINO = "destino", "Destino"
         FLUXO = "fluxo", "Fluxo"
-        DESCARTE = "descarte", "Descarte"
 
     item = models.ForeignKey(
         ItemPatrimonial,
@@ -99,7 +97,7 @@ class TimelineEvento(models.Model):
         MOVIMENTACAO = "movimentacao", "Movimentacao"
         INCONSISTENCIA = "inconsistencia", "Inconsistencia"
         RASTRO = "rastro", "Rastro"
-        DESCARTE = "descarte", "Descarte"
+        BAIXA = "baixa", "Baixa patrimonial"
         SISTEMA = "sistema", "Sistema"
 
     item = models.ForeignKey(

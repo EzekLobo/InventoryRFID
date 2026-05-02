@@ -13,7 +13,7 @@ from core.domain.models import (
     NotificacaoInconsistencia,
     TimelineEvento,
 )
-from core.domain.services import AuditoriaManager
+from core.domain.services import AuditoriaManager, SyncManager
 from core.middleware.rfid_handler import RFIDEventProcessor
 
 
@@ -31,6 +31,10 @@ class MovimentacaoSerializer(serializers.Serializer):
 
 class BroadcastSerializer(serializers.Serializer):
     duracao_segundos = serializers.IntegerField(required=False, min_value=1, default=5)
+
+
+class BaixaManualSerializer(serializers.Serializer):
+    motivo = serializers.CharField(max_length=255, default="baixa patrimonial")
 
 
 class RFIDEventSerializer(serializers.Serializer):
@@ -67,6 +71,38 @@ class InconsistenciaListSerializer(serializers.ModelSerializer):
             "criado_em",
             "resolvida_em",
         ]
+
+
+class ItemPatrimonialViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+    sync_manager = SyncManager()
+
+    @action(detail=True, methods=["post"], url_path="inativar")
+    def inativar(self, request, pk=None):
+        serializer = BaixaManualSerializer(data=request.data or {})
+        serializer.is_valid(raise_exception=True)
+        item = ItemPatrimonial.objects.filter(id=pk).first()
+        if item is None:
+            return Response(
+                {"status": "erro", "detail": "Item patrimonial nao encontrado."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        item = self.sync_manager.deactivate_item_manually(
+            item_id=item.id,
+            motivo=serializer.validated_data["motivo"],
+            usuario=request.user,
+        )
+        return Response(
+            {
+                "status": "inativado",
+                "item_id": item.id,
+                "tag_id": item.tag_id,
+                "ativo": item.ativo,
+                "motivo": serializer.validated_data["motivo"],
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 class MovimentacaoViewSet(viewsets.ViewSet):

@@ -7,12 +7,11 @@ from core.domain.models import (
     AntenaRFID,
     AuditoriaJob,
     ItemPatrimonial,
-    LeituraRFID,
     Local,
     NotificacaoInconsistencia,
     TimelineEvento,
 )
-from core.middleware.rfid_handler import RFIDEventProcessor, SensorVirtual, TopologyClassifier
+from core.middleware.rfid_handler import RFIDEventProcessor, SensorVirtual
 
 
 class SensorVirtualTests(TestCase):
@@ -97,22 +96,23 @@ class PipelineAndApiTests(TestCase):
         )
         self.assertTrue(NotificacaoInconsistencia.objects.filter(item=self.item, resolvida=False).exists())
 
-    def test_topology_classifier_marks_item_inactive_when_disposal(self):
-        antenna = AntenaRFID.objects.create(
-            nome="Antenna Discard",
-            hardware_id="ESP-DISC",
-            local=self.lab4,
-            tipo=AntenaRFID.TipoAntena.DESCARTE,
-            ativa=True,
+    def test_manual_deactivation_marks_item_inactive_and_registers_timeline(self):
+        self.client.force_authenticate(user=self.user)
+        response = self.client.post(
+            f"/api/itens/{self.item.id}/inativar/",
+            {"motivo": "baixa patrimonial"},
+            format="json",
         )
-        TopologyClassifier().classify_readings(antenna=antenna, tags=[self.item.tag_id])
+        self.assertEqual(response.status_code, 200)
 
         self.item.refresh_from_db()
         self.assertFalse(self.item.ativo)
         self.assertTrue(
-            LeituraRFID.objects.filter(
-                tag_id=self.item.tag_id,
-                classificacao=LeituraRFID.ClassificacaoLeitura.DESCARTE,
+            TimelineEvento.objects.filter(
+                item=self.item,
+                tipo=TimelineEvento.TipoEvento.BAIXA,
+                usuario=self.user,
+                metadados__motivo="baixa patrimonial",
             ).exists()
         )
 

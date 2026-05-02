@@ -61,7 +61,7 @@ class TopologyClassifier:
         tags: list[str],
         payload: dict | None = None,
     ) -> dict:
-        processados = {"destino": 0, "fluxo": 0, "descarte": 0}
+        processados = {"destino": 0, "fluxo": 0}
         for tag_id in tags:
             if antenna.tipo == AntenaRFID.TipoAntena.DESTINO:
                 self.sync_manager.sync_item_location(
@@ -79,14 +79,6 @@ class TopologyClassifier:
                     payload=payload,
                 )
                 processados["fluxo"] += 1
-            elif antenna.tipo == AntenaRFID.TipoAntena.DESCARTE:
-                self.sync_manager.mark_item_inactive(
-                    tag_id=tag_id,
-                    local_id=antenna.local_id,
-                    antena=antenna,
-                    payload=payload,
-                )
-                processados["descarte"] += 1
             else:
                 LeituraRFID.objects.create(
                     tag_id=tag_id,

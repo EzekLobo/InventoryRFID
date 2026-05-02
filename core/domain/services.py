@@ -160,48 +160,30 @@ class SyncManager:
         return leitura
 
     @transaction.atomic
-    def mark_item_inactive(
+    def deactivate_item_manually(
         self,
         *,
-        tag_id: str,
-        local_id: int | None = None,
-        antena: AntenaRFID | None = None,
-        payload: dict | None = None,
-    ) -> ItemPatrimonial | None:
-        item = ItemPatrimonial.objects.select_for_update().filter(tag_id=tag_id).first()
-        duplicate = self._recent_duplicate_exists(
-            tag_id=tag_id,
-            local_id=local_id,
-            classificacao=LeituraRFID.ClassificacaoLeitura.DESCARTE,
-        )
-        if duplicate:
-            return item
+        item_id: int,
+        motivo: str,
+        usuario=None,
+    ) -> ItemPatrimonial:
+        item = ItemPatrimonial.objects.select_for_update().get(id=item_id)
+        was_active = item.ativo
+        if item.ativo:
+            item.ativo = False
+            item.save(update_fields=["ativo", "atualizado_em"])
 
-        LeituraRFID.objects.create(
-            item=item,
-            tag_id=tag_id,
-            local_id=local_id,
-            antena=antena,
-            classificacao=LeituraRFID.ClassificacaoLeitura.DESCARTE,
-            payload=payload or {},
-        )
-        if not item:
-            return None
-
-        item.ativo = False
-        if local_id:
-            item.local_fisico_id = local_id
-        item.save(update_fields=["ativo", "local_fisico", "atualizado_em"])
         TimelineEvento.objects.create(
             item=item,
-            tipo=TimelineEvento.TipoEvento.DESCARTE,
-            mensagem=f"Item {item.nome} marcado como inativo por leitura de descarte.",
-            usuario=item.responsavel,
+            tipo=TimelineEvento.TipoEvento.BAIXA,
+            mensagem=f"Item marcado como inativo por usuario {usuario_label(usuario)}. Motivo: {motivo}",
+            usuario=usuario,
             metadados={
-                "tag_id": tag_id,
-                "local_id": local_id,
-                "antenna_id": antena.id if antena else None,
-                "evento": "discard",
+                "item_id": item.id,
+                "tag_id": item.tag_id,
+                "motivo": motivo,
+                "evento": "baixa_manual",
+                "ja_estava_inativo": not was_active,
             },
         )
         return item
@@ -288,3 +270,9 @@ def previous_local_id(local) -> int | None:
     if local is None:
         return None
     return local.id
+
+
+def usuario_label(usuario) -> str:
+    if not usuario:
+        return "desconhecido"
+    return getattr(usuario, "get_username", lambda: str(usuario))()
