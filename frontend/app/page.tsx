@@ -65,7 +65,7 @@ export default function HomePage() {
           </p>
         </div>
         <div className="hero-visual" aria-hidden="true">
-          <div className="reader-orbit" />
+          <img className="hero-image" src="/assets/hero-inventario.png" alt="" />
         </div>
       </section>
 

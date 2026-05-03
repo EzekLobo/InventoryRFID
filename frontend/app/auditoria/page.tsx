@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2, Play, Send, ShieldAlert } from "lucide-react";
+import { CheckCircle2, Play, RefreshCw, Send, ShieldAlert } from "lucide-react";
 import { api } from "@/lib/api";
-import type { Antena, TagsReadResponse } from "@/lib/types";
+import type { Antena, AuditoriaJob, AuditoriaProcessada, TagsReadResponse } from "@/lib/types";
 import { ErrorState, LoadingState } from "@/components/ui/DataState";
 import { StatCard } from "@/components/ui/StatCard";
 
@@ -20,22 +20,32 @@ export default function AuditoriaPage() {
   const [duracao, setDuracao] = useState(5);
   const [tagsText, setTagsText] = useState("");
   const [result, setResult] = useState<TagsReadResponse | null>(null);
+  const [jobs, setJobs] = useState<AuditoriaJob[]>([]);
+  const [processedAudits, setProcessedAudits] = useState<AuditoriaProcessada[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const data = await api.listAntenas();
-        setAntenas(data);
-        setAntennaId(data[0]?.id || "");
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Nao foi possivel carregar antenas.");
-      } finally {
-        setLoading(false);
-      }
+  async function load() {
+    setError("");
+    try {
+      const [antenasData, jobsData, processedData] = await Promise.all([
+        api.listAntenas(),
+        api.listAuditorias(),
+        api.listAuditoriasProcessadas()
+      ]);
+      setAntenas(antenasData);
+      setAntennaId((current) => current || antenasData[0]?.id || "");
+      setJobs(jobsData);
+      setProcessedAudits(processedData);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Nao foi possivel carregar auditorias.");
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
     load();
   }, []);
 
@@ -64,6 +74,7 @@ export default function AuditoriaPage() {
     try {
       const response = await api.enviarTags(Number(antennaId), parseTags(tagsText), true);
       setResult(response);
+      await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Nao foi possivel enviar resultado da auditoria.");
     } finally {
@@ -78,6 +89,10 @@ export default function AuditoriaPage() {
           <h1>Auditoria RFID</h1>
           <p>Acione um leitor e envie o conjunto de tags lidas para reconciliar o local auditado.</p>
         </div>
+        <button className="button ghost" type="button" onClick={load}>
+          <RefreshCw size={18} />
+          Atualizar
+        </button>
       </div>
 
       {loading ? <LoadingState /> : null}
@@ -173,6 +188,76 @@ export default function AuditoriaPage() {
           <pre>{JSON.stringify(result, null, 2)}</pre>
         </article>
       ) : null}
+
+      <article className="panel" style={{ marginTop: 24 }}>
+        <h2>Auditorias feitas</h2>
+        <div className="table-wrap">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Local</th>
+                <th>Leitor</th>
+                <th>Encontrados</th>
+                <th>Nao encontrados</th>
+                <th>Desconhecidas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {processedAudits.map((audit) => (
+                <tr key={audit.id}>
+                  <td>{new Date(audit.criado_em).toLocaleString("pt-BR")}</td>
+                  <td>{String(audit.metadados.local_nome || "-")}</td>
+                  <td>{String(audit.metadados.antenna_nome || "-")}</td>
+                  <td>{String(audit.metadados.encontrados ?? "-")}</td>
+                  <td>{String(audit.metadados.nao_encontrados ?? "-")}</td>
+                  <td>{String(audit.metadados.tags_desconhecidas ?? "-")}</td>
+                </tr>
+              ))}
+              {processedAudits.length === 0 ? (
+                <tr>
+                  <td colSpan={6}>Nenhuma auditoria processada.</td>
+                </tr>
+              ) : null}
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article className="panel" style={{ marginTop: 18 }}>
+        <h2>Janelas de auditoria</h2>
+        <div className="table-wrap">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Inicio</th>
+                <th>Fim previsto</th>
+                <th>Leitores</th>
+              </tr>
+            </thead>
+            <tbody>
+              {jobs.map((job) => (
+                <tr key={job.id}>
+                  <td>{job.id}</td>
+                  <td>
+                    <span className="badge">{job.status}</span>
+                  </td>
+                  <td>{new Date(job.iniciado_em).toLocaleString("pt-BR")}</td>
+                  <td>{new Date(job.finaliza_em).toLocaleString("pt-BR")}</td>
+                  <td>{job.leitores.map((leitor) => `${leitor.antena_nome} (${leitor.status})`).join(", ")}</td>
+                </tr>
+              ))}
+              {jobs.length === 0 ? (
+                <tr>
+                  <td colSpan={5}>Nenhuma janela de auditoria registrada.</td>
+                </tr>
+              ) : null}
+            </tbody>
+          </table>
+        </div>
+      </article>
     </section>
   );
 }

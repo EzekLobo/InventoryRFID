@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from datetime import timedelta
 
 from django.utils import timezone
+from django.conf import settings
 
 from core.domain.models import AntenaRFID, ItemPatrimonial, LeituraRFID
 from core.domain.services import AuditoriaManager, AuditoriaReconciliacaoManager, SyncManager
@@ -131,13 +132,16 @@ class RFIDEventProcessor:
         valid_tags = list(
             ItemPatrimonial.objects.filter(tag_id__in=normalized_tags).values_list("tag_id", flat=True)
         )
-        result = self.classifier.classify_readings(antenna=antenna, tags=valid_tags, payload=payload)
         auditoria = self.auditoria_reconciliacao_manager.reconcile_destination_reading(
             antenna=antenna,
             raw_tags=normalized_tags,
             valid_tags=valid_tags,
             payload=payload,
         )
+        if auditoria.get("audit"):
+            result = self._register_audit_readings(antenna=antenna, tags=valid_tags, payload=payload)
+        else:
+            result = self.classifier.classify_readings(antenna=antenna, tags=valid_tags, payload=payload)
         return {
             "status": "ok",
             "event": "tags_read",
@@ -146,12 +150,41 @@ class RFIDEventProcessor:
             "ignored_tags": sorted(set(normalized_tags) - set(valid_tags)),
         }
 
+    def _register_audit_readings(self, *, antenna: AntenaRFID, tags: list[str], payload: dict | None = None) -> dict:
+        payload = {"audit_reading": True, **(payload or {})}
+        for tag_id in tags:
+            item = ItemPatrimonial.objects.filter(tag_id=tag_id).first()
+            LeituraRFID.objects.create(
+                item=item,
+                tag_id=tag_id,
+                local_id=antenna.local_id,
+                antena=antenna,
+                classificacao=(
+                    LeituraRFID.ClassificacaoLeitura.DESTINO
+                    if antenna.tipo == AntenaRFID.TipoAntena.DESTINO
+                    else LeituraRFID.ClassificacaoLeitura.FLUXO
+                ),
+                payload=payload,
+            )
+        return {
+            "destino": len(tags) if antenna.tipo == AntenaRFID.TipoAntena.DESTINO else 0,
+            "fluxo": len(tags) if antenna.tipo == AntenaRFID.TipoAntena.FLUXO else 0,
+        }
+
     def deactivate_expired_antennas(self) -> int:
         now = timezone.now()
         expired = AntenaRFID.objects.filter(ativa=True, ativacao_expira_em__isnull=False, ativacao_expira_em__lte=now)
         updated = expired.update(ativa=False)
         self.auditoria_manager.finalize_expired_jobs()
         return updated
+
+    def mark_stale_antennas_offline(self) -> int:
+        timeout_seconds = getattr(settings, "RFID_ONLINE_TIMEOUT_SECONDS", 15)
+        stale_limit = timezone.now() - timedelta(seconds=timeout_seconds)
+        stale = AntenaRFID.objects.filter(online=True).filter(
+            ultimo_ping__isnull=True
+        ) | AntenaRFID.objects.filter(online=True, ultimo_ping__lt=stale_limit)
+        return stale.update(online=False, ativa=False)
 
 
 def normalize_tags(tags: list[str]) -> list[str]:

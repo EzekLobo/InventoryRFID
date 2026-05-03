@@ -9,7 +9,10 @@ from rest_framework.response import Response
 
 from core.domain.models import (
     AntenaRFID,
+    AuditoriaJob,
+    AuditoriaLeitorStatus,
     ItemPatrimonial,
+    Local,
     NotificacaoInconsistencia,
     TimelineEvento,
 )
@@ -65,6 +68,12 @@ class TimelineListSerializer(serializers.ModelSerializer):
         fields = ["id", "item_id", "tipo", "mensagem", "metadados", "criado_em", "usuario_id"]
 
 
+class LocalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Local
+        fields = ["id", "nome", "codigo"]
+
+
 class InconsistenciaListSerializer(serializers.ModelSerializer):
     class Meta:
         model = NotificacaoInconsistencia
@@ -83,6 +92,7 @@ class InconsistenciaListSerializer(serializers.ModelSerializer):
 
 
 class AntenaRFIDListSerializer(serializers.ModelSerializer):
+    local_id = serializers.PrimaryKeyRelatedField(source="local", queryset=Local.objects.all())
     local_nome = serializers.CharField(source="local.nome", read_only=True)
     local_codigo = serializers.CharField(source="local.codigo", read_only=True)
     tipo_display = serializers.CharField(source="get_tipo_display", read_only=True)
@@ -106,7 +116,54 @@ class AntenaRFIDListSerializer(serializers.ModelSerializer):
         ]
 
 
+class AuditoriaLeitorStatusSerializer(serializers.ModelSerializer):
+    antena_nome = serializers.CharField(source="antena.nome", read_only=True)
+    hardware_id = serializers.CharField(source="antena.hardware_id", read_only=True)
+    local_nome = serializers.CharField(source="antena.local.nome", read_only=True)
+
+    class Meta:
+        model = AuditoriaLeitorStatus
+        fields = ["id", "antena_id", "antena_nome", "hardware_id", "local_nome", "status", "atualizado_em"]
+
+
+class AuditoriaJobSerializer(serializers.ModelSerializer):
+    leitores = AuditoriaLeitorStatusSerializer(many=True, read_only=True)
+    solicitado_por_nome = serializers.CharField(source="solicitado_por.get_username", read_only=True)
+
+    class Meta:
+        model = AuditoriaJob
+        fields = [
+            "id",
+            "status",
+            "duracao_segundos",
+            "iniciado_em",
+            "finaliza_em",
+            "concluido_em",
+            "solicitado_por_id",
+            "solicitado_por_nome",
+            "leitores",
+        ]
+
+
+class AuditoriaTimelineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimelineEvento
+        fields = ["id", "mensagem", "metadados", "criado_em"]
+
+
 class ItemPatrimonialListSerializer(serializers.ModelSerializer):
+    local_logico_id = serializers.PrimaryKeyRelatedField(
+        source="local_logico",
+        queryset=Local.objects.all(),
+        allow_null=True,
+        required=False,
+    )
+    local_fisico_id = serializers.PrimaryKeyRelatedField(
+        source="local_fisico",
+        queryset=Local.objects.all(),
+        allow_null=True,
+        required=False,
+    )
     local_logico_nome = serializers.CharField(source="local_logico.nome", read_only=True)
     local_fisico_nome = serializers.CharField(source="local_fisico.nome", read_only=True)
     responsavel_nome = serializers.CharField(source="responsavel.get_username", read_only=True)
@@ -128,12 +185,20 @@ class ItemPatrimonialListSerializer(serializers.ModelSerializer):
         ]
 
 
-class AntenaRFIDViewSet(viewsets.ReadOnlyModelViewSet):
+class LocalViewSet(viewsets.ModelViewSet):
+    serializer_class = LocalSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Local.objects.order_by("nome")
+
+
+class AntenaRFIDViewSet(viewsets.ModelViewSet):
     serializer_class = AntenaRFIDListSerializer
     permission_classes = [IsAuthenticated]
     event_processor = RFIDEventProcessor()
 
     def get_queryset(self):
+        self.event_processor.deactivate_expired_antennas()
+        self.event_processor.mark_stale_antennas_offline()
         queryset = AntenaRFID.objects.select_related("local").order_by("id")
         tipo = self.request.query_params.get("tipo")
         if tipo:
@@ -164,6 +229,17 @@ class AntenaRFIDViewSet(viewsets.ReadOnlyModelViewSet):
             )
 
         duracao = serializer.validated_data["duracao_segundos"]
+        self.event_processor.mark_stale_antennas_offline()
+        antenna.refresh_from_db(fields=["online", "ativa", "ultimo_ping"])
+        if not antenna.online:
+            return Response(
+                {
+                    "status": "offline",
+                    "detail": "Leitor offline. Aguarde o proximo ping do hardware antes de acionar.",
+                },
+                status=status.HTTP_409_CONFLICT,
+            )
+
         now = timezone.now()
         antenna.ativa = True
         antenna.ultimo_acionamento = now
@@ -171,7 +247,7 @@ class AntenaRFIDViewSet(viewsets.ReadOnlyModelViewSet):
         antenna.save(update_fields=["ativa", "ultimo_acionamento", "ativacao_expira_em"])
         return Response(
             {
-                "status": "auditoria_iniciada" if audit else "leitura_iniciada",
+                "status": "auditoria_iniciada" if audit else "sincronizacao_iniciada",
                 "antenna_id": antenna.id,
                 "hardware_id": antenna.hardware_id,
                 "active_for_seconds": duracao,
@@ -182,39 +258,26 @@ class AntenaRFIDViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
 
-class ItemPatrimonialViewSet(viewsets.ViewSet):
+class ItemPatrimonialViewSet(viewsets.ModelViewSet):
+    serializer_class = ItemPatrimonialListSerializer
     permission_classes = [IsAuthenticated]
     sync_manager = SyncManager()
 
-    def list(self, request):
+    def get_queryset(self):
         queryset = ItemPatrimonial.objects.select_related(
             "local_logico",
             "local_fisico",
             "responsavel",
         ).order_by("nome")
-        search = request.query_params.get("search")
+        search = self.request.query_params.get("search")
         if search:
             queryset = queryset.filter(nome__icontains=search) | queryset.filter(tag_id__icontains=search)
-        ativo = request.query_params.get("ativo")
+        ativo = self.request.query_params.get("ativo")
         if ativo in {"true", "True", "1"}:
             queryset = queryset.filter(ativo=True)
         elif ativo in {"false", "False", "0"}:
             queryset = queryset.filter(ativo=False)
-        serializer = ItemPatrimonialListSerializer(queryset[:200], many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def retrieve(self, request, pk=None):
-        item = ItemPatrimonial.objects.select_related(
-            "local_logico",
-            "local_fisico",
-            "responsavel",
-        ).filter(id=pk).first()
-        if item is None:
-            return Response(
-                {"status": "erro", "detail": "Item patrimonial nao encontrado."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        return Response(ItemPatrimonialListSerializer(item).data, status=status.HTTP_200_OK)
+        return queryset
 
     @action(detail=True, methods=["post"], url_path="inativar")
     def inativar(self, request, pk=None):
@@ -426,8 +489,27 @@ class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class AuditoriaViewSet(viewsets.ViewSet):
-    permission_classes = [IsAdminUser]
     auditoria_manager = AuditoriaManager()
+
+    def get_permissions(self):
+        if self.action == "broadcast":
+            return [IsAdminUser()]
+        return [IsAuthenticated()]
+
+    def list(self, request):
+        self.auditoria_manager.finalize_expired_jobs()
+        jobs = AuditoriaJob.objects.select_related("solicitado_por").prefetch_related(
+            "leitores__antena__local",
+        ).order_by("-iniciado_em")[:100]
+        return Response(AuditoriaJobSerializer(jobs, many=True).data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["get"], url_path="processadas")
+    def processadas(self, request):
+        eventos = TimelineEvento.objects.filter(
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            metadados__evento="auditoria_processada",
+        ).order_by("-criado_em")[:100]
+        return Response(AuditoriaTimelineSerializer(eventos, many=True).data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["post"], url_path="broadcast")
     def broadcast(self, request):

@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.utils import timezone
+from datetime import timedelta
 from rest_framework.test import APIClient
 
 from core.domain.models import (
@@ -267,6 +269,7 @@ class PipelineAndApiTests(TestCase):
 
     def test_antenas_endpoint_lists_and_activates_reader(self):
         self.client.force_authenticate(user=self.user)
+        RFIDEventProcessor().process_ping(antenna=self.destino_antenna)
         list_response = self.client.get("/api/antenas/")
         self.assertEqual(list_response.status_code, 200)
         self.assertEqual(list_response.data[0]["id"], self.destino_antenna.id)
@@ -277,9 +280,27 @@ class PipelineAndApiTests(TestCase):
             format="json",
         )
         self.assertEqual(activate_response.status_code, 200)
-        self.assertEqual(activate_response.data["status"], "leitura_iniciada")
+        self.assertEqual(activate_response.data["status"], "sincronizacao_iniciada")
         self.destino_antenna.refresh_from_db()
         self.assertTrue(self.destino_antenna.ativa)
+
+    def test_antenas_endpoint_marks_stale_reader_offline_and_blocks_actions(self):
+        self.destino_antenna.online = True
+        self.destino_antenna.ultimo_ping = timezone.now() - timedelta(seconds=settings.RFID_ONLINE_TIMEOUT_SECONDS + 1)
+        self.destino_antenna.save(update_fields=["online", "ultimo_ping"])
+
+        self.client.force_authenticate(user=self.user)
+        list_response = self.client.get("/api/antenas/")
+        self.assertEqual(list_response.status_code, 200)
+        self.assertFalse(list_response.data[0]["online"])
+
+        activate_response = self.client.post(
+            f"/api/antenas/{self.destino_antenna.id}/ativar/",
+            {"duracao_segundos": 7},
+            format="json",
+        )
+        self.assertEqual(activate_response.status_code, 409)
+        self.assertEqual(activate_response.data["status"], "offline")
 
     def test_itens_endpoint_lists_registered_assets(self):
         self.client.force_authenticate(user=self.user)
@@ -351,3 +372,39 @@ class PipelineAndApiTests(TestCase):
         )
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data["event"], "tags_read")
+
+    def test_audit_reading_does_not_create_movement_or_update_location(self):
+        self.client.post(
+            "/api/eventos/rfid/",
+            {"event_type": "motion_detected", "antenna_id": self.destino_antenna.id},
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        response = self.client.post(
+            "/api/eventos/rfid/",
+            {
+                "event_type": "tags_read",
+                "antenna_id": self.destino_antenna.id,
+                "tags": [self.item.tag_id],
+                "payload": {"audit": True},
+            },
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.item.refresh_from_db()
+        self.assertIsNone(self.item.local_fisico_id)
+        self.assertFalse(
+            TimelineEvento.objects.filter(
+                item=self.item,
+                tipo=TimelineEvento.TipoEvento.MOVIMENTACAO,
+            ).exists()
+        )
+        self.assertTrue(
+            TimelineEvento.objects.filter(
+                tipo=TimelineEvento.TipoEvento.SISTEMA,
+                metadados__evento="auditoria_processada",
+            ).exists()
+        )

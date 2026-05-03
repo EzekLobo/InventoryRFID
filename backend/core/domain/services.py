@@ -279,13 +279,32 @@ class AuditoriaReconciliacaoManager:
         for tag_id in unknown_tags:
             self._mark_unknown_tag(tag_id=tag_id, antenna=antenna, payload=payload)
 
-        return {
+        auditoria = {
             "audit": True,
             "esperados": len(expected_items),
             "encontrados": len(found_expected_items),
             "nao_encontrados": len(missing_items),
             "tags_desconhecidas": len(unknown_tags),
             "tags_fora_do_local": len(valid_tag_set - set(expected_by_tag.keys())),
+        }
+        TimelineEvento.objects.create(
+            item=None,
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            mensagem=f"Auditoria realizada em {antenna.local.nome} pela antena {antenna.nome}.",
+            usuario=None,
+            metadados={
+                "evento": "auditoria_processada",
+                "antenna_id": antenna.id,
+                "antenna_nome": antenna.nome,
+                "local_id": antenna.local_id,
+                "local_nome": antenna.local.nome,
+                "tags_lidas": len(raw_tag_set),
+                **auditoria,
+                **payload,
+            },
+        )
+        return {
+            **auditoria,
         }
 
     def _mark_missing(self, *, item: ItemPatrimonial, antenna: AntenaRFID, payload: dict) -> None:

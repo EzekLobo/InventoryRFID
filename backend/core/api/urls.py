@@ -6,6 +6,7 @@ from core.api.viewsets import (
     AuditoriaViewSet,
     InconsistenciaViewSet,
     ItemPatrimonialViewSet,
+    LocalViewSet,
     MovimentacaoViewSet,
     RFIDEventosViewSet,
     TimelineViewSet,
@@ -13,6 +14,7 @@ from core.api.viewsets import (
 
 router = DefaultRouter(trailing_slash=True)
 router.register("antenas", AntenaRFIDViewSet, basename="antenas")
+router.register("locais", LocalViewSet, basename="locais")
 router.register("movimentacao", MovimentacaoViewSet, basename="movimentacao")
 router.register("eventos/rfid", RFIDEventosViewSet, basename="eventos-rfid")
 router.register("itens", ItemPatrimonialViewSet, basename="itens")

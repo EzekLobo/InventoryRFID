@@ -2,34 +2,55 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Cpu, Menu } from "lucide-react";
-import { useState } from "react";
+import { Cpu, LogIn, LogOut, Menu, RadioTower, Settings, ShieldCheck } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
+import { api } from "@/lib/api";
 
 const navItems = [
-  { href: "/", label: "Início" },
+  { href: "/", label: "Inicio" },
   { href: "/antenas", label: "Leitores" },
   { href: "/auditoria", label: "Auditoria" },
-  { href: "/inconsistencias", label: "Divergências" },
-  { href: "/itens", label: "Patrimônio" },
-  { href: "/timeline", label: "Timeline" }
+  { href: "/inconsistencias", label: "Divergencias" },
+  { href: "/itens", label: "Patrimonio" },
+  { href: "/timeline", label: "Timeline" },
+  { href: "/configuracoes", label: "Configurações", iconOnly: true }
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    setAuthenticated(api.isAuthenticated());
+    setCheckingAuth(false);
+  }, []);
+
+  function handleLogout() {
+    api.logout();
+    setAuthenticated(false);
+    setOpen(false);
+  }
+
+  if (checkingAuth) {
+    return <div className="boot-screen">Inicializando console RFID</div>;
+  }
+
+  if (!authenticated) {
+    return <LoginScreen onAuthenticated={() => setAuthenticated(true)} />;
+  }
 
   return (
     <div className="app-shell">
       <header className="topbar">
         <Link className="brand" href="/">
           <span className="brand-mark" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+            <img className="brand-logo" src="/assets/logo-colcic.png" alt="" />
           </span>
           <span className="brand-copy">
             <strong>COLCIC</strong>
-            <small>Inventário RFID</small>
+            <small>Inventario RFID</small>
           </span>
         </Link>
 
@@ -41,12 +62,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {navItems.map((item) => {
             const active = pathname === item.href;
             return (
-              <Link className={active ? "nav-link active" : "nav-link"} href={item.href} key={item.href}>
-                {item.label}
-                {["Leitores", "Auditoria", "Divergências"].includes(item.label) ? <ChevronDown size={15} /> : null}
+              <Link
+                aria-label={item.iconOnly ? item.label : undefined}
+                className={item.iconOnly ? (active ? "nav-link icon-only active" : "nav-link icon-only") : active ? "nav-link active" : "nav-link"}
+                href={item.href}
+                key={item.href}
+                title={item.iconOnly ? item.label : undefined}
+              >
+                {item.href === "/configuracoes" ? <Settings size={17} /> : null}
+                {item.iconOnly ? <span className="sr-only">{item.label}</span> : item.label}
               </Link>
             );
           })}
+          <button className="nav-action" type="button" onClick={handleLogout}>
+            <LogOut size={17} />
+            Sair
+          </button>
         </nav>
       </header>
 
@@ -54,8 +85,98 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       <footer className="footer">
         <Cpu size={18} />
-        <span>Controle operacional dos leitores RFID, auditorias e divergências patrimoniais.</span>
+        <span>Controle operacional dos leitores RFID, auditorias e divergencias patrimoniais.</span>
       </footer>
     </div>
+  );
+}
+
+function LoginScreen({ onAuthenticated }: { onAuthenticated: () => void }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      await api.login(username, password);
+      onAuthenticated();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Falha ao acessar.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="login-shell">
+      <section className="login-panel" aria-label="Acesso ao inventario RFID">
+        <div className="login-visual" aria-hidden="true">
+          <div className="signal-frame">
+            <RadioTower size={74} />
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="login-brand">
+            <span className="brand-mark">
+              <img className="brand-logo" src="/assets/logo-colcic.png" alt="" />
+            </span>
+            <span>
+              <strong>COLCIC</strong>
+              <small>Inventario RFID</small>
+            </span>
+          </div>
+
+          <div>
+            <span className="eyebrow">Acesso seguro</span>
+            <h1>Console operacional</h1>
+          </div>
+
+          <label className="field">
+            <span>Usuario</span>
+            <input
+              className="input"
+              autoComplete="username"
+              autoFocus
+              required
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </label>
+
+          <label className="field">
+            <span>Senha</span>
+            <input
+              className="input"
+              autoComplete="current-password"
+              required
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </label>
+
+          {error ? <div className="login-error">{error}</div> : null}
+
+          <button className="button login-button" disabled={loading} type="submit">
+            <LogIn size={18} />
+            {loading ? "Validando" : "Entrar"}
+          </button>
+
+          <div className="login-status">
+            <ShieldCheck size={17} />
+            <span>API conectada em modo autenticado</span>
+          </div>
+        </form>
+      </section>
+    </main>
   );
 }

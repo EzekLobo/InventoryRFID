@@ -6,6 +6,11 @@ import { api } from "@/lib/api";
 import type { AcionamentoResponse, Antena } from "@/lib/types";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ui/DataState";
 
+function commandLabel(command: AcionamentoResponse) {
+  const action = command.status === "auditoria_iniciada" ? "Auditoria iniciada" : "Sincronizacao iniciada";
+  return `${action} ate ${new Date(command.expires_at).toLocaleTimeString("pt-BR")}`;
+}
+
 export default function AntenasPage() {
   const [antenas, setAntenas] = useState<Antena[]>([]);
   const [duracao, setDuracao] = useState(5);
@@ -49,7 +54,7 @@ export default function AntenasPage() {
       <div className="section-head">
         <div>
           <h1>Leitores RFID</h1>
-          <p>Acione janelas de leitura e acompanhe o status das antenas cadastradas.</p>
+          <p>Acione janelas de sincronizacao e acompanhe o status das antenas cadastradas.</p>
         </div>
         <button className="button ghost" type="button" onClick={load}>
           <RefreshCw size={18} />
@@ -60,7 +65,7 @@ export default function AntenasPage() {
       <div className="panel">
         <div className="toolbar">
           <div className="field">
-            <label htmlFor="duracao">Duração da janela</label>
+            <label htmlFor="duracao">Duracao da janela</label>
             <input
               className="input"
               id="duracao"
@@ -70,11 +75,7 @@ export default function AntenasPage() {
               onChange={(event) => setDuracao(Number(event.target.value))}
             />
           </div>
-          {lastCommand ? (
-            <span className="badge green">
-              {lastCommand.status} até {new Date(lastCommand.expires_at).toLocaleTimeString("pt-BR")}
-            </span>
-          ) : null}
+          {lastCommand ? <span className="badge green">{commandLabel(lastCommand)}</span> : null}
         </div>
 
         {loading ? <LoadingState /> : null}
@@ -90,8 +91,8 @@ export default function AntenasPage() {
                   <th>Local</th>
                   <th>Tipo</th>
                   <th>Status</th>
-                  <th>Último ping</th>
-                  <th>Ações</th>
+                  <th>Ultimo ping</th>
+                  <th>Acoes</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,16 +116,18 @@ export default function AntenasPage() {
                       <div className="form-row">
                         <button
                           className="button"
-                          disabled={busyId === antena.id}
+                          disabled={!antena.online || busyId === antena.id}
+                          title={antena.online ? "Abrir janela de sincronizacao" : "Leitor offline"}
                           type="button"
                           onClick={() => acionar(antena.id)}
                         >
                           <Play size={17} />
-                          Ler
+                          Sincronizar
                         </button>
                         <button
                           className="button yellow"
-                          disabled={busyId === antena.id}
+                          disabled={!antena.online || busyId === antena.id}
+                          title={antena.online ? "Abrir auditoria do local" : "Leitor offline"}
                           type="button"
                           onClick={() => acionar(antena.id, true)}
                         >
