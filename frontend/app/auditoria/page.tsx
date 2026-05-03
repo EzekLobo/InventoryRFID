@@ -1,9 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2, Play, RefreshCw, Send, ShieldAlert } from "lucide-react";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { CheckCircle2, ChevronDown, ChevronRight, HelpCircle, Play, RefreshCw, Send, ShieldAlert } from "lucide-react";
 import { api } from "@/lib/api";
-import type { Antena, AuditoriaJob, AuditoriaProcessada, TagsReadResponse } from "@/lib/types";
+import type {
+  Antena,
+  AuditoriaItemResumo,
+  AuditoriaJob,
+  AuditoriaMetadados,
+  AuditoriaProcessada,
+  ItemPatrimonial,
+  TagsReadResponse
+} from "@/lib/types";
 import { ErrorState, LoadingState } from "@/components/ui/DataState";
 import { StatCard } from "@/components/ui/StatCard";
 
@@ -12,10 +20,24 @@ type AuditHistoryRow = {
   data: string;
   local: string;
   leitor: string;
-  status: string;
-  encontrados: string;
-  naoEncontrados: string;
-  desconhecidas: string;
+  status: "Aguardando leitura" | "Processada" | "Encerrada sem leitura";
+  esperados: number | null;
+  encontrados: number | null;
+  naoEncontrados: number | null;
+  divergentes: number | null;
+  desconhecidas: number | null;
+  total: number | null;
+  detalhesDisponiveis: boolean;
+  itensNaoEncontrados: AuditoriaItemResumo[];
+  itensDivergentes: AuditoriaItemResumo[];
+  tagsDesconhecidas: string[];
+};
+
+type ActiveProcess = {
+  label: string;
+  detail: string;
+  startedAt: number;
+  expiresAt: number;
 };
 
 function parseTags(value: string) {
@@ -23,6 +45,46 @@ function parseTags(value: string) {
     .split(/[\n,; ]+/)
     .map((tag) => tag.trim())
     .filter(Boolean);
+}
+
+function uniqueValues(values: string[]) {
+  return Array.from(new Set(values.filter(Boolean)));
+}
+
+function numericValue(value: unknown) {
+  const numberValue = Number(value);
+  return Number.isFinite(numberValue) ? numberValue : null;
+}
+
+function countLabel(value: number | null, fallback = "-") {
+  return value === null ? fallback : String(value);
+}
+
+function totalFromMetadata(metadata: AuditoriaMetadados) {
+  const total = numericValue(metadata.total_lidos);
+  if (total !== null) return total;
+
+  const encontrados = numericValue(metadata.encontrados);
+  const divergentes = numericValue(metadata.tags_fora_do_local);
+  const desconhecidas = numericValue(metadata.tags_desconhecidas);
+  if (encontrados === null && divergentes === null && desconhecidas === null) return null;
+  return (encontrados ?? 0) + (divergentes ?? 0) + (desconhecidas ?? 0);
+}
+
+function statusFromAudit(waiting: boolean, finalizaEm: unknown, now: number): AuditHistoryRow["status"] {
+  if (!waiting) return "Processada";
+  if (typeof finalizaEm === "string" && Number.isFinite(new Date(finalizaEm).getTime()) && new Date(finalizaEm).getTime() <= now) {
+    return "Encerrada sem leitura";
+  }
+  return "Aguardando leitura";
+}
+
+function HelpTip({ text }: { text: string }) {
+  return (
+    <span className="help-tip" title={text}>
+      <HelpCircle size={14} />
+    </span>
+  );
 }
 
 export default function AuditoriaPage() {
@@ -33,22 +95,29 @@ export default function AuditoriaPage() {
   const [result, setResult] = useState<TagsReadResponse | null>(null);
   const [jobs, setJobs] = useState<AuditoriaJob[]>([]);
   const [processedAudits, setProcessedAudits] = useState<AuditoriaProcessada[]>([]);
+  const [itens, setItens] = useState<ItemPatrimonial[]>([]);
+  const [expandedAuditId, setExpandedAuditId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [activeProcess, setActiveProcess] = useState<ActiveProcess | null>(null);
+  const [finishedMessage, setFinishedMessage] = useState("");
+  const [now, setNow] = useState(Date.now());
 
   async function load() {
     setError("");
     try {
-      const [antenasData, jobsData, processedData] = await Promise.all([
+      const [antenasData, jobsData, processedData, itensData] = await Promise.all([
         api.listAntenas(),
         api.listAuditorias(),
-        api.listAuditoriasProcessadas()
+        api.listAuditoriasProcessadas(),
+        api.listItens()
       ]);
       setAntenas(antenasData);
       setAntennaId((current) => current || antenasData[0]?.id || "");
       setJobs(jobsData);
       setProcessedAudits(processedData);
+      setItens(itensData);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Nao foi possivel carregar auditorias.");
     } finally {
@@ -65,22 +134,41 @@ export default function AuditoriaPage() {
     [antennaId, antenas]
   );
 
+  const expectedItems = useMemo(
+    () => itens.filter((item) => item.ativo && item.local_logico_id === selectedAntenna?.local_id),
+    [itens, selectedAntenna]
+  );
+
   const auditRows = useMemo<AuditHistoryRow[]>(() => {
     const processedJobIds = new Set(
       processedAudits
         .map((audit) => Number(audit.metadados.auditoria_job_id))
         .filter((id) => Number.isFinite(id))
     );
-    const processedRows = processedAudits.map((audit) => ({
-      id: `processed-${audit.id}`,
-      data: audit.criado_em,
-      local: String(audit.metadados.local_nome || "-"),
-      leitor: String(audit.metadados.antenna_nome || "-"),
-      status: audit.metadados.evento === "auditoria_iniciada" ? "Iniciada" : "Processada",
-      encontrados: String(audit.metadados.encontrados ?? "-"),
-      naoEncontrados: String(audit.metadados.nao_encontrados ?? "-"),
-      desconhecidas: String(audit.metadados.tags_desconhecidas ?? "-")
-    }));
+    const processedRows = processedAudits.map((audit) => {
+      const metadata = audit.metadados;
+      const waiting = metadata.evento === "auditoria_iniciada";
+      const localId = Number(metadata.local_id);
+      const expectedInLocal = itens.filter((item) => item.ativo && item.local_logico_id === localId).length;
+      const esperados = numericValue(metadata.esperados) ?? (waiting && Number.isFinite(localId) ? expectedInLocal : null);
+      return {
+        id: `processed-${audit.id}`,
+        data: audit.criado_em,
+        local: String(metadata.local_nome || "-"),
+        leitor: String(metadata.antenna_nome || "-"),
+        status: statusFromAudit(waiting, metadata.finaliza_em, now),
+        esperados,
+        encontrados: waiting ? null : numericValue(metadata.encontrados),
+        naoEncontrados: waiting ? null : numericValue(metadata.nao_encontrados),
+        divergentes: waiting ? null : numericValue(metadata.tags_fora_do_local),
+        desconhecidas: waiting ? null : numericValue(metadata.tags_desconhecidas),
+        total: waiting ? null : totalFromMetadata(metadata),
+        detalhesDisponiveis: !waiting,
+        itensNaoEncontrados: metadata.itens_nao_encontrados || [],
+        itensDivergentes: metadata.itens_divergentes || [],
+        tagsDesconhecidas: metadata.tags_desconhecidas_lista || []
+      };
+    });
     const jobRows = jobs
       .filter((job) => !processedJobIds.has(job.id))
       .map((job) => ({
@@ -88,22 +176,37 @@ export default function AuditoriaPage() {
         data: job.iniciado_em,
         local: uniqueValues(job.leitores.map((leitor) => leitor.local_nome)).join(", ") || "-",
         leitor: `${job.leitores.length} leitor(es)`,
-        status: job.status,
-        encontrados: "-",
-        naoEncontrados: "-",
-        desconhecidas: "-"
+        status: statusFromAudit(true, job.finaliza_em, now),
+        esperados: null,
+        encontrados: null,
+        naoEncontrados: null,
+        divergentes: null,
+        desconhecidas: null,
+        total: null,
+        detalhesDisponiveis: false,
+        itensNaoEncontrados: [],
+        itensDivergentes: [],
+        tagsDesconhecidas: []
       }));
     return [...processedRows, ...jobRows].sort(
       (left, right) => new Date(right.data).getTime() - new Date(left.data).getTime()
     );
-  }, [jobs, processedAudits]);
+  }, [itens, jobs, now, processedAudits]);
 
   async function startAudit() {
     if (!antennaId) return;
     setSubmitting(true);
     setError("");
     try {
-      await api.auditarAntena(Number(antennaId), duracao);
+      const response = await api.auditarAntena(Number(antennaId), duracao);
+      setFinishedMessage("");
+      setActiveProcess({
+        label: "Auditoria RFID em andamento",
+        detail: "O leitor esta coletando tags para conferir o local auditado.",
+        startedAt: Date.now(),
+        expiresAt: new Date(response.expires_at).getTime()
+      });
+      await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Nao foi possivel iniciar auditoria.");
     } finally {
@@ -118,6 +221,10 @@ export default function AuditoriaPage() {
     try {
       const response = await api.enviarTags(Number(antennaId), parseTags(tagsText), true);
       setResult(response);
+      setFinishedMessage("Simulacao processada. Resultado atualizado na lista de auditorias.");
+      if (response.status !== "ok") {
+        setError("A leitura foi ignorada pelo sistema. Verifique se o leitor e a auditoria estao ativos.");
+      }
       await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Nao foi possivel enviar resultado da auditoria.");
@@ -126,12 +233,30 @@ export default function AuditoriaPage() {
     }
   }
 
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 300);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!activeProcess || now < activeProcess.expiresAt) return;
+
+    setActiveProcess(null);
+    setFinishedMessage("Auditoria RFID concluida. Dados atualizados.");
+    load();
+  }, [activeProcess, now]);
+
+  const processProgress = activeProcess
+    ? Math.min(100, Math.max(0, ((now - activeProcess.startedAt) / (activeProcess.expiresAt - activeProcess.startedAt)) * 100))
+    : 0;
+  const remainingSeconds = activeProcess ? Math.max(0, Math.ceil((activeProcess.expiresAt - now) / 1000)) : 0;
+
   return (
     <section className="content-band">
       <div className="section-head">
         <div>
           <h1>Auditoria RFID</h1>
-          <p>Acione um leitor e envie o conjunto de tags lidas para reconciliar o local auditado.</p>
+          <p>Acione o leitor para auditar um local. Use a simulacao apenas para testes sem leitura fisica.</p>
         </div>
         <button className="button ghost" type="button" onClick={load}>
           <RefreshCw size={18} />
@@ -142,11 +267,27 @@ export default function AuditoriaPage() {
       {loading ? <LoadingState /> : null}
       {error ? <ErrorState message={error} /> : null}
 
+      {activeProcess ? (
+        <div className="process-feedback">
+          <div>
+            <strong>{activeProcess.label}</strong>
+            <span>
+              {activeProcess.detail} Termina em {remainingSeconds}s.
+            </span>
+          </div>
+          <div className="progress-track" aria-hidden="true">
+            <span style={{ width: `${processProgress}%` }} />
+          </div>
+        </div>
+      ) : null}
+
+      {!activeProcess && finishedMessage ? <div className="process-feedback done">{finishedMessage}</div> : null}
+
       {!loading ? (
         <div className="grid two">
           <article className="panel">
             <h2>
-              <ShieldAlert size={21} /> Janela de auditoria
+              <ShieldAlert size={21} /> Auditoria real
             </h2>
             <div className="form-row">
               <div className="field">
@@ -165,7 +306,7 @@ export default function AuditoriaPage() {
                 </select>
               </div>
               <div className="field">
-                <label htmlFor="duracao">Duração</label>
+                <label htmlFor="duracao">Duracao</label>
                 <input
                   className="input"
                   id="duracao"
@@ -177,32 +318,38 @@ export default function AuditoriaPage() {
               </div>
               <button className="button yellow" disabled={submitting || !antennaId} type="button" onClick={startAudit}>
                 <Play size={17} />
-                Iniciar auditoria
+                Iniciar auditoria RFID
               </button>
             </div>
 
             {selectedAntenna ? (
               <p>
-                Local auditado: <strong>{selectedAntenna.local_nome}</strong>. Itens com esse local lógico serão
-                comparados contra as tags enviadas.
+                Local auditado: <strong>{selectedAntenna.local_nome}</strong>. O leitor fisico fica ativo pela duracao
+                definida e envia as tags encontradas ao sistema. Itens esperados neste local:{" "}
+                <strong>{expectedItems.length}</strong>.
+                {expectedItems.length === 0 ? " Nenhum item ativo tem este local como local logico." : ""}
               </p>
             ) : null}
           </article>
 
           <article className="panel">
             <h2>
-              <Send size={21} /> Resultado da leitura
+              <Send size={21} /> Simular leitura RFID
             </h2>
             <div className="field">
-              <label htmlFor="tags">Tags lidas</label>
+              <label htmlFor="tags">Tags simuladas</label>
               <textarea
                 className="textarea"
                 id="tags"
-                placeholder="Cole uma tag por linha ou separadas por vírgula"
+                placeholder="Cole tags de teste, uma por linha ou separadas por virgula"
                 value={tagsText}
                 onChange={(event) => setTagsText(event.target.value)}
               />
             </div>
+            <p>
+              Use este campo para testar a auditoria manualmente. As tags informadas serao tratadas como se tivessem
+              sido lidas pelo RFID. Se deixar vazio, a simulacao considera que nenhuma tag foi encontrada.
+            </p>
             <button
               className="button"
               disabled={submitting || !antennaId}
@@ -211,7 +358,7 @@ export default function AuditoriaPage() {
               onClick={sendAuditResult}
             >
               <CheckCircle2 size={17} />
-              Processar auditoria
+              Processar simulacao
             </button>
           </article>
         </div>
@@ -221,50 +368,70 @@ export default function AuditoriaPage() {
         <div className="grid stats" style={{ marginTop: 24 }}>
           <StatCard label="Esperados" value={result.audit.esperados ?? "-"} />
           <StatCard label="Encontrados" value={result.audit.encontrados} tone="green" />
-          <StatCard label="Não encontrados" value={result.audit.nao_encontrados} tone="red" />
-          <StatCard label="Tags desconhecidas" value={result.audit.tags_desconhecidas} tone="yellow" />
+          <StatCard label="Nao encontrados" value={result.audit.nao_encontrados} tone="red" />
+          <StatCard label="Divergentes" value={result.audit.tags_fora_do_local ?? 0} tone="yellow" />
+          <StatCard label="Desconhecidas" value={result.audit.tags_desconhecidas} tone="yellow" />
+          <StatCard label="Total" value={result.audit.total_lidos ?? totalFromMetadata(result.audit) ?? "-"} />
         </div>
-      ) : null}
-
-      {result ? (
-        <article className="panel" style={{ marginTop: 18 }}>
-          <h2>Resposta do processamento</h2>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-        </article>
       ) : null}
 
       <article className="panel" style={{ marginTop: 24 }}>
         <h2>Auditorias</h2>
         <div className="table-wrap">
-          <table className="data-table">
+          <table className="data-table audit-table">
             <thead>
               <tr>
                 <th>Data</th>
                 <th>Local</th>
                 <th>Leitor</th>
                 <th>Status</th>
+                <th>Esperados</th>
                 <th>Encontrados</th>
                 <th>Nao encontrados</th>
+                <th>Divergentes</th>
                 <th>Desconhecidas</th>
+                <th>Total</th>
               </tr>
             </thead>
             <tbody>
               {auditRows.map((audit) => (
-                <tr key={audit.id}>
-                  <td>{new Date(audit.data).toLocaleString("pt-BR")}</td>
-                  <td>{audit.local}</td>
-                  <td>{audit.leitor}</td>
-                  <td>
-                    <span className="badge">{audit.status}</span>
-                  </td>
-                  <td>{audit.encontrados}</td>
-                  <td>{audit.naoEncontrados}</td>
-                  <td>{audit.desconhecidas}</td>
-                </tr>
+                <Fragment key={audit.id}>
+                  <tr
+                    className="audit-row"
+                    onClick={() => setExpandedAuditId((current) => (current === audit.id ? null : audit.id))}
+                  >
+                    <td>
+                      <span className="audit-row-title">
+                        {expandedAuditId === audit.id ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
+                        {new Date(audit.data).toLocaleString("pt-BR")}
+                      </span>
+                    </td>
+                    <td>{audit.local}</td>
+                    <td>{audit.leitor}</td>
+                    <td>
+                      <span className={audit.status === "Processada" ? "badge green" : audit.status === "Encerrada sem leitura" ? "badge red" : "badge"}>
+                        {audit.status}
+                      </span>
+                    </td>
+                    <td>{countLabel(audit.esperados)}</td>
+                    <td>{countLabel(audit.encontrados, audit.status === "Aguardando leitura" ? "Aguardando" : "-")}</td>
+                    <td>{countLabel(audit.naoEncontrados, audit.status === "Aguardando leitura" ? "Aguardando" : "-")}</td>
+                    <td>{countLabel(audit.divergentes, audit.status === "Aguardando leitura" ? "Aguardando" : "-")}</td>
+                    <td>{countLabel(audit.desconhecidas, audit.status === "Aguardando leitura" ? "Aguardando" : "-")}</td>
+                    <td>{countLabel(audit.total, audit.status === "Aguardando leitura" ? "Aguardando" : "-")}</td>
+                  </tr>
+                  {expandedAuditId === audit.id ? (
+                    <tr className="audit-detail-row">
+                      <td colSpan={10}>
+                        <AuditDetail audit={audit} />
+                      </td>
+                    </tr>
+                  ) : null}
+                </Fragment>
               ))}
               {auditRows.length === 0 ? (
                 <tr>
-                  <td colSpan={7}>Nenhuma auditoria registrada.</td>
+                  <td colSpan={10}>Nenhuma auditoria registrada.</td>
                 </tr>
               ) : null}
             </tbody>
@@ -275,6 +442,79 @@ export default function AuditoriaPage() {
   );
 }
 
-function uniqueValues(values: string[]) {
-  return Array.from(new Set(values.filter(Boolean)));
+function AuditDetail({ audit }: { audit: AuditHistoryRow }) {
+  const waiting = audit.status === "Aguardando leitura";
+
+  return (
+    <div className="audit-detail">
+      {!audit.detalhesDisponiveis ? (
+        <div className="state-box">
+          {waiting
+            ? "A auditoria ainda esta aguardando uma leitura do RFID."
+            : "A janela foi encerrada sem leitura processada para detalhar."}
+        </div>
+      ) : (
+        <>
+          <div className="audit-summary-grid">
+            <AuditSummaryCard label="Quantidade esperada" value={audit.esperados} help="Itens ativos cujo local logico e o local auditado." />
+            <AuditSummaryCard label="Quantidade encontrada" value={audit.encontrados} help="Itens esperados no local que foram lidos." />
+            <AuditSummaryCard label="Nao encontrados" value={audit.naoEncontrados} help="Itens esperados no local que nao apareceram na leitura." />
+            <AuditSummaryCard label="Divergentes" value={audit.divergentes} help="Itens conhecidos lidos aqui, mas cadastrados logicamente em outro local." />
+            <AuditSummaryCard label="Desconhecidos" value={audit.desconhecidas} help="Tags lidas que nao existem cadastradas no inventario." />
+            <AuditSummaryCard label="Quantidade total" value={audit.total} help="Total de leituras: encontrados, divergentes e desconhecidos." />
+          </div>
+
+          <div className="audit-detail-lists">
+            <AuditItemList title="Nao encontrados" items={audit.itensNaoEncontrados} empty="Nenhum item esperado ficou sem leitura." />
+            <AuditItemList title="Divergentes" items={audit.itensDivergentes} empty="Nenhum item de outro local foi lido nesta auditoria." />
+            <UnknownTagsList tags={audit.tagsDesconhecidas} />
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function AuditSummaryCard({ label, value, help }: { label: string; value: number | null; help: string }) {
+  return (
+    <div className="audit-summary-card">
+      <span>
+        {label}
+        <HelpTip text={help} />
+      </span>
+      <strong>{countLabel(value)}</strong>
+    </div>
+  );
+}
+
+function AuditItemList({ title, items, empty }: { title: string; items: AuditoriaItemResumo[]; empty: string }) {
+  return (
+    <div className="audit-list">
+      <h3>{title}</h3>
+      {items.length === 0 ? <p>{empty}</p> : null}
+      {items.map((item) => (
+        <div className="audit-list-item" key={`${title}-${item.id}-${item.tag_id}`}>
+          <strong>{item.nome}</strong>
+          <span>Tag: {item.tag_id}</span>
+          <span>Local logico: {item.local_logico_nome || "-"}</span>
+          <span>Local fisico: {item.local_fisico_nome || "-"}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function UnknownTagsList({ tags }: { tags: string[] }) {
+  return (
+    <div className="audit-list">
+      <h3>Desconhecidos</h3>
+      {tags.length === 0 ? <p>Nenhuma tag desconhecida foi lida.</p> : null}
+      {tags.map((tag) => (
+        <div className="audit-list-item" key={tag}>
+          <strong>Tag sem cadastro</strong>
+          <span>{tag}</span>
+        </div>
+      ))}
+    </div>
+  );
 }

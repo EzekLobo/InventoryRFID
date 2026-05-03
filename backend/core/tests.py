@@ -223,6 +223,80 @@ class PipelineAndApiTests(TestCase):
             ).exists()
         )
 
+    def test_audit_reading_records_detailed_metadata(self):
+        expected_item = ItemPatrimonial.objects.create(
+            tag_id="TAG-PROJ-003",
+            nome="Projetor LG",
+            local_logico=self.lab4,
+            responsavel=self.user,
+        )
+
+        response = self.client.post(
+            "/api/eventos/rfid/",
+            {
+                "event_type": "tags_read",
+                "antenna_id": self.destino_antenna.id,
+                "tags": [expected_item.tag_id, self.item.tag_id, "TAG-SEM-CADASTRO"],
+                "payload": {"audit": True},
+            },
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["audit"]["esperados"], 1)
+        self.assertEqual(response.data["audit"]["encontrados"], 1)
+        self.assertEqual(response.data["audit"]["tags_fora_do_local"], 1)
+        self.assertEqual(response.data["audit"]["tags_desconhecidas"], 1)
+        self.assertEqual(response.data["audit"]["total_lidos"], 3)
+
+        evento = TimelineEvento.objects.filter(
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            metadados__evento="auditoria_processada",
+        ).latest("criado_em")
+        self.assertEqual(evento.metadados["total_lidos"], 3)
+        self.assertEqual(evento.metadados["itens_esperados"][0]["tag_id"], expected_item.tag_id)
+        self.assertEqual(evento.metadados["itens_encontrados"][0]["tag_id"], expected_item.tag_id)
+        self.assertEqual(evento.metadados["itens_divergentes"][0]["tag_id"], self.item.tag_id)
+        self.assertEqual(evento.metadados["tags_desconhecidas_lista"], ["TAG-SEM-CADASTRO"])
+
+    def test_manual_audit_payload_processes_even_without_open_reader_window(self):
+        expected_item = ItemPatrimonial.objects.create(
+            tag_id="TAG-PROJ-002",
+            nome="Projetor Benq",
+            local_logico=self.lab4,
+            responsavel=self.user,
+        )
+
+        response = self.client.post(
+            "/api/eventos/rfid/",
+            {
+                "event_type": "tags_read",
+                "antenna_id": self.destino_antenna.id,
+                "tags": [],
+                "payload": {"audit": True, "source": "frontend_manual"},
+            },
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["status"], "ok")
+        self.assertEqual(response.data["audit"]["nao_encontrados"], 1)
+        self.assertTrue(
+            NotificacaoInconsistencia.objects.filter(
+                item=expected_item,
+                tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+                resolvida=False,
+            ).exists()
+        )
+        self.assertTrue(
+            TimelineEvento.objects.filter(
+                tipo=TimelineEvento.TipoEvento.SISTEMA,
+                metadados__evento="auditoria_processada",
+            ).exists()
+        )
+
     def test_rfid_command_endpoint_reports_idle_or_start_reading(self):
         idle = self.client.get(
             f"/api/eventos/rfid/comando/?antenna_id={self.destino_antenna.id}",

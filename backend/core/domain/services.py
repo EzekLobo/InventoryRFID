@@ -317,6 +317,7 @@ class AuditoriaReconciliacaoManager:
                 tag_id__in=valid_tag_set - set(expected_by_tag.keys()),
             ).select_related("local_logico", "local_fisico", "responsavel")
         )
+        total_lidos = len(found_expected_items) + len(extra_items) + len(unknown_tags)
 
         for item in missing_items:
             self._mark_missing(item=item, antenna=antenna, payload=payload)
@@ -337,6 +338,12 @@ class AuditoriaReconciliacaoManager:
             "nao_encontrados": len(missing_items),
             "tags_desconhecidas": len(unknown_tags),
             "tags_fora_do_local": len(extra_items),
+            "total_lidos": total_lidos,
+            "itens_esperados": [self._serialize_audit_item(item) for item in expected_items],
+            "itens_encontrados": [self._serialize_audit_item(item) for item in found_expected_items],
+            "itens_nao_encontrados": [self._serialize_audit_item(item) for item in missing_items],
+            "itens_divergentes": [self._serialize_audit_item(item) for item in extra_items],
+            "tags_desconhecidas_lista": unknown_tags,
         }
         TimelineEvento.objects.create(
             item=None,
@@ -356,6 +363,15 @@ class AuditoriaReconciliacaoManager:
         )
         return {
             **auditoria,
+        }
+
+    def _serialize_audit_item(self, item: ItemPatrimonial) -> dict:
+        return {
+            "id": item.id,
+            "nome": item.nome,
+            "tag_id": item.tag_id,
+            "local_logico_nome": item.local_logico.nome if item.local_logico else None,
+            "local_fisico_nome": item.local_fisico.nome if item.local_fisico else None,
         }
 
     def _mark_missing(self, *, item: ItemPatrimonial, antenna: AntenaRFID, payload: dict) -> None:

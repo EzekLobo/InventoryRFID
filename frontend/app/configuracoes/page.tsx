@@ -469,10 +469,10 @@ function RecordList({
           </div>
           {item.badge ? <span className="badge">{item.badge}</span> : null}
           <div className="record-actions">
-            <button className="button ghost" type="button" onClick={item.onEdit} title="Editar">
+            <button className="icon-action" type="button" onClick={item.onEdit} title="Editar">
               <Pencil size={16} />
             </button>
-            <button className="button ghost" type="button" onClick={item.onDelete} title="Excluir">
+            <button className="icon-action" type="button" onClick={item.onDelete} title="Excluir">
               <Trash2 size={16} />
             </button>
           </div>

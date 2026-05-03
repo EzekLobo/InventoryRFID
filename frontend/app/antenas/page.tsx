@@ -6,6 +6,13 @@ import { api } from "@/lib/api";
 import type { AcionamentoResponse, Antena } from "@/lib/types";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ui/DataState";
 
+type ActiveProcess = {
+  label: string;
+  detail: string;
+  startedAt: number;
+  expiresAt: number;
+};
+
 function commandLabel(command: AcionamentoResponse) {
   const action = command.status === "auditoria_iniciada" ? "Auditoria iniciada" : "Sincronizacao iniciada";
   return `${action} ate ${new Date(command.expires_at).toLocaleTimeString("pt-BR")}`;
@@ -18,6 +25,9 @@ export default function AntenasPage() {
   const [busyId, setBusyId] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [lastCommand, setLastCommand] = useState<AcionamentoResponse | null>(null);
+  const [activeProcess, setActiveProcess] = useState<ActiveProcess | null>(null);
+  const [finishedMessage, setFinishedMessage] = useState("");
+  const [now, setNow] = useState(Date.now());
 
   async function load() {
     setLoading(true);
@@ -37,6 +47,15 @@ export default function AntenasPage() {
     try {
       const response = audit ? await api.auditarAntena(id, duracao) : await api.ativarAntena(id, duracao);
       setLastCommand(response);
+      setFinishedMessage("");
+      setActiveProcess({
+        label: audit ? "Auditoria em andamento" : "Sincronizacao em andamento",
+        detail: audit
+          ? "O leitor esta coletando tags para conferir o local."
+          : "O leitor esta coletando tags para atualizar a localizacao fisica.",
+        startedAt: Date.now(),
+        expiresAt: new Date(response.expires_at).getTime()
+      });
       await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Falha ao acionar leitor.");
@@ -48,6 +67,26 @@ export default function AntenasPage() {
   useEffect(() => {
     load();
   }, []);
+
+  useEffect(() => {
+    if (!activeProcess) return;
+    const timer = window.setInterval(() => setNow(Date.now()), 300);
+    return () => window.clearInterval(timer);
+  }, [activeProcess]);
+
+  useEffect(() => {
+    if (!activeProcess || now < activeProcess.expiresAt) return;
+
+    const label = activeProcess.label;
+    setActiveProcess(null);
+    setFinishedMessage(`${label.replace("em andamento", "concluida")}. Dados atualizados.`);
+    load();
+  }, [activeProcess, now]);
+
+  const processProgress = activeProcess
+    ? Math.min(100, Math.max(0, ((now - activeProcess.startedAt) / (activeProcess.expiresAt - activeProcess.startedAt)) * 100))
+    : 0;
+  const remainingSeconds = activeProcess ? Math.max(0, Math.ceil((activeProcess.expiresAt - now) / 1000)) : 0;
 
   return (
     <section className="content-band">
@@ -77,6 +116,22 @@ export default function AntenasPage() {
           </div>
           {lastCommand ? <span className="badge green">{commandLabel(lastCommand)}</span> : null}
         </div>
+
+        {activeProcess ? (
+          <div className="process-feedback">
+            <div>
+              <strong>{activeProcess.label}</strong>
+              <span>
+                {activeProcess.detail} Termina em {remainingSeconds}s.
+              </span>
+            </div>
+            <div className="progress-track" aria-hidden="true">
+              <span style={{ width: `${processProgress}%` }} />
+            </div>
+          </div>
+        ) : null}
+
+        {!activeProcess && finishedMessage ? <div className="process-feedback done">{finishedMessage}</div> : null}
 
         {loading ? <LoadingState /> : null}
         {error ? <ErrorState message={error} /> : null}

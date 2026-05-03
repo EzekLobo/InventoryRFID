@@ -123,9 +123,11 @@ class RFIDEventProcessor:
     def process_tags_read(self, *, antenna: AntenaRFID, tags: list[str], payload: dict | None = None) -> dict:
         self.deactivate_expired_antennas()
         antenna.refresh_from_db(fields=["ativa", "ativacao_expira_em"])
-        if (not antenna.ativa) or (
+        is_audit = self.auditoria_reconciliacao_manager.is_audit_payload(payload)
+        window_closed = (not antenna.ativa) or (
             antenna.ativacao_expira_em and antenna.ativacao_expira_em <= timezone.now()
-        ):
+        )
+        if window_closed and not is_audit:
             return {"status": "ignored", "reason": "antenna_window_closed", "event": "tags_read"}
 
         normalized_tags = normalize_tags(tags)

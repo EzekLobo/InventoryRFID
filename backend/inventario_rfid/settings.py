@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from corsheaders.defaults import default_headers
+
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENVIRONMENT = os.getenv("DJANGO_ENV", "dev").lower()
@@ -88,6 +90,7 @@ CORS_ALLOWED_ORIGINS = [
     for origin in os.getenv("DJANGO_CORS_ALLOWED_ORIGINS", "").split(",")
     if origin.strip()
 ]
+CORS_ALLOW_HEADERS = (*default_headers, "x-rfid-token")
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [

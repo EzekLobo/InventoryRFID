@@ -522,6 +522,48 @@ textarea {
   opacity: 0.55;
 }
 
+.process-feedback {
+  background: rgba(87, 244, 208, 0.08);
+  border: 1px solid var(--line-strong);
+  color: #d7fffa;
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+}
+
+.process-feedback strong,
+.process-feedback span {
+  display: block;
+}
+
+.process-feedback span {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+.process-feedback.done {
+  background: rgba(87, 217, 141, 0.1);
+  border-color: rgba(87, 217, 141, 0.3);
+  color: #9af0bd;
+}
+
+.progress-track {
+  background: rgba(4, 12, 15, 0.75);
+  border: 1px solid var(--line);
+  height: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.progress-track span {
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  display: block;
+  height: 100%;
+  transition: width 0.25s ease;
+}
+
 .sr-only {
   height: 1px;
   margin: -1px;
@@ -671,11 +713,21 @@ textarea {
   gap: 8px;
 }
 
-.record-actions .button {
-  height: 38px;
-  min-height: 38px;
+.icon-action {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
   padding: 0;
-  width: 40px;
+  width: 34px;
+}
+
+.icon-action:hover {
+  color: var(--cyan);
 }
 
 .table-wrap {
@@ -721,6 +773,119 @@ textarea {
 
 .readers-table th {
   vertical-align: middle;
+}
+
+.audit-table th,
+.audit-table td {
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.audit-row {
+  cursor: pointer;
+}
+
+.audit-row-title {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.audit-detail-row td {
+  background: rgba(4, 12, 15, 0.22);
+  padding: 0;
+}
+
+.audit-detail {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+.audit-summary-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.audit-summary-card {
+  background: rgba(4, 12, 15, 0.42);
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+}
+
+.audit-summary-card span {
+  align-items: center;
+  color: var(--muted);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 6px;
+  text-transform: uppercase;
+}
+
+.audit-summary-card strong {
+  color: var(--text);
+  font-size: 24px;
+}
+
+.help-tip {
+  align-items: center;
+  color: var(--muted);
+  display: inline-flex;
+}
+
+.help-tip:hover {
+  color: var(--cyan);
+}
+
+.audit-detail-lists {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.audit-list {
+  background: rgba(4, 12, 15, 0.28);
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+}
+
+.audit-list h3 {
+  color: var(--text);
+  font-size: 15px;
+  margin: 0;
+}
+
+.audit-list p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.audit-list-item {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding-top: 10px;
+}
+
+.audit-list-item strong,
+.audit-list-item span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.audit-list-item span {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .actions-cell {
