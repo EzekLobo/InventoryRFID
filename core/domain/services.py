@@ -40,7 +40,11 @@ class SyncManager:
                 "item": item,
                 "leitura": duplicate,
                 "timeline": None,
-                "inconsistencia": NotificacaoInconsistencia.objects.filter(item=item, resolvida=False).first(),
+                "inconsistencia": NotificacaoInconsistencia.objects.filter(
+                    item=item,
+                    tipo=NotificacaoInconsistencia.TipoInconsistencia.LOCAL_DIVERGENTE,
+                    resolvida=False,
+                ).first(),
                 "mudou_local": False,
                 "duplicada": True,
             }
@@ -74,13 +78,25 @@ class SyncManager:
             },
         )
 
-        inconsistencia = NotificacaoInconsistencia.objects.filter(item=item, resolvida=False).first()
+        inconsistencia = NotificacaoInconsistencia.objects.filter(
+            item=item,
+            tipo=NotificacaoInconsistencia.TipoInconsistencia.LOCAL_DIVERGENTE,
+            resolvida=False,
+        ).first()
         if item.local_logico_id and item.local_logico_id != local_id:
             if inconsistencia is None:
                 inconsistencia = NotificacaoInconsistencia.objects.create(
                     item=item,
+                    tipo=NotificacaoInconsistencia.TipoInconsistencia.LOCAL_DIVERGENTE,
+                    tag_id=tag_id,
                     local_logico=item.local_logico,
                     local_fisico=item.local_fisico,
+                    metadados={
+                        "tag_id": tag_id,
+                        "local_id": local_id,
+                        "antenna_id": antena.id if antena else None,
+                        "evento": "local_divergente",
+                    },
                 )
                 TimelineEvento.objects.create(
                     item=item,
@@ -91,14 +107,29 @@ class SyncManager:
                         f"vs local fisico={item.local_fisico.nome if item.local_fisico else 'desconhecido'}."
                     ),
                     usuario=item.responsavel,
-                    metadados={"inconsistencia_id": inconsistencia.id},
+                    metadados={
+                        "inconsistencia_id": inconsistencia.id,
+                        "tipo": inconsistencia.tipo,
+                    },
                 )
             else:
                 inconsistencia.local_logico = item.local_logico
                 inconsistencia.local_fisico = item.local_fisico
-                inconsistencia.save(update_fields=["local_logico", "local_fisico"])
+                inconsistencia.tag_id = tag_id
+                inconsistencia.metadados = {
+                    **(inconsistencia.metadados or {}),
+                    "tag_id": tag_id,
+                    "local_id": local_id,
+                    "antenna_id": antena.id if antena else None,
+                    "evento": "local_divergente",
+                }
+                inconsistencia.save(update_fields=["local_logico", "local_fisico", "tag_id", "metadados"])
         elif inconsistencia is not None:
-            NotificacaoInconsistencia.objects.filter(item=item, resolvida=False).update(
+            NotificacaoInconsistencia.objects.filter(
+                item=item,
+                tipo=NotificacaoInconsistencia.TipoInconsistencia.LOCAL_DIVERGENTE,
+                resolvida=False,
+            ).update(
                 resolvida=True,
                 resolvida_em=timezone.now(),
             )
@@ -107,7 +138,7 @@ class SyncManager:
                 tipo=TimelineEvento.TipoEvento.SISTEMA,
                 mensagem="Inconsistencia resolvida automaticamente por reconciliacao fisica/logica.",
                 usuario=item.responsavel,
-                metadados={"evento": "reconciliacao"},
+                metadados={"evento": "reconciliacao", "tipo": inconsistencia.tipo},
             )
             inconsistencia = None
 
@@ -199,6 +230,174 @@ class SyncManager:
             )
             .order_by("-criado_em")
             .first()
+        )
+
+
+class AuditoriaReconciliacaoManager:
+    def is_audit_payload(self, payload: dict | None) -> bool:
+        payload = payload or {}
+        return bool(payload.get("audit") or payload.get("auditoria_job_id"))
+
+    @transaction.atomic
+    def reconcile_destination_reading(
+        self,
+        *,
+        antenna: AntenaRFID,
+        raw_tags: list[str],
+        valid_tags: list[str],
+        payload: dict | None = None,
+    ) -> dict:
+        if antenna.tipo != AntenaRFID.TipoAntena.DESTINO or not self.is_audit_payload(payload):
+            return {
+                "audit": False,
+                "encontrados": len(valid_tags),
+                "nao_encontrados": 0,
+                "tags_desconhecidas": 0,
+            }
+
+        payload = payload or {}
+        raw_tag_set = set(raw_tags)
+        valid_tag_set = set(valid_tags)
+        unknown_tags = sorted(raw_tag_set - valid_tag_set)
+
+        expected_items = list(
+            ItemPatrimonial.objects.filter(
+                ativo=True,
+                local_logico_id=antenna.local_id,
+            ).select_related("local_logico", "local_fisico", "responsavel")
+        )
+        expected_by_tag = {item.tag_id: item for item in expected_items}
+        missing_items = [item for item in expected_items if item.tag_id not in valid_tag_set]
+        found_expected_items = [item for tag, item in expected_by_tag.items() if tag in valid_tag_set]
+
+        for item in missing_items:
+            self._mark_missing(item=item, antenna=antenna, payload=payload)
+
+        for item in found_expected_items:
+            self._resolve_missing(item=item, antenna=antenna, payload=payload)
+
+        for tag_id in unknown_tags:
+            self._mark_unknown_tag(tag_id=tag_id, antenna=antenna, payload=payload)
+
+        return {
+            "audit": True,
+            "esperados": len(expected_items),
+            "encontrados": len(found_expected_items),
+            "nao_encontrados": len(missing_items),
+            "tags_desconhecidas": len(unknown_tags),
+            "tags_fora_do_local": len(valid_tag_set - set(expected_by_tag.keys())),
+        }
+
+    def _mark_missing(self, *, item: ItemPatrimonial, antenna: AntenaRFID, payload: dict) -> None:
+        inconsistencia = NotificacaoInconsistencia.objects.filter(
+            item=item,
+            tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+            resolvida=False,
+        ).first()
+        metadados = {
+            "tag_id": item.tag_id,
+            "local_id": antenna.local_id,
+            "antenna_id": antenna.id,
+            "evento": "item_nao_encontrado",
+            **payload,
+        }
+        if inconsistencia:
+            inconsistencia.local_logico = item.local_logico
+            inconsistencia.local_fisico = item.local_fisico
+            inconsistencia.tag_id = item.tag_id
+            inconsistencia.metadados = metadados
+            inconsistencia.save(update_fields=["local_logico", "local_fisico", "tag_id", "metadados"])
+            return
+
+        inconsistencia = NotificacaoInconsistencia.objects.create(
+            item=item,
+            tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+            tag_id=item.tag_id,
+            local_logico=item.local_logico,
+            local_fisico=item.local_fisico,
+            metadados=metadados,
+        )
+        TimelineEvento.objects.create(
+            item=item,
+            tipo=TimelineEvento.TipoEvento.INCONSISTENCIA,
+            mensagem=(
+                f"Item esperado em {antenna.local.nome} nao foi encontrado "
+                f"na leitura da antena {antenna.nome}."
+            ),
+            usuario=item.responsavel,
+            metadados={
+                "inconsistencia_id": inconsistencia.id,
+                "tipo": inconsistencia.tipo,
+                **metadados,
+            },
+        )
+
+    def _resolve_missing(self, *, item: ItemPatrimonial, antenna: AntenaRFID, payload: dict) -> None:
+        inconsistencias = list(
+            NotificacaoInconsistencia.objects.filter(
+                item=item,
+                tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+                resolvida=False,
+            )
+        )
+        if not inconsistencias:
+            return
+
+        now = timezone.now()
+        ids = [inconsistencia.id for inconsistencia in inconsistencias]
+        NotificacaoInconsistencia.objects.filter(id__in=ids).update(resolvida=True, resolvida_em=now)
+        TimelineEvento.objects.create(
+            item=item,
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            mensagem=f"Item {item.nome} encontrado novamente em auditoria da antena {antenna.nome}.",
+            usuario=item.responsavel,
+            metadados={
+                "evento": "item_reencontrado",
+                "tipo": NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+                "inconsistencia_ids": ids,
+                "antenna_id": antenna.id,
+                "local_id": antenna.local_id,
+                **payload,
+            },
+        )
+
+    def _mark_unknown_tag(self, *, tag_id: str, antenna: AntenaRFID, payload: dict) -> None:
+        inconsistencia = NotificacaoInconsistencia.objects.filter(
+            tipo=NotificacaoInconsistencia.TipoInconsistencia.TAG_DESCONHECIDA,
+            tag_id=tag_id,
+            local_fisico=antenna.local,
+            resolvida=False,
+        ).first()
+        metadados = {
+            "tag_id": tag_id,
+            "local_id": antenna.local_id,
+            "antenna_id": antenna.id,
+            "evento": "tag_desconhecida",
+            **payload,
+        }
+        if inconsistencia:
+            inconsistencia.metadados = metadados
+            inconsistencia.save(update_fields=["metadados"])
+            return
+
+        inconsistencia = NotificacaoInconsistencia.objects.create(
+            item=None,
+            tipo=NotificacaoInconsistencia.TipoInconsistencia.TAG_DESCONHECIDA,
+            tag_id=tag_id,
+            local_logico=None,
+            local_fisico=antenna.local,
+            metadados=metadados,
+        )
+        TimelineEvento.objects.create(
+            item=None,
+            tipo=TimelineEvento.TipoEvento.INCONSISTENCIA,
+            mensagem=f"Tag RFID desconhecida {tag_id} lida na antena {antenna.nome}.",
+            usuario=None,
+            metadados={
+                "inconsistencia_id": inconsistencia.id,
+                "tipo": inconsistencia.tipo,
+                **metadados,
+            },
         )
 
 

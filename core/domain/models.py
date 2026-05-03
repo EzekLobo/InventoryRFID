@@ -120,11 +120,24 @@ class TimelineEvento(models.Model):
 
 
 class NotificacaoInconsistencia(models.Model):
+    class TipoInconsistencia(models.TextChoices):
+        LOCAL_DIVERGENTE = "local_divergente", "Local divergente"
+        NAO_ENCONTRADO = "nao_encontrado", "Nao encontrado"
+        TAG_DESCONHECIDA = "tag_desconhecida", "Tag desconhecida"
+
     item = models.ForeignKey(
         ItemPatrimonial,
         on_delete=models.CASCADE,
         related_name="inconsistencias",
+        null=True,
+        blank=True,
     )
+    tipo = models.CharField(
+        max_length=30,
+        choices=TipoInconsistencia.choices,
+        default=TipoInconsistencia.LOCAL_DIVERGENTE,
+    )
+    tag_id = models.CharField(max_length=64, null=True, blank=True)
     local_logico = models.ForeignKey(
         Local,
         on_delete=models.PROTECT,
@@ -141,6 +154,7 @@ class NotificacaoInconsistencia(models.Model):
     )
     resolvida = models.BooleanField(default=False)
     resolvida_em = models.DateTimeField(null=True, blank=True)
+    metadados = models.JSONField(default=dict, blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
 
 

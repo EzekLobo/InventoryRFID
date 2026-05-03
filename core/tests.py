@@ -96,6 +96,155 @@ class PipelineAndApiTests(TestCase):
         )
         self.assertTrue(NotificacaoInconsistencia.objects.filter(item=self.item, resolvida=False).exists())
 
+    def test_audit_reading_marks_expected_items_not_found(self):
+        expected_item = ItemPatrimonial.objects.create(
+            tag_id="TAG-PROJ-001",
+            nome="Projetor Epson",
+            local_logico=self.lab4,
+            responsavel=self.user,
+        )
+        self.client.post(
+            "/api/eventos/rfid/",
+            {"event_type": "motion_detected", "antenna_id": self.destino_antenna.id},
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        response = self.client.post(
+            "/api/eventos/rfid/",
+            {
+                "event_type": "tags_read",
+                "antenna_id": self.destino_antenna.id,
+                "tags": [],
+                "payload": {"audit": True, "auditoria_job_id": 123},
+            },
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["audit"]["nao_encontrados"], 1)
+        self.assertTrue(
+            NotificacaoInconsistencia.objects.filter(
+                item=expected_item,
+                tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+                resolvida=False,
+            ).exists()
+        )
+        self.assertTrue(
+            TimelineEvento.objects.filter(
+                item=expected_item,
+                tipo=TimelineEvento.TipoEvento.INCONSISTENCIA,
+                metadados__tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+            ).exists()
+        )
+
+    def test_audit_reading_resolves_not_found_when_item_is_read_again(self):
+        expected_item = ItemPatrimonial.objects.create(
+            tag_id="TAG-PROJ-001",
+            nome="Projetor Epson",
+            local_logico=self.lab4,
+            responsavel=self.user,
+        )
+        NotificacaoInconsistencia.objects.create(
+            item=expected_item,
+            tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+            tag_id=expected_item.tag_id,
+            local_logico=self.lab4,
+            resolvida=False,
+        )
+        self.client.post(
+            "/api/eventos/rfid/",
+            {"event_type": "motion_detected", "antenna_id": self.destino_antenna.id},
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        response = self.client.post(
+            "/api/eventos/rfid/",
+            {
+                "event_type": "tags_read",
+                "antenna_id": self.destino_antenna.id,
+                "tags": [expected_item.tag_id],
+                "payload": {"audit": True},
+            },
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["audit"]["encontrados"], 1)
+        self.assertFalse(
+            NotificacaoInconsistencia.objects.filter(
+                item=expected_item,
+                tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+                resolvida=False,
+            ).exists()
+        )
+        self.assertTrue(
+            NotificacaoInconsistencia.objects.filter(
+                item=expected_item,
+                tipo=NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
+                resolvida=True,
+            ).exists()
+        )
+
+    def test_audit_reading_records_unknown_tags(self):
+        self.client.post(
+            "/api/eventos/rfid/",
+            {"event_type": "motion_detected", "antenna_id": self.destino_antenna.id},
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        response = self.client.post(
+            "/api/eventos/rfid/",
+            {
+                "event_type": "tags_read",
+                "antenna_id": self.destino_antenna.id,
+                "tags": ["TAG-DESCONHECIDA"],
+                "payload": {"audit": True},
+            },
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["audit"]["tags_desconhecidas"], 1)
+        self.assertIn("TAG-DESCONHECIDA", response.data["ignored_tags"])
+        self.assertTrue(
+            NotificacaoInconsistencia.objects.filter(
+                item__isnull=True,
+                tag_id="TAG-DESCONHECIDA",
+                tipo=NotificacaoInconsistencia.TipoInconsistencia.TAG_DESCONHECIDA,
+                resolvida=False,
+            ).exists()
+        )
+
+    def test_rfid_command_endpoint_reports_idle_or_start_reading(self):
+        idle = self.client.get(
+            f"/api/eventos/rfid/comando/?antenna_id={self.destino_antenna.id}",
+            **self._rfid_headers(),
+        )
+        self.assertEqual(idle.status_code, 200)
+        self.assertEqual(idle.data["command"], "idle")
+
+        self.client.post(
+            "/api/eventos/rfid/",
+            {"event_type": "motion_detected", "antenna_id": self.destino_antenna.id},
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        active = self.client.get(
+            f"/api/eventos/rfid/comando/?antenna_id={self.destino_antenna.id}",
+            **self._rfid_headers(),
+        )
+        self.assertEqual(active.status_code, 200)
+        self.assertEqual(active.data["command"], "start_reading")
+        self.assertTrue(active.data["active"])
+        self.assertGreaterEqual(active.data["active_for_seconds"], 0)
+
     def test_manual_deactivation_marks_item_inactive_and_registers_timeline(self):
         self.client.force_authenticate(user=self.user)
         response = self.client.post(

@@ -5,8 +5,8 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from core.domain.models import AntenaRFID, LeituraRFID
-from core.domain.services import AuditoriaManager, SyncManager
+from core.domain.models import AntenaRFID, ItemPatrimonial, LeituraRFID
+from core.domain.services import AuditoriaManager, AuditoriaReconciliacaoManager, SyncManager
 
 
 @dataclass
@@ -95,6 +95,7 @@ class RFIDEventProcessor:
         self.sync_manager = SyncManager()
         self.classifier = TopologyClassifier(sync_manager=self.sync_manager)
         self.auditoria_manager = AuditoriaManager()
+        self.auditoria_reconciliacao_manager = AuditoriaReconciliacaoManager()
 
     def process_ping(self, *, antenna: AntenaRFID) -> dict:
         now = timezone.now()
@@ -125,8 +126,25 @@ class RFIDEventProcessor:
             antenna.ativacao_expira_em and antenna.ativacao_expira_em <= timezone.now()
         ):
             return {"status": "ignored", "reason": "antenna_window_closed", "event": "tags_read"}
-        result = self.classifier.classify_readings(antenna=antenna, tags=tags, payload=payload)
-        return {"status": "ok", "event": "tags_read", "processed": result}
+
+        normalized_tags = normalize_tags(tags)
+        valid_tags = list(
+            ItemPatrimonial.objects.filter(tag_id__in=normalized_tags).values_list("tag_id", flat=True)
+        )
+        result = self.classifier.classify_readings(antenna=antenna, tags=valid_tags, payload=payload)
+        auditoria = self.auditoria_reconciliacao_manager.reconcile_destination_reading(
+            antenna=antenna,
+            raw_tags=normalized_tags,
+            valid_tags=valid_tags,
+            payload=payload,
+        )
+        return {
+            "status": "ok",
+            "event": "tags_read",
+            "processed": result,
+            "audit": auditoria,
+            "ignored_tags": sorted(set(normalized_tags) - set(valid_tags)),
+        }
 
     def deactivate_expired_antennas(self) -> int:
         now = timezone.now()
@@ -134,3 +152,14 @@ class RFIDEventProcessor:
         updated = expired.update(ativa=False)
         self.auditoria_manager.finalize_expired_jobs()
         return updated
+
+
+def normalize_tags(tags: list[str]) -> list[str]:
+    normalized = []
+    seen = set()
+    for tag in tags:
+        tag_id = str(tag).strip()
+        if tag_id and tag_id not in seen:
+            normalized.append(tag_id)
+            seen.add(tag_id)
+    return normalized

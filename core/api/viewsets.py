@@ -48,7 +48,9 @@ class RFIDEventSerializer(serializers.Serializer):
     payload = serializers.JSONField(required=False)
 
     def validate(self, attrs):
-        if attrs["event_type"] == "tags_read" and not attrs.get("tags"):
+        payload = attrs.get("payload") or {}
+        is_audit = bool(payload.get("audit") or payload.get("auditoria_job_id"))
+        if attrs["event_type"] == "tags_read" and not attrs.get("tags") and not is_audit:
             raise serializers.ValidationError("tags sao obrigatorias para tags_read.")
         return attrs
 
@@ -65,9 +67,12 @@ class InconsistenciaListSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "item_id",
+            "tipo",
+            "tag_id",
             "local_logico_id",
             "local_fisico_id",
             "resolvida",
+            "metadados",
             "criado_em",
             "resolvida_em",
         ]
@@ -167,10 +172,13 @@ class RFIDEventosViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
     event_processor = RFIDEventProcessor()
 
-    def create(self, request):
+    def _validate_ingest_token(self, request):
         expected_token = getattr(settings, "RFID_INGEST_TOKEN", "")
         provided_token = request.headers.get("X-RFID-Token", "")
-        if not expected_token or provided_token != expected_token:
+        return expected_token and provided_token == expected_token
+
+    def create(self, request):
+        if not self._validate_ingest_token(request):
             return Response(
                 {"status": "erro", "detail": "Token de ingestao invalido."},
                 status=status.HTTP_401_UNAUTHORIZED,
@@ -192,20 +200,60 @@ class RFIDEventosViewSet(viewsets.ViewSet):
         elif event_type == "motion_detected":
             result = self.event_processor.process_motion_detected(antenna=antenna)
         else:
-            valid_tags = list(
-                ItemPatrimonial.objects.filter(tag_id__in=data["tags"]).values_list("tag_id", flat=True)
-            )
-            if not valid_tags:
-                return Response(
-                    {"status": "erro", "detail": "Nenhuma tag valida enviada."},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
             result = self.event_processor.process_tags_read(
                 antenna=antenna,
-                tags=valid_tags,
+                tags=data.get("tags", []),
                 payload=data.get("payload"),
             )
         return Response(result, status=status.HTTP_201_CREATED)
+
+    @action(detail=False, methods=["get"], url_path="comando")
+    def comando(self, request):
+        if not self._validate_ingest_token(request):
+            return Response(
+                {"status": "erro", "detail": "Token de ingestao invalido."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
+        antenna_id = request.query_params.get("antenna_id")
+        if not antenna_id:
+            return Response(
+                {"status": "erro", "detail": "Informe antenna_id."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        antenna = AntenaRFID.objects.filter(id=antenna_id).first()
+        if antenna is None:
+            return Response(
+                {"status": "erro", "detail": "Antena nao encontrada."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        self.event_processor.process_ping(antenna=antenna)
+        self.event_processor.deactivate_expired_antennas()
+        antenna.refresh_from_db(fields=["ativa", "ativacao_expira_em", "hardware_id"])
+        now = timezone.now()
+        active = bool(
+            antenna.ativa
+            and antenna.ativacao_expira_em
+            and antenna.ativacao_expira_em > now
+        )
+        active_for_seconds = 0
+        if active:
+            active_for_seconds = max(0, int((antenna.ativacao_expira_em - now).total_seconds()))
+
+        return Response(
+            {
+                "status": "ok",
+                "antenna_id": antenna.id,
+                "hardware_id": antenna.hardware_id,
+                "command": "start_reading" if active else "idle",
+                "active": active,
+                "active_for_seconds": active_for_seconds,
+                "expires_at": antenna.ativacao_expira_em if active else None,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 class TimelineViewSet(viewsets.ReadOnlyModelViewSet):
