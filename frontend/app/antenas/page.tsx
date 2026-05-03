@@ -84,7 +84,15 @@ export default function AntenasPage() {
 
         {!loading && antenas.length > 0 ? (
           <div className="table-wrap">
-            <table className="data-table">
+            <table className="data-table readers-table">
+              <colgroup>
+                <col style={{ width: "18%" }} />
+                <col style={{ width: "24%" }} />
+                <col style={{ width: "14%" }} />
+                <col style={{ width: "16%" }} />
+                <col style={{ width: "12%" }} />
+                <col style={{ width: "16%" }} />
+              </colgroup>
               <thead>
                 <tr>
                   <th>Leitor</th>
@@ -112,10 +120,10 @@ export default function AntenasPage() {
                       {antena.ativa ? <span className="badge">Ativa</span> : null}
                     </td>
                     <td>{antena.ultimo_ping ? new Date(antena.ultimo_ping).toLocaleString("pt-BR") : "-"}</td>
-                    <td>
-                      <div className="form-row">
+                    <td className="actions-cell">
+                      <div className="action-buttons">
                         <button
-                          className="button"
+                          className="button action-button"
                           disabled={!antena.online || busyId === antena.id}
                           title={antena.online ? "Abrir janela de sincronizacao" : "Leitor offline"}
                           type="button"
@@ -125,7 +133,7 @@ export default function AntenasPage() {
                           Sincronizar
                         </button>
                         <button
-                          className="button yellow"
+                          className="button yellow action-button"
                           disabled={!antena.online || busyId === antena.id}
                           title={antena.online ? "Abrir auditoria do local" : "Leitor offline"}
                           type="button"

@@ -7,6 +7,17 @@ import type { Antena, AuditoriaJob, AuditoriaProcessada, TagsReadResponse } from
 import { ErrorState, LoadingState } from "@/components/ui/DataState";
 import { StatCard } from "@/components/ui/StatCard";
 
+type AuditHistoryRow = {
+  id: string;
+  data: string;
+  local: string;
+  leitor: string;
+  status: string;
+  encontrados: string;
+  naoEncontrados: string;
+  desconhecidas: string;
+};
+
 function parseTags(value: string) {
   return value
     .split(/[\n,; ]+/)
@@ -53,6 +64,39 @@ export default function AuditoriaPage() {
     () => antenas.find((antena) => antena.id === Number(antennaId)),
     [antennaId, antenas]
   );
+
+  const auditRows = useMemo<AuditHistoryRow[]>(() => {
+    const processedJobIds = new Set(
+      processedAudits
+        .map((audit) => Number(audit.metadados.auditoria_job_id))
+        .filter((id) => Number.isFinite(id))
+    );
+    const processedRows = processedAudits.map((audit) => ({
+      id: `processed-${audit.id}`,
+      data: audit.criado_em,
+      local: String(audit.metadados.local_nome || "-"),
+      leitor: String(audit.metadados.antenna_nome || "-"),
+      status: audit.metadados.evento === "auditoria_iniciada" ? "Iniciada" : "Processada",
+      encontrados: String(audit.metadados.encontrados ?? "-"),
+      naoEncontrados: String(audit.metadados.nao_encontrados ?? "-"),
+      desconhecidas: String(audit.metadados.tags_desconhecidas ?? "-")
+    }));
+    const jobRows = jobs
+      .filter((job) => !processedJobIds.has(job.id))
+      .map((job) => ({
+        id: `job-${job.id}`,
+        data: job.iniciado_em,
+        local: uniqueValues(job.leitores.map((leitor) => leitor.local_nome)).join(", ") || "-",
+        leitor: `${job.leitores.length} leitor(es)`,
+        status: job.status,
+        encontrados: "-",
+        naoEncontrados: "-",
+        desconhecidas: "-"
+      }));
+    return [...processedRows, ...jobRows].sort(
+      (left, right) => new Date(right.data).getTime() - new Date(left.data).getTime()
+    );
+  }, [jobs, processedAudits]);
 
   async function startAudit() {
     if (!antennaId) return;
@@ -190,7 +234,7 @@ export default function AuditoriaPage() {
       ) : null}
 
       <article className="panel" style={{ marginTop: 24 }}>
-        <h2>Auditorias feitas</h2>
+        <h2>Auditorias</h2>
         <div className="table-wrap">
           <table className="data-table">
             <thead>
@@ -198,60 +242,29 @@ export default function AuditoriaPage() {
                 <th>Data</th>
                 <th>Local</th>
                 <th>Leitor</th>
+                <th>Status</th>
                 <th>Encontrados</th>
                 <th>Nao encontrados</th>
                 <th>Desconhecidas</th>
               </tr>
             </thead>
             <tbody>
-              {processedAudits.map((audit) => (
+              {auditRows.map((audit) => (
                 <tr key={audit.id}>
-                  <td>{new Date(audit.criado_em).toLocaleString("pt-BR")}</td>
-                  <td>{String(audit.metadados.local_nome || "-")}</td>
-                  <td>{String(audit.metadados.antenna_nome || "-")}</td>
-                  <td>{String(audit.metadados.encontrados ?? "-")}</td>
-                  <td>{String(audit.metadados.nao_encontrados ?? "-")}</td>
-                  <td>{String(audit.metadados.tags_desconhecidas ?? "-")}</td>
-                </tr>
-              ))}
-              {processedAudits.length === 0 ? (
-                <tr>
-                  <td colSpan={6}>Nenhuma auditoria processada.</td>
-                </tr>
-              ) : null}
-            </tbody>
-          </table>
-        </div>
-      </article>
-
-      <article className="panel" style={{ marginTop: 18 }}>
-        <h2>Janelas de auditoria</h2>
-        <div className="table-wrap">
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Status</th>
-                <th>Inicio</th>
-                <th>Fim previsto</th>
-                <th>Leitores</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs.map((job) => (
-                <tr key={job.id}>
-                  <td>{job.id}</td>
+                  <td>{new Date(audit.data).toLocaleString("pt-BR")}</td>
+                  <td>{audit.local}</td>
+                  <td>{audit.leitor}</td>
                   <td>
-                    <span className="badge">{job.status}</span>
+                    <span className="badge">{audit.status}</span>
                   </td>
-                  <td>{new Date(job.iniciado_em).toLocaleString("pt-BR")}</td>
-                  <td>{new Date(job.finaliza_em).toLocaleString("pt-BR")}</td>
-                  <td>{job.leitores.map((leitor) => `${leitor.antena_nome} (${leitor.status})`).join(", ")}</td>
+                  <td>{audit.encontrados}</td>
+                  <td>{audit.naoEncontrados}</td>
+                  <td>{audit.desconhecidas}</td>
                 </tr>
               ))}
-              {jobs.length === 0 ? (
+              {auditRows.length === 0 ? (
                 <tr>
-                  <td colSpan={5}>Nenhuma janela de auditoria registrada.</td>
+                  <td colSpan={7}>Nenhuma auditoria registrada.</td>
                 </tr>
               ) : null}
             </tbody>
@@ -260,4 +273,8 @@ export default function AuditoriaPage() {
       </article>
     </section>
   );
+}
+
+function uniqueValues(values: string[]) {
+  return Array.from(new Set(values.filter(Boolean)));
 }

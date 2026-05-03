@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.conf import settings
+from django.db.models import Q
 from django.utils import timezone
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
@@ -40,6 +41,10 @@ class BaixaManualSerializer(serializers.Serializer):
     motivo = serializers.CharField(max_length=255, default="baixa patrimonial")
 
 
+class ResolucaoInconsistenciaSerializer(serializers.Serializer):
+    motivo = serializers.CharField(max_length=255, default="resolucao manual")
+
+
 class AcionamentoAntenaSerializer(serializers.Serializer):
     duracao_segundos = serializers.IntegerField(required=False, min_value=1, default=5)
 
@@ -75,15 +80,22 @@ class LocalSerializer(serializers.ModelSerializer):
 
 
 class InconsistenciaListSerializer(serializers.ModelSerializer):
+    item_nome = serializers.CharField(source="item.nome", read_only=True)
+    local_logico_nome = serializers.CharField(source="local_logico.nome", read_only=True)
+    local_fisico_nome = serializers.CharField(source="local_fisico.nome", read_only=True)
+
     class Meta:
         model = NotificacaoInconsistencia
         fields = [
             "id",
             "item_id",
+            "item_nome",
             "tipo",
             "tag_id",
             "local_logico_id",
+            "local_logico_nome",
             "local_fisico_id",
+            "local_fisico_nome",
             "resolvida",
             "metadados",
             "criado_em",
@@ -245,6 +257,22 @@ class AntenaRFIDViewSet(viewsets.ModelViewSet):
         antenna.ultimo_acionamento = now
         antenna.ativacao_expira_em = now + timedelta(seconds=duracao)
         antenna.save(update_fields=["ativa", "ultimo_acionamento", "ativacao_expira_em"])
+        if audit:
+            TimelineEvento.objects.create(
+                item=None,
+                tipo=TimelineEvento.TipoEvento.SISTEMA,
+                mensagem=f"Auditoria iniciada em {antenna.local.nome} pela antena {antenna.nome}.",
+                usuario=request.user,
+                metadados={
+                    "evento": "auditoria_iniciada",
+                    "antenna_id": antenna.id,
+                    "antenna_nome": antenna.nome,
+                    "local_id": antenna.local_id,
+                    "local_nome": antenna.local.nome,
+                    "duracao_segundos": duracao,
+                    "finaliza_em": antenna.ativacao_expira_em.isoformat(),
+                },
+            )
         return Response(
             {
                 "status": "auditoria_iniciada" if audit else "sincronizacao_iniciada",
@@ -471,9 +499,14 @@ class TimelineViewSet(viewsets.ReadOnlyModelViewSet):
 class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = InconsistenciaListSerializer
     permission_classes = [IsAuthenticated]
+    sync_manager = SyncManager()
 
     def get_queryset(self):
-        queryset = NotificacaoInconsistencia.objects.select_related("item").order_by("-criado_em")
+        queryset = NotificacaoInconsistencia.objects.select_related(
+            "item",
+            "local_logico",
+            "local_fisico",
+        ).order_by("-criado_em")
         item_id = self.request.query_params.get("item_id")
         if item_id:
             queryset = queryset.filter(item_id=item_id)
@@ -486,6 +519,30 @@ class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
         if tipo:
             queryset = queryset.filter(tipo=tipo)
         return queryset
+
+    @action(detail=True, methods=["post"], url_path="resolver")
+    def resolver(self, request, pk=None):
+        serializer = ResolucaoInconsistenciaSerializer(data=request.data or {})
+        serializer.is_valid(raise_exception=True)
+        inconsistencia = self.get_queryset().filter(id=pk).first()
+        if inconsistencia is None:
+            return Response(
+                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        inconsistencia = self.sync_manager.resolve_inconsistency_manually(
+            inconsistencia_id=inconsistencia.id,
+            usuario=request.user,
+            motivo=serializer.validated_data["motivo"],
+        )
+        return Response(
+            {
+                "status": "resolvida",
+                "inconsistencia": InconsistenciaListSerializer(inconsistencia).data,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 class AuditoriaViewSet(viewsets.ViewSet):
@@ -506,8 +563,8 @@ class AuditoriaViewSet(viewsets.ViewSet):
     @action(detail=False, methods=["get"], url_path="processadas")
     def processadas(self, request):
         eventos = TimelineEvento.objects.filter(
+            Q(metadados__evento="auditoria_processada") | Q(metadados__evento="auditoria_iniciada"),
             tipo=TimelineEvento.TipoEvento.SISTEMA,
-            metadados__evento="auditoria_processada",
         ).order_by("-criado_em")[:100]
         return Response(AuditoriaTimelineSerializer(eventos, many=True).data, status=status.HTTP_200_OK)
 

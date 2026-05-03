@@ -217,20 +217,18 @@ textarea {
 
 .brand-mark {
   align-items: center;
-  background: linear-gradient(135deg, rgba(87, 244, 208, 0.18), rgba(106, 168, 255, 0.12));
-  border: 1px solid var(--line-strong);
-  color: var(--cyan);
   display: inline-flex;
-  height: 46px;
+  flex: 0 0 auto;
+  height: 52px;
   justify-content: center;
-  width: 46px;
+  width: 52px;
 }
 
 .brand-logo {
   display: block;
-  height: 36px;
+  height: 46px;
   object-fit: contain;
-  width: 36px;
+  width: 46px;
 }
 
 .nav {
@@ -331,8 +329,8 @@ textarea {
   display: block;
   filter: drop-shadow(0 28px 48px rgba(0, 0, 0, 0.34));
   height: auto;
-  max-height: 430px;
-  max-width: min(390px, 100%);
+  max-height: 460px;
+  max-width: min(430px, 100%);
   object-fit: contain;
   width: 100%;
 }
@@ -681,12 +679,14 @@ textarea {
 }
 
 .table-wrap {
-  overflow-x: auto;
+  max-width: 100%;
+  overflow-x: visible;
 }
 
 .data-table {
   border-collapse: collapse;
-  min-width: 760px;
+  min-width: 0;
+  table-layout: fixed;
   width: 100%;
 }
 
@@ -696,6 +696,9 @@ textarea {
   padding: 13px 12px;
   text-align: left;
   vertical-align: top;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 .data-table th {
@@ -710,6 +713,36 @@ textarea {
 
 .data-table tr:hover td {
   background: rgba(87, 244, 208, 0.045);
+}
+
+.readers-table td {
+  vertical-align: middle;
+}
+
+.readers-table th {
+  vertical-align: middle;
+}
+
+.actions-cell {
+  min-width: 0;
+}
+
+.action-buttons {
+  align-items: stretch;
+  display: grid;
+  gap: 8px;
+  justify-content: start;
+  width: min(150px, 100%);
+}
+
+.action-button {
+  height: 46px;
+  justify-content: center;
+  min-height: 46px;
+  overflow-wrap: normal;
+  padding: 0 12px;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .badge {

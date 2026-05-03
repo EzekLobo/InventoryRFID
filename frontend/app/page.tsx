@@ -101,6 +101,11 @@ export default function HomePage() {
                   </h3>
                   <div className="table-wrap">
                     <table className="data-table">
+                      <colgroup>
+                        <col style={{ width: "34%" }} />
+                        <col style={{ width: "46%" }} />
+                        <col style={{ width: "20%" }} />
+                      </colgroup>
                       <thead>
                         <tr>
                           <th>Nome</th>
@@ -131,6 +136,11 @@ export default function HomePage() {
                   </h3>
                   <div className="table-wrap">
                     <table className="data-table">
+                      <colgroup>
+                        <col style={{ width: "34%" }} />
+                        <col style={{ width: "32%" }} />
+                        <col style={{ width: "34%" }} />
+                      </colgroup>
                       <thead>
                         <tr>
                           <th>Tipo</th>
@@ -158,6 +168,11 @@ export default function HomePage() {
                 </h3>
                 <div className="table-wrap">
                   <table className="data-table">
+                    <colgroup>
+                      <col style={{ width: "18%" }} />
+                      <col style={{ width: "58%" }} />
+                      <col style={{ width: "24%" }} />
+                    </colgroup>
                     <thead>
                       <tr>
                         <th>Evento</th>
