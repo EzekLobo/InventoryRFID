@@ -1,7 +1,7 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
-import { Filter, RefreshCw, Search } from "lucide-react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { CalendarDays, Filter, RefreshCw, Search } from "lucide-react";
 import { api } from "@/lib/api";
 import type { Antena, Local, TimelineEvento } from "@/lib/types";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ui/DataState";
@@ -46,13 +46,20 @@ export default function LogPage() {
   async function load(nextFilters = filters) {
     setLoading(true);
     setError("");
+    const validationError = validateDateFilters(nextFilters);
+    if (validationError) {
+      setData([]);
+      setError(validationError);
+      setLoading(false);
+      return;
+    }
     try {
       const [timelineData, locaisData, antenasData] = await Promise.all([
         api.listTimeline({
           search: nextFilters.search,
           tipo: nextFilters.tipo,
-          data_inicio: nextFilters.data_inicio,
-          data_fim: nextFilters.data_fim,
+          data_inicio: toApiDate(nextFilters.data_inicio),
+          data_fim: toApiDate(nextFilters.data_fim),
           local_id: nextFilters.local_id ? Number(nextFilters.local_id) : undefined,
           antenna_id: nextFilters.antenna_id ? Number(nextFilters.antenna_id) : undefined,
           me: nextFilters.me || undefined
@@ -131,12 +138,18 @@ export default function LogPage() {
 
           <label className="field">
             <span>Inicio</span>
-            <input className="input" type="date" value={filters.data_inicio} onChange={(event) => setFilters({ ...filters, data_inicio: event.target.value })} />
+            <DateField
+              value={filters.data_inicio}
+              onChange={(data_inicio) => setFilters({ ...filters, data_inicio })}
+            />
           </label>
 
           <label className="field">
             <span>Fim</span>
-            <input className="input" type="date" value={filters.data_fim} onChange={(event) => setFilters({ ...filters, data_fim: event.target.value })} />
+            <DateField
+              value={filters.data_fim}
+              onChange={(data_fim) => setFilters({ ...filters, data_fim })}
+            />
           </label>
 
           <label className="field">
@@ -169,11 +182,11 @@ export default function LogPage() {
           </label>
 
           <div className="log-actions">
-            <button className="button" type="submit">
+            <button className="button log-action-button" type="submit">
               <Search size={17} />
               Filtrar
             </button>
-            <button className="button ghost" type="button" onClick={resetFilters}>
+            <button className="button ghost log-action-button" type="button" onClick={resetFilters}>
               <Filter size={17} />
               Limpar
             </button>
@@ -221,6 +234,98 @@ export default function LogPage() {
       </article>
     </section>
   );
+}
+
+function DateField({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const pickerRef = useRef<HTMLInputElement>(null);
+
+  function openPicker() {
+    const picker = pickerRef.current;
+    if (!picker) return;
+    if (typeof picker.showPicker === "function") {
+      picker.showPicker();
+    } else {
+      picker.click();
+    }
+  }
+
+  return (
+    <div className="date-field">
+      <input
+        className="input"
+        inputMode="numeric"
+        maxLength={10}
+        placeholder="dd/mm/aaaa"
+        value={value}
+        onChange={(event) => onChange(formatDateInput(event.target.value))}
+      />
+      <button className="date-picker-button" type="button" onClick={openPicker} title="Escolher data">
+        <CalendarDays size={18} />
+      </button>
+      <input
+        ref={pickerRef}
+        aria-hidden="true"
+        className="native-date-picker"
+        max="2100-12-31"
+        min="1900-01-01"
+        tabIndex={-1}
+        type="date"
+        value={toApiDate(value)}
+        onChange={(event) => onChange(fromApiDate(event.target.value))}
+      />
+    </div>
+  );
+}
+
+function validateDateFilters(filters: LogFilters) {
+  const start = parseValidDate(filters.data_inicio);
+  const end = parseValidDate(filters.data_fim);
+  if (filters.data_inicio && !start) return "Informe uma data inicial valida.";
+  if (filters.data_fim && !end) return "Informe uma data final valida.";
+  if (start && end && start.getTime() > end.getTime()) {
+    return "A data inicial nao pode ser maior que a data final.";
+  }
+  return "";
+}
+
+function parseValidDate(value: string) {
+  if (!value) return null;
+  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
+  if (!match) return null;
+
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  if (year < 1900 || year > 2100) return null;
+
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return null;
+  }
+  return date;
+}
+
+function formatDateInput(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 8);
+  const day = digits.slice(0, 2);
+  const month = digits.slice(2, 4);
+  const year = digits.slice(4, 8);
+  return [day, month, year].filter(Boolean).join("/");
+}
+
+function toApiDate(value: string) {
+  const date = parseValidDate(value);
+  if (!date) return "";
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function fromApiDate(value: string) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return "";
+  return `${match[3]}/${match[2]}/${match[1]}`;
 }
 
 function metadataSummary(metadata: Record<string, unknown>) {

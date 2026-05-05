@@ -84,8 +84,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main>{children}</main>
 
       <footer className="footer">
-        <Cpu size={18} />
-        <span>Controle operacional dos leitores RFID, auditorias e divergencias patrimoniais.</span>
+        <div className="footer-main">
+          <Cpu size={18} />
+          <span>Controle operacional dos leitores RFID, auditorias e divergencias patrimoniais.</span>
+        </div>
+        <small>&copy; 2026 InventoryRFID &bull; By Ezequiel Lobo</small>
       </footer>
     </div>
   );
