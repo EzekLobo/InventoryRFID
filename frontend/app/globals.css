@@ -910,6 +910,32 @@ textarea {
   width: 100%;
 }
 
+.inconsistencies-table th,
+.inconsistencies-table td {
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.resolution-panel {
+  margin-top: 18px;
+}
+
+.resolution-context {
+  color: var(--muted);
+  flex-basis: 100%;
+  font-size: 14px;
+  margin: -8px 0 0;
+}
+
+.textarea.compact {
+  min-height: 86px;
+}
+
+.muted-text {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .badge {
   background: rgba(106, 168, 255, 0.13);
   border: 1px solid rgba(106, 168, 255, 0.22);

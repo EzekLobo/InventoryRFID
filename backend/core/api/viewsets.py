@@ -45,6 +45,18 @@ class ResolucaoInconsistenciaSerializer(serializers.Serializer):
     motivo = serializers.CharField(max_length=255, default="resolucao manual")
 
 
+class CadastroTagDesconhecidaSerializer(serializers.Serializer):
+    nome = serializers.CharField(max_length=160)
+    local_logico_id = serializers.IntegerField(required=False, min_value=1, allow_null=True)
+    local_fisico_id = serializers.IntegerField(required=False, min_value=1, allow_null=True)
+    motivo = serializers.CharField(max_length=255, default="tag cadastrada a partir de divergencia")
+
+
+class AssociacaoTagDesconhecidaSerializer(serializers.Serializer):
+    item_id = serializers.IntegerField(min_value=1)
+    motivo = serializers.CharField(max_length=255, default="tag associada a item existente")
+
+
 class AcionamentoAntenaSerializer(serializers.Serializer):
     duracao_segundos = serializers.IntegerField(required=False, min_value=1, default=5)
 
@@ -539,6 +551,115 @@ class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(
             {
                 "status": "resolvida",
+                "inconsistencia": InconsistenciaListSerializer(inconsistencia).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=True, methods=["post"], url_path="confirmar-local")
+    def confirmar_local(self, request, pk=None):
+        serializer = ResolucaoInconsistenciaSerializer(data=request.data or {})
+        serializer.is_valid(raise_exception=True)
+        inconsistencia = self.get_queryset().filter(id=pk).first()
+        if inconsistencia is None:
+            return Response(
+                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        try:
+            inconsistencia = self.sync_manager.confirm_logical_location_from_inconsistency(
+                inconsistencia_id=inconsistencia.id,
+                usuario=request.user,
+                motivo=serializer.validated_data["motivo"],
+            )
+        except ValueError as exc:
+            return Response({"status": "erro", "detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(
+            {
+                "status": "local_logico_atualizado",
+                "inconsistencia": InconsistenciaListSerializer(inconsistencia).data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    @action(detail=True, methods=["post"], url_path="cadastrar-tag")
+    def cadastrar_tag(self, request, pk=None):
+        serializer = CadastroTagDesconhecidaSerializer(data=request.data or {})
+        serializer.is_valid(raise_exception=True)
+        inconsistencia = self.get_queryset().filter(id=pk).first()
+        if inconsistencia is None:
+            return Response(
+                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        data = serializer.validated_data
+        if inconsistencia.tag_id and ItemPatrimonial.objects.filter(tag_id=inconsistencia.tag_id).exists():
+            return Response(
+                {"status": "erro", "detail": "Ja existe item cadastrado com esta tag."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            inconsistencia, item = self.sync_manager.register_unknown_tag_as_item(
+                inconsistencia_id=inconsistencia.id,
+                nome=data["nome"],
+                local_logico_id=data.get("local_logico_id"),
+                local_fisico_id=data.get("local_fisico_id"),
+                responsavel=request.user,
+                usuario=request.user,
+                motivo=data["motivo"],
+            )
+        except ValueError as exc:
+            return Response({"status": "erro", "detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(
+            {
+                "status": "tag_cadastrada",
+                "item": ItemPatrimonialListSerializer(item).data,
+                "inconsistencia": InconsistenciaListSerializer(inconsistencia).data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+    @action(detail=True, methods=["post"], url_path="associar-tag")
+    def associar_tag(self, request, pk=None):
+        serializer = AssociacaoTagDesconhecidaSerializer(data=request.data or {})
+        serializer.is_valid(raise_exception=True)
+        inconsistencia = self.get_queryset().filter(id=pk).first()
+        if inconsistencia is None:
+            return Response(
+                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        if inconsistencia.tag_id and ItemPatrimonial.objects.filter(tag_id=inconsistencia.tag_id).exists():
+            return Response(
+                {"status": "erro", "detail": "Ja existe item cadastrado com esta tag."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        data = serializer.validated_data
+        try:
+            inconsistencia, item = self.sync_manager.associate_unknown_tag_to_item(
+                inconsistencia_id=inconsistencia.id,
+                item_id=data["item_id"],
+                usuario=request.user,
+                motivo=data["motivo"],
+            )
+        except ItemPatrimonial.DoesNotExist:
+            return Response(
+                {"status": "erro", "detail": "Item patrimonial nao encontrado."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        except ValueError as exc:
+            return Response({"status": "erro", "detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(
+            {
+                "status": "tag_associada",
+                "item": ItemPatrimonialListSerializer(item).data,
                 "inconsistencia": InconsistenciaListSerializer(inconsistencia).data,
             },
             status=status.HTTP_200_OK,

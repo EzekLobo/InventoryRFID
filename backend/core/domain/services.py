@@ -261,6 +261,188 @@ class SyncManager:
         )
         return inconsistencia
 
+    @transaction.atomic
+    def confirm_logical_location_from_inconsistency(
+        self,
+        *,
+        inconsistencia_id: int,
+        usuario=None,
+        motivo: str = "local confirmado pela divergencia",
+    ) -> NotificacaoInconsistencia:
+        inconsistencia = NotificacaoInconsistencia.objects.select_for_update().select_related(
+            "item",
+            "local_logico",
+            "local_fisico",
+        ).get(id=inconsistencia_id)
+        if inconsistencia.resolvida:
+            return inconsistencia
+        if inconsistencia.tipo != NotificacaoInconsistencia.TipoInconsistencia.LOCAL_DIVERGENTE:
+            raise ValueError("Apenas divergencias de local podem atualizar o local logico.")
+        if not inconsistencia.item:
+            raise ValueError("Divergencia sem item patrimonial vinculado.")
+        if not inconsistencia.local_fisico:
+            raise ValueError("Divergencia sem local fisico para confirmar.")
+
+        item = ItemPatrimonial.objects.select_for_update().select_related("local_logico").get(id=inconsistencia.item_id)
+        local_anterior = item.local_logico
+        item.local_logico = inconsistencia.local_fisico
+        item.save(update_fields=["local_logico", "atualizado_em"])
+
+        inconsistencia.local_logico = item.local_logico
+        inconsistencia.resolvida = True
+        inconsistencia.resolvida_em = timezone.now()
+        inconsistencia.metadados = {
+            **(inconsistencia.metadados or {}),
+            "resolvida_por": usuario_label(usuario),
+            "resolucao": "confirmar_local_logico",
+            "motivo_resolucao": motivo,
+            "local_logico_anterior_id": previous_local_id(local_anterior),
+            "local_logico_novo_id": item.local_logico_id,
+        }
+        inconsistencia.save(update_fields=["local_logico", "resolvida", "resolvida_em", "metadados"])
+
+        TimelineEvento.objects.create(
+            item=item,
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            mensagem=(
+                f"Local logico de {item.nome} atualizado de "
+                f"{local_anterior.nome if local_anterior else 'sem local'} para "
+                f"{item.local_logico.nome if item.local_logico else 'sem local'} "
+                f"por {usuario_label(usuario)}."
+            ),
+            usuario=usuario,
+            metadados={
+                "evento": "local_logico_confirmado",
+                "inconsistencia_id": inconsistencia.id,
+                "tag_id": item.tag_id,
+                "local_logico_anterior_id": previous_local_id(local_anterior),
+                "local_logico_novo_id": item.local_logico_id,
+                "motivo": motivo,
+            },
+        )
+        return inconsistencia
+
+    @transaction.atomic
+    def register_unknown_tag_as_item(
+        self,
+        *,
+        inconsistencia_id: int,
+        nome: str,
+        local_logico_id: int | None = None,
+        local_fisico_id: int | None = None,
+        responsavel=None,
+        usuario=None,
+        motivo: str = "tag cadastrada a partir de divergencia",
+    ) -> tuple[NotificacaoInconsistencia, ItemPatrimonial]:
+        inconsistencia = NotificacaoInconsistencia.objects.select_for_update().select_related("local_fisico").get(
+            id=inconsistencia_id,
+        )
+        if inconsistencia.resolvida:
+            raise ValueError("Divergencia ja resolvida.")
+        if inconsistencia.tipo != NotificacaoInconsistencia.TipoInconsistencia.TAG_DESCONHECIDA:
+            raise ValueError("Apenas tags desconhecidas podem ser cadastradas por esta acao.")
+        if not inconsistencia.tag_id:
+            raise ValueError("Divergencia sem tag para cadastrar.")
+
+        item = ItemPatrimonial.objects.create(
+            tag_id=inconsistencia.tag_id,
+            nome=nome,
+            local_logico_id=local_logico_id or previous_local_id(inconsistencia.local_fisico),
+            local_fisico_id=local_fisico_id or previous_local_id(inconsistencia.local_fisico),
+            responsavel=responsavel,
+            ativo=True,
+        )
+        inconsistencia.item = item
+        inconsistencia.local_logico = item.local_logico
+        inconsistencia.local_fisico = item.local_fisico
+        inconsistencia.resolvida = True
+        inconsistencia.resolvida_em = timezone.now()
+        inconsistencia.metadados = {
+            **(inconsistencia.metadados or {}),
+            "resolvida_por": usuario_label(usuario),
+            "resolucao": "tag_cadastrada",
+            "motivo_resolucao": motivo,
+            "item_id": item.id,
+        }
+        inconsistencia.save(
+            update_fields=["item", "local_logico", "local_fisico", "resolvida", "resolvida_em", "metadados"]
+        )
+        TimelineEvento.objects.create(
+            item=item,
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            mensagem=f"Tag desconhecida {item.tag_id} cadastrada como item {item.nome} por {usuario_label(usuario)}.",
+            usuario=usuario,
+            metadados={
+                "evento": "tag_desconhecida_cadastrada",
+                "inconsistencia_id": inconsistencia.id,
+                "item_id": item.id,
+                "tag_id": item.tag_id,
+                "motivo": motivo,
+            },
+        )
+        return inconsistencia, item
+
+    @transaction.atomic
+    def associate_unknown_tag_to_item(
+        self,
+        *,
+        inconsistencia_id: int,
+        item_id: int,
+        usuario=None,
+        motivo: str = "tag associada a item existente",
+    ) -> tuple[NotificacaoInconsistencia, ItemPatrimonial]:
+        inconsistencia = NotificacaoInconsistencia.objects.select_for_update().select_related("local_fisico").get(
+            id=inconsistencia_id,
+        )
+        if inconsistencia.resolvida:
+            raise ValueError("Divergencia ja resolvida.")
+        if inconsistencia.tipo != NotificacaoInconsistencia.TipoInconsistencia.TAG_DESCONHECIDA:
+            raise ValueError("Apenas tags desconhecidas podem ser associadas por esta acao.")
+        if not inconsistencia.tag_id:
+            raise ValueError("Divergencia sem tag para associar.")
+
+        item = ItemPatrimonial.objects.select_for_update().get(id=item_id)
+        tag_anterior = item.tag_id
+        item.tag_id = inconsistencia.tag_id
+        if inconsistencia.local_fisico and not item.local_fisico_id:
+            item.local_fisico = inconsistencia.local_fisico
+        item.save(update_fields=["tag_id", "local_fisico", "atualizado_em"])
+
+        inconsistencia.item = item
+        inconsistencia.local_logico = item.local_logico
+        inconsistencia.local_fisico = item.local_fisico or inconsistencia.local_fisico
+        inconsistencia.resolvida = True
+        inconsistencia.resolvida_em = timezone.now()
+        inconsistencia.metadados = {
+            **(inconsistencia.metadados or {}),
+            "resolvida_por": usuario_label(usuario),
+            "resolucao": "tag_associada",
+            "motivo_resolucao": motivo,
+            "item_id": item.id,
+            "tag_anterior": tag_anterior,
+        }
+        inconsistencia.save(
+            update_fields=["item", "local_logico", "local_fisico", "resolvida", "resolvida_em", "metadados"]
+        )
+        TimelineEvento.objects.create(
+            item=item,
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            mensagem=(
+                f"Tag {inconsistencia.tag_id} associada ao item {item.nome} "
+                f"por {usuario_label(usuario)}."
+            ),
+            usuario=usuario,
+            metadados={
+                "evento": "tag_desconhecida_associada",
+                "inconsistencia_id": inconsistencia.id,
+                "item_id": item.id,
+                "tag_anterior": tag_anterior,
+                "tag_id": item.tag_id,
+                "motivo": motivo,
+            },
+        )
+        return inconsistencia, item
+
     def _recent_duplicate_exists(self, *, tag_id: str, local_id: int | None, classificacao: str):
         window_start = timezone.now() - timedelta(seconds=self.duplicate_window_seconds)
         return (
