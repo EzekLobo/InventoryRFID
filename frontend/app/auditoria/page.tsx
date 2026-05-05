@@ -473,10 +473,10 @@ export default function AuditoriaPage() {
                 <th>Leitor</th>
                 <th>Status</th>
                 <th>Esperados</th>
-                <th>Encontrados</th>
-                <th>Nao encontrados</th>
-                <th>Divergentes</th>
-                <th>Desconhecidas</th>
+                <th>Lidos</th>
+                <th>Ausentes</th>
+                <th>Diverg.</th>
+                <th>Desconh.</th>
                 <th>Total</th>
               </tr>
             </thead>

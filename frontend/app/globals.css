@@ -732,7 +732,7 @@ textarea {
 
 .table-wrap {
   max-width: 100%;
-  overflow-x: visible;
+  overflow-x: auto;
 }
 
 .data-table {
@@ -779,6 +779,42 @@ textarea {
 .audit-table td {
   font-size: 13px;
   vertical-align: middle;
+}
+
+.audit-table {
+  min-width: 980px;
+}
+
+.audit-table th {
+  font-size: 11px;
+  line-height: 1.2;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
+.audit-table th:nth-child(n + 5),
+.audit-table td:nth-child(n + 5) {
+  text-align: center;
+}
+
+.audit-table th:nth-child(1) {
+  width: 18%;
+}
+
+.audit-table th:nth-child(2) {
+  width: 15%;
+}
+
+.audit-table th:nth-child(3) {
+  width: 13%;
+}
+
+.audit-table th:nth-child(4) {
+  width: 13%;
+}
+
+.audit-table th:nth-child(n + 5) {
+  width: 7%;
 }
 
 .audit-row {
