@@ -55,11 +55,14 @@ export type Inconsistencia = {
 export type TimelineEvento = {
   id: number;
   item_id: number | null;
+  item_nome: string | null;
+  item_tag: string | null;
   tipo: string;
   mensagem: string;
   metadados: Record<string, unknown>;
   criado_em: string;
   usuario_id: number | null;
+  usuario_nome: string | null;
 };
 
 export type AcionamentoResponse = {

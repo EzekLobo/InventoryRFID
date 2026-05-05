@@ -164,7 +164,7 @@ export default function HomePage() {
 
               <article className="panel" style={{ marginTop: 18 }}>
                 <h3>
-                  <Activity size={20} /> Timeline
+                  <Activity size={20} /> Atividade recente
                 </h3>
                 <div className="table-wrap">
                   <table className="data-table">

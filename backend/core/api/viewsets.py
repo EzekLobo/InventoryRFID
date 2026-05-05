@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.db.models import Q
+from django.utils.dateparse import parse_date
 from django.utils import timezone
 from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import action
@@ -85,9 +86,24 @@ class RFIDEventSerializer(serializers.Serializer):
 
 
 class TimelineListSerializer(serializers.ModelSerializer):
+    item_nome = serializers.CharField(source="item.nome", read_only=True)
+    item_tag = serializers.CharField(source="item.tag_id", read_only=True)
+    usuario_nome = serializers.CharField(source="usuario.get_username", read_only=True)
+
     class Meta:
         model = TimelineEvento
-        fields = ["id", "item_id", "tipo", "mensagem", "metadados", "criado_em", "usuario_id"]
+        fields = [
+            "id",
+            "item_id",
+            "item_nome",
+            "item_tag",
+            "tipo",
+            "mensagem",
+            "metadados",
+            "criado_em",
+            "usuario_id",
+            "usuario_nome",
+        ]
 
 
 class LocalSerializer(serializers.ModelSerializer):
@@ -507,6 +523,34 @@ class TimelineViewSet(viewsets.ReadOnlyModelViewSet):
         item_id = self.request.query_params.get("item_id")
         if item_id:
             queryset = queryset.filter(item_id=item_id)
+        tipo = self.request.query_params.get("tipo")
+        if tipo:
+            queryset = queryset.filter(tipo=tipo)
+        search = self.request.query_params.get("search")
+        if search:
+            queryset = queryset.filter(
+                Q(mensagem__icontains=search)
+                | Q(item__nome__icontains=search)
+                | Q(item__tag_id__icontains=search)
+                | Q(metadados__tag_id__icontains=search)
+            )
+        data_inicio = parse_date(self.request.query_params.get("data_inicio", ""))
+        if data_inicio:
+            queryset = queryset.filter(criado_em__date__gte=data_inicio)
+        data_fim = parse_date(self.request.query_params.get("data_fim", ""))
+        if data_fim:
+            queryset = queryset.filter(criado_em__date__lte=data_fim)
+        usuario_id = self.request.query_params.get("usuario_id")
+        if usuario_id and usuario_id.isdigit():
+            queryset = queryset.filter(usuario_id=usuario_id)
+        local_id = self.request.query_params.get("local_id")
+        if local_id and local_id.isdigit():
+            queryset = queryset.filter(Q(metadados__local_id=int(local_id)) | Q(metadados__local_id=str(local_id)))
+        antenna_id = self.request.query_params.get("antenna_id")
+        if antenna_id and antenna_id.isdigit():
+            queryset = queryset.filter(
+                Q(metadados__antenna_id=int(antenna_id)) | Q(metadados__antenna_id=str(antenna_id))
+            )
         only_mine = self.request.query_params.get("me")
         if only_mine in {"1", "true", "True"}:
             queryset = queryset.filter(usuario=self.request.user)

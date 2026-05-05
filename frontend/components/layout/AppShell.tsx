@@ -12,7 +12,7 @@ const navItems = [
   { href: "/auditoria", label: "Auditoria" },
   { href: "/inconsistencias", label: "Divergencias" },
   { href: "/itens", label: "Patrimonio" },
-  { href: "/timeline", label: "Timeline" },
+  { href: "/log", label: "Log" },
   { href: "/configuracoes", label: "Configurações", iconOnly: true }
 ];
 

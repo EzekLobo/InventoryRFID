@@ -410,6 +410,43 @@ class PipelineAndApiTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertGreaterEqual(len(response.data), 1)
 
+    def test_timeline_endpoint_filters_operational_log(self):
+        other_item = ItemPatrimonial.objects.create(
+            tag_id="TAG-LOG-002",
+            nome="Multimetro",
+            local_logico=self.lab4,
+            responsavel=self.user,
+        )
+        TimelineEvento.objects.create(
+            item=self.item,
+            tipo=TimelineEvento.TipoEvento.MOVIMENTACAO,
+            mensagem="Osciloscopio movido para o laboratorio",
+            usuario=self.user,
+            metadados={
+                "tag_id": self.item.tag_id,
+                "local_id": self.lab4.id,
+                "antenna_id": self.destino_antenna.id,
+                "evento": "tags_read",
+            },
+        )
+        TimelineEvento.objects.create(
+            item=other_item,
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            mensagem="Evento de outro item",
+            usuario=self.admin,
+            metadados={"local_id": self.lab1.id},
+        )
+
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(
+            f"/api/timeline/?tipo=movimentacao&search=OSC&local_id={self.lab4.id}&antenna_id={self.destino_antenna.id}"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["item_nome"], self.item.nome)
+        self.assertEqual(response.data[0]["item_tag"], self.item.tag_id)
+
     def test_inconsistencias_endpoint_requires_auth_and_filters(self):
         NotificacaoInconsistencia.objects.create(
             item=self.item,

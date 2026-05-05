@@ -925,6 +925,113 @@ textarea {
   padding: 10px;
 }
 
+.log-filters {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+}
+
+.log-filters .field,
+.log-filters .input,
+.log-filters .select {
+  min-width: 0;
+  width: 100%;
+}
+
+.log-check {
+  align-self: end;
+}
+
+.log-actions {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.log-table th,
+.log-table td {
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.log-subtext {
+  color: var(--muted);
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.items-table th,
+.items-table td {
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.history-button {
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+.item-timeline-row td {
+  background: rgba(4, 12, 15, 0.22);
+  padding: 0;
+}
+
+.item-timeline {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.item-timeline-head strong {
+  align-items: center;
+  color: var(--text);
+  display: flex;
+  gap: 8px;
+}
+
+.item-timeline-head span {
+  color: var(--muted);
+  display: block;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.item-timeline-list {
+  display: grid;
+  gap: 10px;
+}
+
+.item-timeline-event {
+  align-items: flex-start;
+  background: rgba(4, 12, 15, 0.32);
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 12px;
+}
+
+.item-timeline-event strong,
+.item-timeline-event span,
+.item-timeline-event small {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.item-timeline-event span,
+.item-timeline-event small {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
 .audit-list {
   background: rgba(4, 12, 15, 0.28);
   border: 1px solid var(--line);
