@@ -715,7 +715,13 @@ class AuditoriaReconciliacaoManager:
 
 class AuditoriaManager:
     @transaction.atomic
-    def start_broadcast(self, *, duracao_segundos: int, requested_by=None) -> AuditoriaJob:
+    def start_broadcast(
+        self,
+        *,
+        duracao_segundos: int,
+        requested_by=None,
+        antenna_ids: list[int] | None = None,
+    ) -> AuditoriaJob:
         now = timezone.now()
         finaliza_em = now + timedelta(seconds=duracao_segundos)
         job = AuditoriaJob.objects.create(
@@ -725,7 +731,10 @@ class AuditoriaManager:
             status=AuditoriaJob.Status.INICIADO,
         )
 
-        antenas = list(AntenaRFID.objects.all())
+        antenas_queryset = AntenaRFID.objects.all()
+        if antenna_ids is not None:
+            antenas_queryset = antenas_queryset.filter(id__in=antenna_ids)
+        antenas = list(antenas_queryset)
         for antena in antenas:
             antena.ativa = True
             antena.ultimo_acionamento = now
@@ -739,9 +748,14 @@ class AuditoriaManager:
         TimelineEvento.objects.create(
             item=None,
             tipo=TimelineEvento.TipoEvento.SISTEMA,
-            mensagem=f"Broadcast de auditoria iniciado para {len(antenas)} leitores.",
+            mensagem=f"Broadcast de auditoria iniciado para {len(antenas)} leitor(es).",
             usuario=requested_by,
-            metadados={"auditoria_job_id": job.id, "duracao_segundos": duracao_segundos},
+            metadados={
+                "auditoria_job_id": job.id,
+                "duracao_segundos": duracao_segundos,
+                "antenna_ids": [antena.id for antena in antenas],
+                "total_antenas": len(antenas),
+            },
         )
         return job
 

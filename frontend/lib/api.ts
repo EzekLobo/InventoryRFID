@@ -3,6 +3,7 @@ import type {
   Antena,
   AuditoriaJob,
   AuditoriaProcessada,
+  BroadcastAuditoriaResponse,
   Inconsistencia,
   ItemPatrimonial,
   Local,
@@ -124,6 +125,16 @@ export const api = {
     return request<AcionamentoResponse>(`/antenas/${id}/auditar/`, {
       method: "POST",
       body: JSON.stringify({ duracao_segundos })
+    });
+  },
+
+  auditarLeitores(duracao_segundos: number, antenna_ids?: number[]) {
+    return request<BroadcastAuditoriaResponse>("/auditoria/broadcast/", {
+      method: "POST",
+      body: JSON.stringify({
+        duracao_segundos,
+        ...(antenna_ids && antenna_ids.length > 0 ? { antenna_ids } : {})
+      })
     });
   },
 

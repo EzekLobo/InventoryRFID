@@ -144,3 +144,18 @@ export type AuditoriaProcessada = {
   metadados: AuditoriaMetadados;
   criado_em: string;
 };
+
+export type BroadcastAuditoriaResponse = {
+  status: string;
+  auditoria_job_id: number;
+  duracao_segundos: number;
+  iniciado_em: string;
+  finaliza_em: string;
+  total_antenas: number;
+  leitores: {
+    antena_id: number;
+    antena__hardware_id: string;
+    antena__nome: string;
+    status: string;
+  }[];
+};

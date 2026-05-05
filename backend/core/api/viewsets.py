@@ -35,6 +35,11 @@ class MovimentacaoSerializer(serializers.Serializer):
 
 class BroadcastSerializer(serializers.Serializer):
     duracao_segundos = serializers.IntegerField(required=False, min_value=1, default=5)
+    antenna_ids = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        required=False,
+        allow_empty=False,
+    )
 
 
 class BaixaManualSerializer(serializers.Serializer):
@@ -694,10 +699,21 @@ class AuditoriaViewSet(viewsets.ViewSet):
         serializer = BroadcastSerializer(data=request.data or {})
         serializer.is_valid(raise_exception=True)
         duracao_segundos = serializer.validated_data["duracao_segundos"]
+        antenna_ids = serializer.validated_data.get("antenna_ids")
+        if antenna_ids:
+            found_ids = set(AntenaRFID.objects.filter(id__in=antenna_ids).values_list("id", flat=True))
+            missing_ids = sorted(set(antenna_ids) - found_ids)
+            if missing_ids:
+                return Response(
+                    {"status": "erro", "detail": f"Leitor(es) nao encontrado(s): {missing_ids}."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
         self.auditoria_manager.finalize_expired_jobs()
         job = self.auditoria_manager.start_broadcast(
             duracao_segundos=duracao_segundos,
             requested_by=request.user,
+            antenna_ids=antenna_ids,
         )
         leitores = list(
             job.leitores.select_related("antena").values(

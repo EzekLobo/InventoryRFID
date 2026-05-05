@@ -89,7 +89,11 @@ function HelpTip({ text }: { text: string }) {
 
 export default function AuditoriaPage() {
   const [antenas, setAntenas] = useState<Antena[]>([]);
-  const [antennaId, setAntennaId] = useState<number | "">("");
+  const [selectedAntennaIds, setSelectedAntennaIds] = useState<number[]>([]);
+  const [auditAll, setAuditAll] = useState(true);
+  const [selectorOpen, setSelectorOpen] = useState(false);
+  const [antennaSearch, setAntennaSearch] = useState("");
+  const [simulationAntennaId, setSimulationAntennaId] = useState<number | "">("");
   const [duracao, setDuracao] = useState(5);
   const [tagsText, setTagsText] = useState("");
   const [result, setResult] = useState<TagsReadResponse | null>(null);
@@ -114,7 +118,11 @@ export default function AuditoriaPage() {
         api.listItens()
       ]);
       setAntenas(antenasData);
-      setAntennaId((current) => current || antenasData[0]?.id || "");
+      setSimulationAntennaId((current) => current || antenasData[0]?.id || "");
+      setSelectedAntennaIds((current) => {
+        const availableIds = new Set(antenasData.map((antena) => antena.id));
+        return current.filter((id) => availableIds.has(id));
+      });
       setJobs(jobsData);
       setProcessedAudits(processedData);
       setItens(itensData);
@@ -129,14 +137,36 @@ export default function AuditoriaPage() {
     load();
   }, []);
 
-  const selectedAntenna = useMemo(
-    () => antenas.find((antena) => antena.id === Number(antennaId)),
-    [antennaId, antenas]
+  const selectedAntennas = useMemo(
+    () => antenas.filter((antena) => selectedAntennaIds.includes(antena.id)),
+    [antenas, selectedAntennaIds]
   );
 
-  const expectedItems = useMemo(
-    () => itens.filter((item) => item.ativo && item.local_logico_id === selectedAntenna?.local_id),
-    [itens, selectedAntenna]
+  const expectedItems = useMemo(() => {
+    const localIds = new Set(selectedAntennas.map((antena) => antena.local_id));
+    return itens.filter((item) => item.ativo && item.local_logico_id !== null && localIds.has(item.local_logico_id));
+  }, [itens, selectedAntennas]);
+
+  const filteredAntennas = useMemo(
+    () =>
+      antenas.filter((antena) => {
+        const search = antennaSearch.trim().toLowerCase();
+        if (!search) return true;
+        return `${antena.nome} ${antena.local_nome} ${antena.hardware_id}`.toLowerCase().includes(search);
+      }),
+    [antennaSearch, antenas]
+  );
+
+  const selectionLabel = useMemo(
+    () => {
+      if (auditAll) return "Todos os leitores";
+      if (selectedAntennas.length === 0) return "Selecione leitores";
+      if (selectedAntennas.length === 1) {
+        return `${selectedAntennas[0].nome} - ${selectedAntennas[0].local_nome}`;
+      }
+      return `${selectedAntennas.length} leitores selecionados`;
+    },
+    [auditAll, selectedAntennas]
   );
 
   const auditRows = useMemo<AuditHistoryRow[]>(() => {
@@ -193,18 +223,32 @@ export default function AuditoriaPage() {
     );
   }, [itens, jobs, now, processedAudits]);
 
+  function toggleAntenna(id: number) {
+    setAuditAll(false);
+    setSelectedAntennaIds((current) =>
+      current.includes(id) ? current.filter((value) => value !== id) : [...current, id]
+    );
+  }
+
+  function selectAllAntennas() {
+    setAuditAll(true);
+    setSelectedAntennaIds([]);
+    setSelectorOpen(false);
+  }
+
   async function startAudit() {
-    if (!antennaId) return;
+    const antennaIds = auditAll ? undefined : selectedAntennaIds;
+    if (!auditAll && selectedAntennaIds.length === 0) return;
     setSubmitting(true);
     setError("");
     try {
-      const response = await api.auditarAntena(Number(antennaId), duracao);
+      const response = await api.auditarLeitores(duracao, antennaIds);
       setFinishedMessage("");
       setActiveProcess({
-        label: "Auditoria RFID em andamento",
-        detail: "O leitor esta coletando tags para conferir o local auditado.",
+        label: auditAll ? "Auditoria geral em andamento" : "Auditoria selecionada em andamento",
+        detail: `${response.total_antenas} leitor(es) coletando tags para conferencia dos locais auditados.`,
         startedAt: Date.now(),
-        expiresAt: new Date(response.expires_at).getTime()
+        expiresAt: new Date(response.finaliza_em).getTime()
       });
       await load();
     } catch (err) {
@@ -215,11 +259,11 @@ export default function AuditoriaPage() {
   }
 
   async function sendAuditResult() {
-    if (!antennaId) return;
+    if (!simulationAntennaId) return;
     setSubmitting(true);
     setError("");
     try {
-      const response = await api.enviarTags(Number(antennaId), parseTags(tagsText), true);
+      const response = await api.enviarTags(Number(simulationAntennaId), parseTags(tagsText), true);
       setResult(response);
       setFinishedMessage("Simulacao processada. Resultado atualizado na lista de auditorias.");
       if (response.status !== "ok") {
@@ -256,7 +300,7 @@ export default function AuditoriaPage() {
       <div className="section-head">
         <div>
           <h1>Auditoria RFID</h1>
-          <p>Acione o leitor para auditar um local. Use a simulacao apenas para testes sem leitura fisica.</p>
+          <p>Escolha varios leitores ou acione todos para auditar os locais em uma unica janela operacional.</p>
         </div>
         <button className="button ghost" type="button" onClick={load}>
           <RefreshCw size={18} />
@@ -287,24 +331,9 @@ export default function AuditoriaPage() {
         <div className="grid two">
           <article className="panel">
             <h2>
-              <ShieldAlert size={21} /> Auditoria real
+              <ShieldAlert size={21} /> Auditoria em lote
             </h2>
             <div className="form-row">
-              <div className="field">
-                <label htmlFor="antenna">Leitor</label>
-                <select
-                  className="select"
-                  id="antenna"
-                  value={antennaId}
-                  onChange={(event) => setAntennaId(Number(event.target.value))}
-                >
-                  {antenas.map((antena) => (
-                    <option key={antena.id} value={antena.id}>
-                      {antena.nome} - {antena.local_nome}
-                    </option>
-                  ))}
-                </select>
-              </div>
               <div className="field">
                 <label htmlFor="duracao">Duracao</label>
                 <input
@@ -316,26 +345,84 @@ export default function AuditoriaPage() {
                   onChange={(event) => setDuracao(Number(event.target.value))}
                 />
               </div>
-              <button className="button yellow" disabled={submitting || !antennaId} type="button" onClick={startAudit}>
+              <div className="field audit-select-field">
+                <span>Leitores</span>
+                <button className="select audit-picker-trigger" type="button" onClick={() => setSelectorOpen((value) => !value)}>
+                  {selectionLabel}
+                  <ChevronDown size={16} />
+                </button>
+                {selectorOpen ? (
+                  <div className="audit-picker">
+                    <input
+                      className="input audit-picker-search"
+                      placeholder="Pesquisar leitor ou local"
+                      value={antennaSearch}
+                      onChange={(event) => setAntennaSearch(event.target.value)}
+                    />
+                    <button className={auditAll ? "audit-picker-option active" : "audit-picker-option"} type="button" onClick={selectAllAntennas}>
+                      <CheckCircle2 size={17} />
+                      <span>
+                        <strong>Todos os leitores</strong>
+                        <small>{antenas.length} leitor(es) cadastrados</small>
+                      </span>
+                    </button>
+                    {filteredAntennas.map((antena) => (
+                      <button
+                        className={selectedAntennaIds.includes(antena.id) && !auditAll ? "audit-picker-option active" : "audit-picker-option"}
+                        key={antena.id}
+                        type="button"
+                        onClick={() => toggleAntenna(antena.id)}
+                      >
+                        <input checked={selectedAntennaIds.includes(antena.id) && !auditAll} readOnly type="checkbox" />
+                        <span>
+                          <strong>{antena.nome}</strong>
+                          <small>
+                            {antena.local_nome} - {antena.tipo_display} - {antena.online ? "online" : "offline"}
+                          </small>
+                        </span>
+                      </button>
+                    ))}
+                    {filteredAntennas.length === 0 ? <div className="audit-picker-empty">Nenhum leitor encontrado.</div> : null}
+                  </div>
+                ) : null}
+              </div>
+              <button
+                className="button yellow"
+                disabled={submitting || antenas.length === 0 || (!auditAll && selectedAntennaIds.length === 0)}
+                type="button"
+                onClick={startAudit}
+              >
                 <Play size={17} />
-                Iniciar auditoria RFID
+                Iniciar auditoria
               </button>
             </div>
 
-            {selectedAntenna ? (
-              <p>
-                Local auditado: <strong>{selectedAntenna.local_nome}</strong>. O leitor fisico fica ativo pela duracao
-                definida e envia as tags encontradas ao sistema. Itens esperados neste local:{" "}
-                <strong>{expectedItems.length}</strong>.
-                {expectedItems.length === 0 ? " Nenhum item ativo tem este local como local logico." : ""}
-              </p>
-            ) : null}
+            <p>
+              Os leitores selecionados ficam ativos pela duracao definida. Locais selecionados:{" "}
+              <strong>{auditAll ? "todos" : uniqueValues(selectedAntennas.map((antena) => antena.local_nome)).join(", ") || "-"}</strong>.
+              Itens esperados nesses locais: <strong>{auditAll ? itens.filter((item) => item.ativo).length : expectedItems.length}</strong>.
+            </p>
           </article>
 
           <article className="panel">
             <h2>
               <Send size={21} /> Simular leitura RFID
             </h2>
+            <div className="field">
+              <label htmlFor="simulation-antenna">Leitor da simulacao</label>
+              <select
+                className="select"
+                id="simulation-antenna"
+                value={simulationAntennaId}
+                onChange={(event) => setSimulationAntennaId(Number(event.target.value))}
+              >
+                {antenas.map((antena) => (
+                  <option key={antena.id} value={antena.id}>
+                    {antena.nome} - {antena.local_nome}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="field">
               <label htmlFor="tags">Tags simuladas</label>
               <textarea
@@ -352,7 +439,7 @@ export default function AuditoriaPage() {
             </p>
             <button
               className="button"
-              disabled={submitting || !antennaId}
+              disabled={submitting || !simulationAntennaId}
               style={{ marginTop: 12 }}
               type="button"
               onClick={sendAuditResult}

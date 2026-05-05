@@ -520,6 +520,28 @@ class PipelineAndApiTests(TestCase):
         self.assertEqual(success.status_code, 200)
         self.assertTrue(AuditoriaJob.objects.filter(id=success.data["auditoria_job_id"]).exists())
 
+    def test_broadcast_can_target_selected_antennas(self):
+        second_antenna = AntenaRFID.objects.create(
+            nome="Destino 1",
+            hardware_id="ESP-DEST-002",
+            local=self.lab1,
+            tipo=AntenaRFID.TipoAntena.DESTINO,
+        )
+
+        self.client.force_authenticate(user=self.admin)
+        response = self.client.post(
+            "/api/auditoria/broadcast/",
+            {"duracao_segundos": 8, "antenna_ids": [second_antenna.id]},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["total_antenas"], 1)
+        self.destino_antenna.refresh_from_db()
+        second_antenna.refresh_from_db()
+        self.assertFalse(self.destino_antenna.ativa)
+        self.assertTrue(second_antenna.ativa)
+
     def test_movimentacao_alias_uses_topology_pipeline(self):
         self.client.force_authenticate(user=self.user)
         self.destino_antenna.ativa = True
