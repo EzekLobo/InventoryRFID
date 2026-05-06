@@ -22,7 +22,7 @@ export default function ItensPage() {
     try {
       setItens(await api.listItens(term));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nao foi possivel carregar itens.");
+      setError(err instanceof Error ? err.message : "Não foi possível carregar itens.");
     } finally {
       setLoading(false);
     }
@@ -39,7 +39,7 @@ export default function ItensPage() {
       const timeline = await api.listTimeline(item.id);
       setTimelineByItem((current) => ({ ...current, [item.id]: timeline }));
     } catch (err) {
-      setTimelineError(err instanceof Error ? err.message : "Nao foi possivel carregar historico do item.");
+      setTimelineError(err instanceof Error ? err.message : "Não foi possível carregar histórico do item.");
     } finally {
       setTimelineLoadingId(null);
     }
@@ -53,8 +53,8 @@ export default function ItensPage() {
     <section className="content-band">
       <div className="section-head">
         <div>
-          <h1>Patrimonio</h1>
-          <p>Consulte itens por nome ou tag e confira local logico versus local fisico.</p>
+          <h1>Patrimônio</h1>
+          <p>Consulte itens por nome ou tag e confira local lógico versus local físico.</p>
         </div>
       </div>
 
@@ -93,11 +93,11 @@ export default function ItensPage() {
                 <tr>
                   <th>Item</th>
                   <th>Tag</th>
-                  <th>Local logico</th>
-                  <th>Local fisico</th>
-                  <th>Responsavel</th>
+                  <th>Local lógico</th>
+                  <th>Local físico</th>
+                  <th>Responsável</th>
                   <th>Status</th>
-                  <th>Historico</th>
+                  <th>Histórico</th>
                 </tr>
               </thead>
               <tbody>
@@ -117,7 +117,7 @@ export default function ItensPage() {
                       <td>
                         <button className="button ghost history-button" type="button" onClick={() => toggleTimeline(item)}>
                           {expandedItemId === item.id ? <ChevronDown size={17} /> : <ChevronRight size={17} />}
-                          Historico
+                          Histórico
                         </button>
                       </td>
                     </tr>
@@ -160,15 +160,15 @@ function ItemTimeline({
       <div className="item-timeline-head">
         <div>
           <strong>
-            <History size={17} /> Historico de {item.nome}
+            <History size={17} /> Histórico de {item.nome}
           </strong>
           <span>
-            Tag {item.tag_id} | logico: {item.local_logico_nome || "-"} | fisico: {item.local_fisico_nome || "-"}
+            Tag {item.tag_id} | lógico: {item.local_logico_nome || "-"} | físico: {item.local_fisico_nome || "-"}
           </span>
         </div>
       </div>
 
-      {loading ? <LoadingState label="Carregando historico do item" /> : null}
+      {loading ? <LoadingState label="Carregando histórico do item" /> : null}
       {error ? <ErrorState message={error} /> : null}
       {!loading && !error && events.length === 0 ? <EmptyState label="Nenhum evento registrado para este item." /> : null}
 
@@ -198,7 +198,7 @@ function metadataSummary(metadata: Record<string, unknown>) {
     antenna_id: "leitor",
     motivo: "motivo",
     tipo: "tipo",
-    inconsistencia_id: "divergencia"
+    inconsistencia_id: "inconsistencia"
   };
   return Object.keys(labels)
     .map((key) => {

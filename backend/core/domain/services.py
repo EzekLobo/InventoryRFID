@@ -505,6 +505,7 @@ class AuditoriaReconciliacaoManager:
             self._mark_missing(item=item, antenna=antenna, payload=payload)
 
         for item in found_expected_items:
+            self._mark_correctly_read(item=item, antenna=antenna, payload=payload)
             self._resolve_missing(item=item, antenna=antenna, payload=payload)
 
         for item in extra_items:
@@ -623,6 +624,24 @@ class AuditoriaReconciliacaoManager:
                 "evento": "item_reencontrado",
                 "tipo": NotificacaoInconsistencia.TipoInconsistencia.NAO_ENCONTRADO,
                 "inconsistencia_ids": ids,
+                "antenna_id": antenna.id,
+                "local_id": antenna.local_id,
+                **payload,
+            },
+        )
+
+    def _mark_correctly_read(self, *, item: ItemPatrimonial, antenna: AntenaRFID, payload: dict) -> None:
+        TimelineEvento.objects.create(
+            item=item,
+            tipo=TimelineEvento.TipoEvento.SISTEMA,
+            mensagem=(
+                f"Item {item.nome} lido corretamente em auditoria de {antenna.local.nome} "
+                f"pela antena {antenna.nome}."
+            ),
+            usuario=item.responsavel,
+            metadados={
+                "evento": "item_lido_local_correto",
+                "tag_id": item.tag_id,
                 "antenna_id": antenna.id,
                 "local_id": antenna.local_id,
                 **payload,

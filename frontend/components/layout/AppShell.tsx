@@ -7,11 +7,11 @@ import { FormEvent, useEffect, useState } from "react";
 import { api } from "@/lib/api";
 
 const navItems = [
-  { href: "/", label: "Inicio" },
+  { href: "/", label: "Início" },
   { href: "/antenas", label: "Leitores" },
   { href: "/auditoria", label: "Auditoria" },
-  { href: "/inconsistencias", label: "Divergencias" },
-  { href: "/itens", label: "Patrimonio" },
+  { href: "/inconsistencias", label: "Inconsistências" },
+  { href: "/itens", label: "Patrimônio" },
   { href: "/log", label: "Log" },
   { href: "/configuracoes", label: "Configurações", iconOnly: true }
 ];
@@ -50,7 +50,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </span>
           <span className="brand-copy">
             <strong>COLCIC</strong>
-            <small>Inventario RFID</small>
+            <small>Inventário RFID</small>
           </span>
         </Link>
 
@@ -86,7 +86,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <footer className="footer">
         <div className="footer-main">
           <Cpu size={18} />
-          <span>Controle operacional dos leitores RFID, auditorias e divergencias patrimoniais.</span>
+          <span>Controle operacional dos leitores RFID, auditorias e inconsistências patrimoniais.</span>
         </div>
         <small>&copy; 2026 InventoryRFID &bull; By Ezequiel Lobo</small>
       </footer>
@@ -117,7 +117,7 @@ function LoginScreen({ onAuthenticated }: { onAuthenticated: () => void }) {
 
   return (
     <main className="login-shell">
-      <section className="login-panel" aria-label="Acesso ao inventario RFID">
+      <section className="login-panel" aria-label="Acesso ao inventário RFID">
         <div className="login-visual" aria-hidden="true">
           <div className="signal-frame">
             <RadioTower size={74} />
@@ -134,7 +134,7 @@ function LoginScreen({ onAuthenticated }: { onAuthenticated: () => void }) {
             </span>
             <span>
               <strong>COLCIC</strong>
-              <small>Inventario RFID</small>
+              <small>Inventário RFID</small>
             </span>
           </div>
 
@@ -144,7 +144,7 @@ function LoginScreen({ onAuthenticated }: { onAuthenticated: () => void }) {
           </div>
 
           <label className="field">
-            <span>Usuario</span>
+            <span>Usuário</span>
             <input
               className="input"
               autoComplete="username"

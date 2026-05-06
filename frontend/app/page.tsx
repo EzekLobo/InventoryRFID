@@ -30,7 +30,7 @@ export default function HomePage() {
       setInconsistencias(inconsistenciasData);
       setTimeline(timelineData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nao foi possivel carregar o painel.");
+      setError(err instanceof Error ? err.message : "Não foi possível carregar o painel.");
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ export default function HomePage() {
       leitoresOnline: antenas.filter((antena) => antena.online).length,
       leitoresAtivos: antenas.filter((antena) => antena.ativa).length,
       itensAtivos: itens.filter((item) => item.ativo).length,
-      divergencias: inconsistencias.length
+      inconsistencias: inconsistencias.length
     }),
     [antenas, inconsistencias, itens]
   );
@@ -60,7 +60,7 @@ export default function HomePage() {
             RFID COLCIC
           </h1>
           <p>
-            Gerencie leitores, acione janelas de leitura, execute auditorias e acompanhe divergências entre
+            Gerencie leitores, acione janelas de leitura, execute auditorias e acompanhe inconsistências entre
             inventário lógico e físico.
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function HomePage() {
               <StatCard label="Leitores online" value={stats.leitoresOnline} tone="green" />
               <StatCard label="Leitores ativos" value={stats.leitoresAtivos} />
               <StatCard label="Itens ativos" value={stats.itensAtivos} tone="yellow" />
-              <StatCard label="Divergências abertas" value={stats.divergencias} tone="red" />
+              <StatCard label="Inconsistências abertas" value={stats.inconsistencias} tone="red" />
             </div>
 
             <div className="content-band" style={{ paddingLeft: 0, paddingRight: 0 }}>
@@ -132,7 +132,7 @@ export default function HomePage() {
 
                 <article className="panel">
                   <h3>
-                    <AlertTriangle size={20} /> Divergências recentes
+                    <AlertTriangle size={20} /> Inconsistências recentes
                   </h3>
                   <div className="table-wrap">
                     <table className="data-table">

@@ -55,7 +55,7 @@ class CadastroTagDesconhecidaSerializer(serializers.Serializer):
     nome = serializers.CharField(max_length=160)
     local_logico_id = serializers.IntegerField(required=False, min_value=1, allow_null=True)
     local_fisico_id = serializers.IntegerField(required=False, min_value=1, allow_null=True)
-    motivo = serializers.CharField(max_length=255, default="tag cadastrada a partir de divergencia")
+    motivo = serializers.CharField(max_length=255, default="tag cadastrada a partir de inconsistencia")
 
 
 class AssociacaoTagDesconhecidaSerializer(serializers.Serializer):
@@ -588,7 +588,7 @@ class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
         inconsistencia = self.get_queryset().filter(id=pk).first()
         if inconsistencia is None:
             return Response(
-                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                {"status": "erro", "detail": "Inconsistencia nao encontrada."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -612,7 +612,7 @@ class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
         inconsistencia = self.get_queryset().filter(id=pk).first()
         if inconsistencia is None:
             return Response(
-                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                {"status": "erro", "detail": "Inconsistencia nao encontrada."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -640,7 +640,7 @@ class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
         inconsistencia = self.get_queryset().filter(id=pk).first()
         if inconsistencia is None:
             return Response(
-                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                {"status": "erro", "detail": "Inconsistencia nao encontrada."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -680,7 +680,7 @@ class InconsistenciaViewSet(viewsets.ReadOnlyModelViewSet):
         inconsistencia = self.get_queryset().filter(id=pk).first()
         if inconsistencia is None:
             return Response(
-                {"status": "erro", "detail": "Divergencia nao encontrada."},
+                {"status": "erro", "detail": "Inconsistencia nao encontrada."},
                 status=status.HTTP_404_NOT_FOUND,
             )
         if inconsistencia.tag_id and ItemPatrimonial.objects.filter(tag_id=inconsistencia.tag_id).exists():

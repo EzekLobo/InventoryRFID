@@ -191,6 +191,43 @@ class PipelineAndApiTests(TestCase):
             ).exists()
         )
 
+    def test_audit_reading_records_correct_location_in_item_timeline(self):
+        expected_item = ItemPatrimonial.objects.create(
+            tag_id="TAG-PROJ-OK",
+            nome="Projetor correto",
+            local_logico=self.lab4,
+            responsavel=self.user,
+        )
+
+        response = self.client.post(
+            "/api/eventos/rfid/",
+            {
+                "event_type": "tags_read",
+                "antenna_id": self.destino_antenna.id,
+                "tags": [expected_item.tag_id],
+                "payload": {"audit": True, "auditoria_job_id": 321},
+            },
+            format="json",
+            **self._rfid_headers(),
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["audit"]["encontrados"], 1)
+        self.assertEqual(response.data["audit"]["nao_encontrados"], 0)
+        self.assertEqual(response.data["audit"]["tags_fora_do_local"], 0)
+        self.assertEqual(response.data["audit"]["tags_desconhecidas"], 0)
+        self.assertTrue(
+            TimelineEvento.objects.filter(
+                item=expected_item,
+                tipo=TimelineEvento.TipoEvento.SISTEMA,
+                metadados__evento="item_lido_local_correto",
+                metadados__tag_id=expected_item.tag_id,
+                metadados__antenna_id=self.destino_antenna.id,
+                metadados__local_id=self.lab4.id,
+                metadados__auditoria_job_id=321,
+            ).exists()
+        )
+
     def test_audit_reading_records_unknown_tags(self):
         self.client.post(
             "/api/eventos/rfid/",

@@ -47,7 +47,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   const text = await response.text();
   const data = text ? JSON.parse(text) : null;
   if (!response.ok) {
-    const detail = data?.detail || data?.non_field_errors?.[0] || "Falha na comunicacao com a API.";
+    const detail = data?.detail || data?.non_field_errors?.[0] || "Falha na comunicação com a API.";
     throw new Error(String(detail));
   }
   return data as T;

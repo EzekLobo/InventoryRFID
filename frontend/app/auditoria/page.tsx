@@ -127,7 +127,7 @@ export default function AuditoriaPage() {
       setProcessedAudits(processedData);
       setItens(itensData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nao foi possivel carregar auditorias.");
+      setError(err instanceof Error ? err.message : "Não foi possível carregar auditorias.");
     } finally {
       setLoading(false);
     }
@@ -246,13 +246,13 @@ export default function AuditoriaPage() {
       setFinishedMessage("");
       setActiveProcess({
         label: auditAll ? "Auditoria geral em andamento" : "Auditoria selecionada em andamento",
-        detail: `${response.total_antenas} leitor(es) coletando tags para conferencia dos locais auditados.`,
+        detail: `${response.total_antenas} leitor(es) coletando tags para conferência dos locais auditados.`,
         startedAt: Date.now(),
         expiresAt: new Date(response.finaliza_em).getTime()
       });
       await load();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nao foi possivel iniciar auditoria.");
+      setError(err instanceof Error ? err.message : "Não foi possível iniciar auditoria.");
     } finally {
       setSubmitting(false);
     }
@@ -265,13 +265,13 @@ export default function AuditoriaPage() {
     try {
       const response = await api.enviarTags(Number(simulationAntennaId), parseTags(tagsText), true);
       setResult(response);
-      setFinishedMessage("Simulacao processada. Resultado atualizado na lista de auditorias.");
+      setFinishedMessage("Simulação processada. Resultado atualizado na lista de auditorias.");
       if (response.status !== "ok") {
-        setError("A leitura foi ignorada pelo sistema. Verifique se o leitor e a auditoria estao ativos.");
+        setError("A leitura foi ignorada pelo sistema. Verifique se o leitor e a auditoria estão ativos.");
       }
       await load();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nao foi possivel enviar resultado da auditoria.");
+      setError(err instanceof Error ? err.message : "Não foi possível enviar resultado da auditoria.");
     } finally {
       setSubmitting(false);
     }
@@ -286,7 +286,7 @@ export default function AuditoriaPage() {
     if (!activeProcess || now < activeProcess.expiresAt) return;
 
     setActiveProcess(null);
-    setFinishedMessage("Auditoria RFID concluida. Dados atualizados.");
+    setFinishedMessage("Auditoria RFID concluída. Dados atualizados.");
     load();
   }, [activeProcess, now]);
 
@@ -300,7 +300,7 @@ export default function AuditoriaPage() {
       <div className="section-head">
         <div>
           <h1>Auditoria RFID</h1>
-          <p>Escolha varios leitores ou acione todos para auditar os locais em uma unica janela operacional.</p>
+          <p>Escolha vários leitores ou acione todos para auditar os locais em uma única janela operacional.</p>
         </div>
         <button className="button ghost" type="button" onClick={load}>
           <RefreshCw size={18} />
@@ -335,7 +335,7 @@ export default function AuditoriaPage() {
             </h2>
             <div className="form-row">
               <div className="field">
-                <label htmlFor="duracao">Duracao</label>
+                <label htmlFor="duracao">Duração</label>
                 <input
                   className="input"
                   id="duracao"
@@ -398,7 +398,7 @@ export default function AuditoriaPage() {
             </div>
 
             <p>
-              Os leitores selecionados ficam ativos pela duracao definida. Locais selecionados:{" "}
+              Os leitores selecionados ficam ativos pela duração definida. Locais selecionados:{" "}
               <strong>{auditAll ? "todos" : uniqueValues(selectedAntennas.map((antena) => antena.local_nome)).join(", ") || "-"}</strong>.
               Itens esperados nesses locais: <strong>{auditAll ? itens.filter((item) => item.ativo).length : expectedItems.length}</strong>.
             </p>
@@ -409,7 +409,7 @@ export default function AuditoriaPage() {
               <Send size={21} /> Simular leitura RFID
             </h2>
             <div className="field">
-              <label htmlFor="simulation-antenna">Leitor da simulacao</label>
+              <label htmlFor="simulation-antenna">Leitor da simulação</label>
               <select
                 className="select"
                 id="simulation-antenna"
@@ -428,14 +428,14 @@ export default function AuditoriaPage() {
               <textarea
                 className="textarea"
                 id="tags"
-                placeholder="Cole tags de teste, uma por linha ou separadas por virgula"
+                placeholder="Cole tags de teste, uma por linha ou separadas por vírgula"
                 value={tagsText}
                 onChange={(event) => setTagsText(event.target.value)}
               />
             </div>
             <p>
-              Use este campo para testar a auditoria manualmente. As tags informadas serao tratadas como se tivessem
-              sido lidas pelo RFID. Se deixar vazio, a simulacao considera que nenhuma tag foi encontrada.
+              Use este campo para testar a auditoria manualmente. As tags informadas serão tratadas como se tivessem
+              sido lidas pelo RFID. Se deixar vazio, a simulação considera que nenhuma tag foi encontrada.
             </p>
             <button
               className="button"
@@ -445,7 +445,7 @@ export default function AuditoriaPage() {
               onClick={sendAuditResult}
             >
               <CheckCircle2 size={17} />
-              Processar simulacao
+              Processar simulação
             </button>
           </article>
         </div>
@@ -455,7 +455,7 @@ export default function AuditoriaPage() {
         <div className="grid stats" style={{ marginTop: 24 }}>
           <StatCard label="Esperados" value={result.audit.esperados ?? "-"} />
           <StatCard label="Encontrados" value={result.audit.encontrados} tone="green" />
-          <StatCard label="Nao encontrados" value={result.audit.nao_encontrados} tone="red" />
+          <StatCard label="Não encontrados" value={result.audit.nao_encontrados} tone="red" />
           <StatCard label="Divergentes" value={result.audit.tags_fora_do_local ?? 0} tone="yellow" />
           <StatCard label="Desconhecidas" value={result.audit.tags_desconhecidas} tone="yellow" />
           <StatCard label="Total" value={result.audit.total_lidos ?? totalFromMetadata(result.audit) ?? "-"} />
@@ -537,22 +537,22 @@ function AuditDetail({ audit }: { audit: AuditHistoryRow }) {
       {!audit.detalhesDisponiveis ? (
         <div className="state-box">
           {waiting
-            ? "A auditoria ainda esta aguardando uma leitura do RFID."
+            ? "A auditoria ainda está aguardando uma leitura do RFID."
             : "A janela foi encerrada sem leitura processada para detalhar."}
         </div>
       ) : (
         <>
           <div className="audit-summary-grid">
-            <AuditSummaryCard label="Quantidade esperada" value={audit.esperados} help="Itens ativos cujo local logico e o local auditado." />
+            <AuditSummaryCard label="Quantidade esperada" value={audit.esperados} help="Itens ativos cujo local lógico é o local auditado." />
             <AuditSummaryCard label="Quantidade encontrada" value={audit.encontrados} help="Itens esperados no local que foram lidos." />
-            <AuditSummaryCard label="Nao encontrados" value={audit.naoEncontrados} help="Itens esperados no local que nao apareceram na leitura." />
+            <AuditSummaryCard label="Não encontrados" value={audit.naoEncontrados} help="Itens esperados no local que não apareceram na leitura." />
             <AuditSummaryCard label="Divergentes" value={audit.divergentes} help="Itens conhecidos lidos aqui, mas cadastrados logicamente em outro local." />
-            <AuditSummaryCard label="Desconhecidos" value={audit.desconhecidas} help="Tags lidas que nao existem cadastradas no inventario." />
+            <AuditSummaryCard label="Desconhecidos" value={audit.desconhecidas} help="Tags lidas que não existem cadastradas no inventário." />
             <AuditSummaryCard label="Quantidade total" value={audit.total} help="Total de leituras: encontrados, divergentes e desconhecidos." />
           </div>
 
           <div className="audit-detail-lists">
-            <AuditItemList title="Nao encontrados" items={audit.itensNaoEncontrados} empty="Nenhum item esperado ficou sem leitura." />
+            <AuditItemList title="Não encontrados" items={audit.itensNaoEncontrados} empty="Nenhum item esperado ficou sem leitura." />
             <AuditItemList title="Divergentes" items={audit.itensDivergentes} empty="Nenhum item de outro local foi lido nesta auditoria." />
             <UnknownTagsList tags={audit.tagsDesconhecidas} />
           </div>
@@ -583,8 +583,8 @@ function AuditItemList({ title, items, empty }: { title: string; items: Auditori
         <div className="audit-list-item" key={`${title}-${item.id}-${item.tag_id}`}>
           <strong>{item.nome}</strong>
           <span>Tag: {item.tag_id}</span>
-          <span>Local logico: {item.local_logico_nome || "-"}</span>
-          <span>Local fisico: {item.local_fisico_nome || "-"}</span>
+          <span>Local lógico: {item.local_logico_nome || "-"}</span>
+          <span>Local físico: {item.local_fisico_nome || "-"}</span>
         </div>
       ))}
     </div>

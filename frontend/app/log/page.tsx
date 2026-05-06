@@ -28,8 +28,8 @@ const emptyFilters: LogFilters = {
 
 const tipoOptions = [
   { value: "", label: "Todos" },
-  { value: "movimentacao", label: "Movimentacao" },
-  { value: "inconsistencia", label: "Inconsistencia" },
+  { value: "movimentacao", label: "Movimentação" },
+  { value: "inconsistencia", label: "Inconsistência" },
   { value: "rastro", label: "Rastro" },
   { value: "baixa", label: "Baixa" },
   { value: "sistema", label: "Sistema" }
@@ -71,7 +71,7 @@ export default function LogPage() {
       setLocais(locaisData);
       setAntenas(antenasData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Nao foi possivel carregar o log.");
+      setError(err instanceof Error ? err.message : "Não foi possível carregar o log.");
     } finally {
       setLoading(false);
     }
@@ -105,7 +105,7 @@ export default function LogPage() {
       <div className="section-head">
         <div>
           <h1>Log operacional</h1>
-          <p>Consulte eventos do sistema por item, tipo, periodo, local, leitor e usuario.</p>
+          <p>Consulte eventos do sistema por item, tipo, período, local, leitor e usuário.</p>
         </div>
         <button className="button ghost" type="button" onClick={() => load(filters)}>
           <RefreshCw size={18} />
@@ -137,7 +137,7 @@ export default function LogPage() {
           </label>
 
           <label className="field">
-            <span>Inicio</span>
+            <span>Início</span>
             <DateField
               value={filters.data_inicio}
               onChange={(data_inicio) => setFilters({ ...filters, data_inicio })}
@@ -208,7 +208,7 @@ export default function LogPage() {
                   <th>Item</th>
                   <th>Mensagem</th>
                   <th>Detalhes</th>
-                  <th>Usuario</th>
+                  <th>Usuário</th>
                 </tr>
               </thead>
               <tbody>
@@ -280,10 +280,10 @@ function DateField({ value, onChange }: { value: string; onChange: (value: strin
 function validateDateFilters(filters: LogFilters) {
   const start = parseValidDate(filters.data_inicio);
   const end = parseValidDate(filters.data_fim);
-  if (filters.data_inicio && !start) return "Informe uma data inicial valida.";
-  if (filters.data_fim && !end) return "Informe uma data final valida.";
+  if (filters.data_inicio && !start) return "Informe uma data inicial válida.";
+  if (filters.data_fim && !end) return "Informe uma data final válida.";
   if (start && end && start.getTime() > end.getTime()) {
-    return "A data inicial nao pode ser maior que a data final.";
+    return "A data inicial não pode ser maior que a data final.";
   }
   return "";
 }
@@ -348,7 +348,7 @@ function labelForMetadata(key: string) {
     antenna_id: "leitor",
     motivo: "motivo",
     tipo: "tipo",
-    inconsistencia_id: "divergencia"
+    inconsistencia_id: "inconsistencia"
   };
   return labels[key] || key;
 }

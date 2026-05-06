@@ -1190,11 +1190,87 @@ textarea {
   margin-top: 18px;
 }
 
+.resolution-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.resolution-head h2 {
+  margin: 0 0 4px;
+}
+
+.resolution-options-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 980px;
+}
+
+.resolution-choice {
+  align-items: start;
+  background: rgba(4, 12, 15, 0.36);
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 38px minmax(0, 1fr);
+  min-height: 112px;
+  padding: 16px;
+  text-align: left;
+}
+
+.resolution-choice:hover {
+  background: rgba(87, 244, 208, 0.08);
+  border-color: var(--line-strong);
+}
+
+.resolution-choice-icon {
+  align-items: center;
+  background: rgba(87, 244, 208, 0.12);
+  color: var(--cyan);
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+.resolution-choice strong,
+.resolution-choice small {
+  display: block;
+}
+
+.resolution-choice strong {
+  margin-bottom: 6px;
+}
+
+.resolution-choice small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.resolution-form {
+  display: grid;
+  gap: 14px;
+  max-width: 620px;
+}
+
+.resolution-form .field,
+.resolution-form .input,
+.resolution-form .select,
+.resolution-form .textarea {
+  min-width: 0;
+  width: 100%;
+}
+
 .resolution-context {
   color: var(--muted);
-  flex-basis: 100%;
   font-size: 14px;
-  margin: -8px 0 0;
+  margin: 0;
 }
 
 .textarea.compact {
@@ -1326,6 +1402,7 @@ textarea {
   .hero-panel,
   .grid.two,
   .grid.stats,
+  .resolution-options-grid,
   .settings-layout,
   .login-panel {
     grid-template-columns: 1fr;
@@ -1350,6 +1427,11 @@ textarea {
   }
 
   .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resolution-head {
     align-items: flex-start;
     flex-direction: column;
   }
