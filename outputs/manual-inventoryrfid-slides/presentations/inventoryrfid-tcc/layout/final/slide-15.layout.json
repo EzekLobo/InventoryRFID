@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/mgs2by",
-    "id": "mgs2by",
+    "aid": "sl/gxo8zl",
+    "id": "gxo8zl",
     "slide": 15,
-    "layoutId": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2hwfyxob",
+      "aid": "sh/gbq1oryt",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/94fu18jq",
+      "aid": "sh/nuxc3ylc",
       "id": "2",
       "bbox": [
         0,
@@ -97,7 +97,7 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/kjm1cfa9",
+      "aid": "sh/y90je9cv",
       "id": "3",
       "bbox": [
         46,
@@ -114,7 +114,7 @@
       "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ra5gbq1o",
+      "aid": "sh/58z25kb6",
       "id": "4",
       "name": "kicker-15-label",
       "bbox": [
@@ -183,7 +183,7 @@
       "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2p8nqxs7",
+      "aid": "sh/gn29gr2p",
       "id": "5",
       "bbox": [
         1190,
@@ -248,7 +248,7 @@
       "order": 6,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/9gr2p8nq",
+      "aid": "sh/n29gr2p8",
       "id": "6",
       "bbox": [
         76,
@@ -257,8 +257,8 @@
         110
       ],
       "geometry": "rect",
-      "text": "Divergências deixam de ser anotações soltas e passam a ter acompanhamento.",
-      "textPreview": "Divergências deixam de ser anotações soltas e passam a ter acompanhamento.",
+      "text": "Divergências deixam de ser registros avulsos e passam a ter acompanhamento.",
+      "textPreview": "Divergências deixam de ser registros avulsos e passam a ter acompanhamento.",
       "resolvedFontSize": 37,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -280,7 +280,7 @@
         "lines": [
           {
             "index": 1,
-            "text": "Divergências deixam de ser anotações soltas e passam a ter"
+            "text": "Divergências deixam de ser registros avulsos e passam a ter"
           },
           {
             "index": 2,
@@ -291,7 +291,7 @@
       "paragraphs": [
         {
           "index": 1,
-          "text": "Divergências deixam de ser anotações soltas e passam a ter acompanhamento.",
+          "text": "Divergências deixam de ser registros avulsos e passam a ter acompanhamento.",
           "resolvedTextStyle": {
             "fontSize": 37,
             "typeface": "Arial",
@@ -302,7 +302,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Divergências deixam de ser anotações soltas e passam a ter acompanhamento.",
+              "text": "Divergências deixam de ser registros avulsos e passam a ter acompanhamento.",
               "fontSize": 37,
               "typeface": "Arial",
               "color": "#17202A",
@@ -320,7 +320,7 @@
       "order": 7,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/gvy90je9",
+      "aid": "sh/yhgn29gr",
       "id": "7",
       "bbox": [
         86,
@@ -337,7 +337,7 @@
       "order": 8,
       "kind": "image",
       "scope": "slide",
-      "aid": "im/ulwval87",
+      "aid": "im/cvixczed",
       "id": "8",
       "bbox": [
         100,
@@ -349,7 +349,7 @@
       "contentType": "image/png",
       "imageFit": "contain",
       "asset": {
-        "assetId": "62765995-d9a0-4811-beb1-5b1555ef7e19",
+        "assetId": "35069acf-b08e-496b-acf5-d226d6616943",
         "contentType": "image/png",
         "byteLength": 78260
       }
@@ -358,7 +358,7 @@
       "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2t83itgf",
+      "aid": "sh/czed8v6p",
       "id": "9",
       "bbox": [
         94,

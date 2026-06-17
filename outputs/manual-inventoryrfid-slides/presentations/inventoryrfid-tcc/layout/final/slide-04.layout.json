@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/99fa1f",
-    "id": "99fa1f",
+    "aid": "sl/gl2fyx",
+    "id": "gl2fyx",
     "slide": 4,
-    "layoutId": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2hwfyxob",
+      "aid": "sh/kre1w7mp",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/94fu18jq",
+      "aid": "sh/val87ed8",
       "id": "2",
       "bbox": [
         0,
@@ -97,7 +97,7 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/kjm1cfa9",
+      "aid": "sh/6psfil0r",
       "id": "3",
       "bbox": [
         46,
@@ -114,7 +114,7 @@
       "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ra5gbq1o",
+      "aid": "sh/donyd0z6",
       "id": "4",
       "name": "kicker-4-label",
       "bbox": [
@@ -183,7 +183,7 @@
       "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2p8nqxs7",
+      "aid": "sh/k3q5o7qp",
       "id": "5",
       "bbox": [
         1190,
@@ -248,7 +248,7 @@
       "order": 6,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/9gr2p8nq",
+      "aid": "sh/vixczed8",
       "id": "6",
       "bbox": [
         76,
@@ -320,7 +320,7 @@
       "order": 7,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/gvy90je9",
+      "aid": "sh/2x4nap4r",
       "id": "7",
       "bbox": [
         84,
@@ -337,7 +337,7 @@
       "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/re1w7mp0",
+      "aid": "sh/d0z61032",
       "id": "8",
       "bbox": [
         112,
@@ -406,7 +406,7 @@
       "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2t83itgf",
+      "aid": "sh/kf6dcbul",
       "id": "9",
       "bbox": [
         84,
@@ -423,7 +423,7 @@
       "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/sneloj2t",
+      "aid": "sh/ylc7u54z",
       "id": "10",
       "bbox": [
         112,
@@ -492,7 +492,7 @@
       "order": 11,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/l87ed8ba",
+      "aid": "sh/r65wjudg",
       "id": "11",
       "bbox": [
         84,
@@ -509,7 +509,7 @@
       "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ahoza1gv",
+      "aid": "sh/gr2p8nqx",
       "id": "12",
       "bbox": [
         112,
@@ -578,7 +578,7 @@
       "order": 13,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/32lszqtc",
+      "aid": "sh/9cvixcze",
       "id": "13",
       "bbox": [
         718,
@@ -595,7 +595,7 @@
       "order": 14,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/szqtcj6t",
+      "aid": "sh/yxobm58z",
       "id": "14",
       "bbox": [
         744,
@@ -663,7 +663,7 @@
       "order": 15,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/lkjm1cfa",
+      "aid": "sh/nih4byhg",
       "id": "15",
       "bbox": [
         744,
@@ -672,8 +672,8 @@
         24
       ],
       "geometry": "rect",
-      "text": "linha de visada e conferência item a item",
-      "textPreview": "linha de visada e conferência item a item",
+      "text": "de conferência visual item a item",
+      "textPreview": "de conferência visual item a item",
       "resolvedFontSize": 18,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -694,14 +694,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "linha de visada e conferência item a item"
+            "text": "de conferência visual item a item"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "linha de visada e conferência item a item",
+          "text": "de conferência visual item a item",
           "resolvedTextStyle": {
             "fontSize": 18,
             "typeface": "Arial",
@@ -711,7 +711,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "linha de visada e conferência item a item",
+              "text": "de conferência visual item a item",
               "fontSize": 18,
               "typeface": "Arial",
               "color": "#51606F"
@@ -728,7 +728,7 @@
       "order": 16,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/at47y1kr",
+      "aid": "sh/g3ex0nux",
       "id": "16",
       "bbox": [
         718,
@@ -745,7 +745,7 @@
       "order": 17,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/3ex0nuxc",
+      "aid": "sh/5o7qpg3e",
       "id": "17",
       "bbox": [
         744,
@@ -813,7 +813,7 @@
       "order": 18,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/w3m94fu1",
+      "aid": "sh/y1kre1w7",
       "id": "18",
       "bbox": [
         744,
@@ -822,8 +822,8 @@
         24
       ],
       "geometry": "rect",
-      "text": "histórico, auditoria e inconsistências",
-      "textPreview": "histórico, auditoria e inconsistências",
+      "text": "com histórico e auditoria por evento",
+      "textPreview": "com histórico e auditoria por evento",
       "resolvedFontSize": 18,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -844,14 +844,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "histórico, auditoria e inconsistências"
+            "text": "com histórico e auditoria por evento"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "histórico, auditoria e inconsistências",
+          "text": "com histórico e auditoria por evento",
           "resolvedTextStyle": {
             "fontSize": 18,
             "typeface": "Arial",
@@ -861,7 +861,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "histórico, auditoria e inconsistências",
+              "text": "com histórico e auditoria por evento",
               "fontSize": 18,
               "typeface": "Arial",
               "color": "#51606F"
@@ -878,7 +878,7 @@
       "order": 19,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/loj2t83i",
+      "aid": "sh/rmhk3q5o",
       "id": "19",
       "bbox": [
         718,
@@ -895,7 +895,7 @@
       "order": 20,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/p8nqxs72",
+      "aid": "sh/3ylc7u54",
       "id": "20",
       "bbox": [
         744,
@@ -963,7 +963,7 @@
       "order": 21,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/0nuxc3yl",
+      "aid": "sh/adsji5sn",
       "id": "21",
       "bbox": [
         744,
@@ -972,8 +972,8 @@
         24
       ],
       "geometry": "rect",
-      "text": "sem extrapolar alcance ou leitura simultânea",
-      "textPreview": "sem extrapolar alcance ou leitura simultânea",
+      "text": "sem extrapolar alcance físico",
+      "textPreview": "sem extrapolar alcance físico",
       "resolvedFontSize": 18,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -990,22 +990,18 @@
         }
       },
       "textLayout": {
-        "lineCount": 2,
+        "lineCount": 1,
         "lines": [
           {
             "index": 1,
-            "text": "sem extrapolar alcance ou leitura"
-          },
-          {
-            "index": 2,
-            "text": "simultânea"
+            "text": "sem extrapolar alcance físico"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "sem extrapolar alcance ou leitura simultânea",
+          "text": "sem extrapolar alcance físico",
           "resolvedTextStyle": {
             "fontSize": 18,
             "typeface": "Arial",
@@ -1015,7 +1011,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "sem extrapolar alcance ou leitura simultânea",
+              "text": "sem extrapolar alcance físico",
               "fontSize": 18,
               "typeface": "Arial",
               "color": "#51606F"

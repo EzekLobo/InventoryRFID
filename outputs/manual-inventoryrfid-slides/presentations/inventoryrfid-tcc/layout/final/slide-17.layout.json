@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/hc0lg6",
-    "id": "hc0lg6",
+    "aid": "sl/kzfk0z",
+    "id": "kzfk0z",
     "slide": 17,
-    "layoutId": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/u18jqh0f",
+      "aid": "sh/yd0z6103",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1orytsvu",
+      "aid": "sh/90je9cvi",
       "id": "2",
       "bbox": [
         0,
@@ -97,7 +97,7 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/c7u54zid",
+      "aid": "sh/gfmlkjm1",
       "id": "3",
       "bbox": [
         46,
@@ -114,7 +114,7 @@
       "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/judg7ads",
+      "aid": "sh/rmhk3q5o",
       "id": "4",
       "name": "kicker-17-label",
       "bbox": [
@@ -183,7 +183,7 @@
       "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/u9knih4b",
+      "aid": "sh/y1kre1w7",
       "id": "5",
       "bbox": [
         1190,
@@ -248,7 +248,7 @@
       "order": 6,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1032lszq",
+      "aid": "sh/9s36hcrm",
       "id": "6",
       "bbox": [
         76,
@@ -320,7 +320,7 @@
       "order": 7,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/cfa9w3m9",
+      "aid": "sh/g7adsji5",
       "id": "7",
       "bbox": [
         84,
@@ -337,7 +337,7 @@
       "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/nyd0z610",
+      "aid": "sh/nih4byhg",
       "id": "8",
       "bbox": [
         112,
@@ -406,7 +406,7 @@
       "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/udg7adsj",
+      "aid": "sh/yxobm58z",
       "id": "9",
       "bbox": [
         84,
@@ -423,7 +423,7 @@
       "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/czed8v6p",
+      "aid": "sh/obm58z25",
       "id": "10",
       "bbox": [
         112,
@@ -496,7 +496,7 @@
       "order": 11,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/5kb6xkf6",
+      "aid": "sh/hwfyxobm",
       "id": "11",
       "bbox": [
         84,
@@ -513,7 +513,7 @@
       "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ytsvu9kn",
+      "aid": "sh/65wjudg7",
       "id": "12",
       "bbox": [
         112,
@@ -522,8 +522,8 @@
         64
       ],
       "geometry": "rect",
-      "text": "Os limites são claros: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
-      "textPreview": "Os limites são claros: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
+      "text": "Os limites permanecem explícitos: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
+      "textPreview": "Os limites permanecem explícitos: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
       "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -544,22 +544,22 @@
         "lines": [
           {
             "index": 1,
-            "text": "Os limites são claros: não foram medidos alcance,"
+            "text": "Os limites permanecem explícitos: não foram"
           },
           {
             "index": 2,
-            "text": "taxa de leitura, múltiplas tags ou interferência"
+            "text": "medidos alcance, taxa de leitura, múltiplas tags ou"
           },
           {
             "index": 3,
-            "text": "ambiental."
+            "text": "interferência ambiental."
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Os limites são claros: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
+          "text": "Os limites permanecem explícitos: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
           "resolvedTextStyle": {
             "fontSize": 23,
             "typeface": "Arial",
@@ -569,7 +569,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Os limites são claros: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
+              "text": "Os limites permanecem explícitos: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
               "fontSize": 23,
               "typeface": "Arial",
               "color": "#17202A"
@@ -586,7 +586,7 @@
       "order": 13,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/neloj2t8",
+      "aid": "sh/zqtcj6to",
       "id": "13",
       "bbox": [
         718,
@@ -603,7 +603,7 @@
       "order": 14,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/cbulwval",
+      "aid": "sh/oza1gvy9",
       "id": "14",
       "bbox": [
         744,
@@ -671,7 +671,7 @@
       "order": 15,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/5sneloj2",
+      "aid": "sh/hk3q5o7q",
       "id": "15",
       "bbox": [
         744,
@@ -740,7 +740,7 @@
       "order": 16,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/u54zidon",
+      "aid": "sh/6xkf6dcb",
       "id": "16",
       "bbox": [
         718,
@@ -757,7 +757,7 @@
       "order": 17,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/nqxs72x4",
+      "aid": "sh/zed8v6ps",
       "id": "17",
       "bbox": [
         744,
@@ -825,7 +825,7 @@
       "order": 18,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/gbq1oryt",
+      "aid": "sh/orytsvu9",
       "id": "18",
       "bbox": [
         744,
@@ -894,7 +894,7 @@
       "order": 19,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/5wjudg7a",
+      "aid": "sh/hcrmhk3q",
       "id": "19",
       "bbox": [
         718,
@@ -911,7 +911,7 @@
       "order": 20,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/t47y1kre",
+      "aid": "sh/5gbq1ory",
       "id": "20",
       "bbox": [
         744,
@@ -979,7 +979,7 @@
       "order": 21,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/0je9cvix",
+      "aid": "sh/cvixczed",
       "id": "21",
       "bbox": [
         744,

@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/go1yxa",
-    "id": "go1yxa",
+    "aid": "sl/5x2axz",
+    "id": "5x2axz",
     "slide": 5,
-    "layoutId": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/jm1cfa9w",
+      "aid": "sh/0rqd4vmt",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/c7u54zid",
+      "aid": "sh/b6xkf6dc",
       "id": "2",
       "bbox": [
         0,
@@ -97,7 +97,7 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1orytsvu",
+      "aid": "sh/il0rqd4v",
       "id": "3",
       "bbox": [
         46,
@@ -114,7 +114,7 @@
       "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/u9knih4b",
+      "aid": "sh/t47y1kre",
       "id": "4",
       "name": "kicker-5-label",
       "bbox": [
@@ -183,7 +183,7 @@
       "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/judg7ads",
+      "aid": "sh/0je9cvix",
       "id": "5",
       "bbox": [
         1190,
@@ -248,7 +248,7 @@
       "order": 6,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/cfa9w3m9",
+      "aid": "sh/byhgn29g",
       "id": "6",
       "bbox": [
         76,
@@ -320,7 +320,7 @@
       "order": 7,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1032lszq",
+      "aid": "sh/idonyd0z",
       "id": "7",
       "bbox": [
         84,
@@ -337,7 +337,7 @@
       "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/udg7adsj",
+      "aid": "sh/p0bi9s36",
       "id": "8",
       "bbox": [
         112,
@@ -406,7 +406,7 @@
       "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/nyd0z610",
+      "aid": "sh/0fepkzup",
       "id": "9",
       "bbox": [
         84,
@@ -423,7 +423,7 @@
       "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/v6psfil0",
+      "aid": "sh/itgfmlkj",
       "id": "10",
       "bbox": [
         112,
@@ -492,7 +492,7 @@
       "order": 11,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2lszqtcj",
+      "aid": "sh/7ed8bat4",
       "id": "11",
       "bbox": [
         84,
@@ -509,7 +509,7 @@
       "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/d8bat47y",
+      "aid": "sh/0z61032l",
       "id": "12",
       "bbox": [
         112,
@@ -578,7 +578,7 @@
       "order": 13,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/knih4byh",
+      "aid": "sh/pkzupwb2",
       "id": "13",
       "bbox": [
         720,
@@ -595,7 +595,7 @@
       "order": 14,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/vu9knih4",
+      "aid": "sh/ih4byhgn",
       "id": "14",
       "bbox": [
         746,
@@ -663,7 +663,7 @@
       "order": 15,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/29gr2p8n",
+      "aid": "sh/72x4nap4",
       "id": "15",
       "bbox": [
         746,
@@ -728,7 +728,7 @@
       "order": 16,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/d0z61032",
+      "aid": "sh/0nuxc3yl",
       "id": "16",
       "bbox": [
         720,
@@ -745,7 +745,7 @@
       "order": 17,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/kf6dcbul",
+      "aid": "sh/p8nqxs72",
       "id": "17",
       "bbox": [
         746,
@@ -813,7 +813,7 @@
       "order": 18,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/vixczed8",
+      "aid": "sh/ed8v6psf",
       "id": "18",
       "bbox": [
         746,
@@ -878,7 +878,7 @@
       "order": 19,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/2x4nap4r",
+      "aid": "sh/7y1kre1w",
       "id": "19",
       "bbox": [
         720,
@@ -895,7 +895,7 @@
       "order": 20,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ex0nuxc3",
+      "aid": "sh/j6tovaho",
       "id": "20",
       "bbox": [
         746,
@@ -963,7 +963,7 @@
       "order": 21,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/3itgfmlk",
+      "aid": "sh/ulwval87",
       "id": "21",
       "bbox": [
         746,
@@ -972,8 +972,8 @@
         24
       ],
       "geometry": "rect",
-      "text": "comparação lógico/físico",
-      "textPreview": "comparação lógico/físico",
+      "text": "comparação entre lógico e físico",
+      "textPreview": "comparação entre lógico e físico",
       "resolvedFontSize": 19,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -994,14 +994,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "comparação lógico/físico"
+            "text": "comparação entre lógico e físico"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "comparação lógico/físico",
+          "text": "comparação entre lógico e físico",
           "resolvedTextStyle": {
             "fontSize": 19,
             "typeface": "Arial",
@@ -1011,7 +1011,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "comparação lógico/físico",
+              "text": "comparação entre lógico e físico",
               "fontSize": 19,
               "typeface": "Arial",
               "color": "#51606F"

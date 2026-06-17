@@ -74,9 +74,9 @@ const slides = [
       "A aplicação interpreta leituras como evidência para auditoria patrimonial.",
     ],
     proof: [
-      ["Menos dependência", "linha de visada e conferência item a item"],
-      ["Mais rastreabilidade", "histórico, auditoria e inconsistências"],
-      ["Cautela experimental", "sem extrapolar alcance ou leitura simultânea"],
+      ["Menos dependência", "de conferência visual item a item"],
+      ["Mais rastreabilidade", "com histórico e auditoria por evento"],
+      ["Cautela experimental", "sem extrapolar alcance físico"],
     ],
   },
   {
@@ -90,16 +90,16 @@ const slides = [
     callouts: [
       { value: "API REST", label: "entrada padronizada" },
       { value: "RFID", label: "identificação física" },
-      { value: "Auditoria", label: "comparação lógico/físico" },
+      { value: "Auditoria", label: "comparação entre lógico e físico" },
     ],
   },
   {
     section: "TRABALHOS RELACIONADOS",
-    title: "A literatura reforça RFID, middleware e cautela na validação física.",
+    title: "A literatura fundamenta RFID e middleware, com cautela na validação física.",
     comparison: [
       ["RFID em inventário", "base conceitual para automação"],
       ["Middleware/IoT", "eventos, normalização e integração"],
-      ["Este protótipo", "auditoria patrimonial com comparação esperado-observado"],
+      ["Este protótipo", "auditoria patrimonial entre esperado e observado"],
     ],
   },
   {
@@ -139,7 +139,7 @@ const slides = [
   },
   {
     section: "FLUXO RFID",
-    title: "O fluxo distingue validação física real e caminho escalável por sensores/gateways.",
+    title: "O fluxo distingue validação física real e caminho escalável com sensores e gateways.",
     flowLanes: [
       {
         title: "Rota validada fisicamente",
@@ -150,7 +150,7 @@ const slides = [
       {
         title: "Rota escalável verificada por software",
         accent: COLORS.gold,
-        steps: ["Sensor/gateway", "Evento motion_detected", "Janela start_reading", "tags_read enviado à API"],
+        steps: ["Sensor ou gateway", "Evento motion_detected", "Janela start_reading", "tags_read enviado à API"],
         note: "Preserva o desenho para sensores e leitores em rede, sem afirmar validação física completa.",
       },
     ],
@@ -159,7 +159,7 @@ const slides = [
     section: "PROCESSAMENTO",
     title: "Cada leitura é validada, normalizada e convertida em consequência operacional.",
     steps: [
-      ["1", "Receber evento", "tags_read enviado pelo comunicador ou por dispositivo com rede."],
+      ["1", "Receber evento", "tags_read enviado pelo comunicador ou por dispositivo conectado à rede."],
       ["2", "Aplicar regras", "autenticação, janela ativa, deduplicação e validação da tag."],
       ["3", "Registrar efeito", "atualização de local, histórico, auditoria ou inconsistência."],
     ],
@@ -178,7 +178,7 @@ const slides = [
   },
   {
     section: "INCONSISTÊNCIAS",
-    title: "Divergências deixam de ser anotações soltas e passam a ter acompanhamento.",
+    title: "Divergências deixam de ser registros avulsos e passam a ter acompanhamento.",
     image: ASSETS.inconsistencias,
     caption: "Acompanhamento de pendências como item ausente, local divergente e tag desconhecida.",
   },
@@ -186,12 +186,12 @@ const slides = [
     section: "VALIDAÇÃO",
     title: "Seis cenários confirmaram o comportamento funcional em dois ambientes.",
     validation: [
-      ["Leitura conhecida", "6/6", "item detectado e ausentes classificados"],
+      ["Leitura conhecida", "6/6", "item detectado e itens ausentes classificados"],
       ["Resolução de inconsistência", "6/6", "pendência encerrada com histórico"],
       ["Tag desconhecida", "6/6", "inconsistência registrada"],
       ["Local divergente", "6/6", "divergência identificada"],
       ["Duplicidade", "6/6", "leituras consolidadas"],
-      ["Leitor sem resposta", "6/6", "estado sinalizado"],
+      ["Leitor sem resposta", "6/6", "estado sinalizado no sistema"],
     ],
   },
   {
@@ -200,7 +200,7 @@ const slides = [
     bullets: [
       "O protótipo integra cadastro patrimonial, eventos RFID, auditoria, histórico e inconsistências.",
       "A contribuição está em transformar leitura RFID em evidência para comparar inventário lógico e físico.",
-      "Os limites são claros: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
+      "Os limites permanecem explícitos: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
     ],
     proof: [
       ["Contribuição", "base funcional extensível para rotinas patrimoniais"],

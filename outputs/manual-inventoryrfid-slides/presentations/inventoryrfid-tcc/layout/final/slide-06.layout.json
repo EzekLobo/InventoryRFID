@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/j55a49",
-    "id": "j55a49",
+    "aid": "sl/fh42f5",
+    "id": "fh42f5",
     "slide": 6,
-    "layoutId": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "d05b4e2f-a965-442f-8c2a-e4370bc7bf7a",
+      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "54dbc06a-087d-4f80-acc7-7a38566a3f60",
+      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/a5gbq1or",
+      "aid": "sh/1032lszq",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/lszqtcj6",
+      "aid": "sh/u9knih4b",
       "id": "2",
       "bbox": [
         0,
@@ -97,7 +97,7 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/s72x4nap",
+      "aid": "sh/judg7ads",
       "id": "3",
       "bbox": [
         46,
@@ -114,7 +114,7 @@
       "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/3ylc7u54",
+      "aid": "sh/c7u54zid",
       "id": "4",
       "name": "kicker-6-label",
       "bbox": [
@@ -183,7 +183,7 @@
       "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/adsji5sn",
+      "aid": "sh/1orytsvu",
       "id": "5",
       "bbox": [
         1190,
@@ -248,7 +248,7 @@
       "order": 6,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/h4byhgn2",
+      "aid": "sh/u18jqh0f",
       "id": "6",
       "bbox": [
         76,
@@ -257,8 +257,8 @@
         110
       ],
       "geometry": "rect",
-      "text": "A literatura reforça RFID, middleware e cautela na validação física.",
-      "textPreview": "A literatura reforça RFID, middleware e cautela na validação física.",
+      "text": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
+      "textPreview": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
       "resolvedFontSize": 37,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -280,18 +280,18 @@
         "lines": [
           {
             "index": 1,
-            "text": "A literatura reforça RFID, middleware e cautela na validação"
+            "text": "A literatura fundamenta RFID e middleware, com cautela na"
           },
           {
             "index": 2,
-            "text": "física."
+            "text": "validação física."
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "A literatura reforça RFID, middleware e cautela na validação física.",
+          "text": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
           "resolvedTextStyle": {
             "fontSize": 37,
             "typeface": "Arial",
@@ -302,7 +302,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "A literatura reforça RFID, middleware e cautela na validação física.",
+              "text": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
               "fontSize": 37,
               "typeface": "Arial",
               "color": "#17202A",
@@ -320,7 +320,7 @@
       "order": 7,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/sji5snel",
+      "aid": "sh/jm1cfa9w",
       "id": "7",
       "bbox": [
         112,
@@ -337,7 +337,7 @@
       "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/za1gvy90",
+      "aid": "sh/cvixczed",
       "id": "8",
       "bbox": [
         134,
@@ -405,7 +405,7 @@
       "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ap4r65wj",
+      "aid": "sh/5gbq1ory",
       "id": "9",
       "bbox": [
         134,
@@ -474,7 +474,7 @@
       "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/0je9cvix",
+      "aid": "sh/18jqh0fe",
       "id": "10",
       "bbox": [
         462,
@@ -491,7 +491,7 @@
       "order": 11,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/t47y1kre",
+      "aid": "sh/8nqxs72x",
       "id": "11",
       "bbox": [
         484,
@@ -559,7 +559,7 @@
       "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/idonyd0z",
+      "aid": "sh/j2t83itg",
       "id": "12",
       "bbox": [
         484,
@@ -628,7 +628,7 @@
       "order": 13,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/byhgn29g",
+      "aid": "sh/qh0fepkz",
       "id": "13",
       "bbox": [
         812,
@@ -645,7 +645,7 @@
       "order": 14,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/0rqd4vmt",
+      "aid": "sh/1w7mp0bi",
       "id": "14",
       "bbox": [
         834,
@@ -713,7 +713,7 @@
       "order": 15,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/tcj6tova",
+      "aid": "sh/8bat47y1",
       "id": "15",
       "bbox": [
         834,
@@ -722,8 +722,8 @@
         68
       ],
       "geometry": "rect",
-      "text": "auditoria patrimonial com comparação esperado-observado",
-      "textPreview": "auditoria patrimonial com comparação esperado-observado",
+      "text": "auditoria patrimonial entre esperado e observado",
+      "textPreview": "auditoria patrimonial entre esperado e observado",
       "resolvedFontSize": 21,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -748,18 +748,18 @@
           },
           {
             "index": 2,
-            "text": "com comparação"
+            "text": "entre esperado e"
           },
           {
             "index": 3,
-            "text": "esperado-observado"
+            "text": "observado"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "auditoria patrimonial com comparação esperado-observado",
+          "text": "auditoria patrimonial entre esperado e observado",
           "resolvedTextStyle": {
             "fontSize": 21,
             "typeface": "Arial",
@@ -769,7 +769,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "auditoria patrimonial com comparação esperado-observado",
+              "text": "auditoria patrimonial entre esperado e observado",
               "fontSize": 21,
               "typeface": "Arial",
               "color": "#17202A"
@@ -786,7 +786,7 @@
       "order": 16,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/il0rqd4v",
+      "aid": "sh/jqh0fepk",
       "id": "16",
       "bbox": [
         126,
