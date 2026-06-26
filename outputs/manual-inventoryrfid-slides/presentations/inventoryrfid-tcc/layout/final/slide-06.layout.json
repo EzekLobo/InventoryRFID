@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/fh42f5",
-    "id": "fh42f5",
+    "aid": "sl/k7gng9",
+    "id": "k7gng9",
     "slide": 6,
-    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+    "layoutId": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+    "masterLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+      "id": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "parentLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "id": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1032lszq",
+      "aid": "sh/re1w7mp0",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/u9knih4b",
+      "aid": "sh/kzupwb2h",
       "id": "2",
       "bbox": [
         0,
@@ -97,94 +97,8 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/judg7ads",
+      "aid": "sh/9knih4by",
       "id": "3",
-      "bbox": [
-        46,
-        48,
-        36,
-        4
-      ],
-      "geometry": "rect",
-      "fillColor": "#D8A21B",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 4,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/c7u54zid",
-      "id": "4",
-      "name": "kicker-6-label",
-      "bbox": [
-        92,
-        34,
-        360,
-        34
-      ],
-      "geometry": "rect",
-      "text": "TRABALHOS RELACIONADOS",
-      "textPreview": "TRABALHOS RELACIONADOS",
-      "resolvedFontSize": 18,
-      "resolvedTextStyle": {
-        "anchor": 2,
-        "fontSize": 18,
-        "typeface": "Arial",
-        "color": "#075D3B",
-        "bold": true,
-        "alignment": "left",
-        "verticalAlignment": "middle",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "TRABALHOS RELACIONADOS"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "TRABALHOS RELACIONADOS",
-          "resolvedTextStyle": {
-            "fontSize": 18,
-            "typeface": "Arial",
-            "color": "#075D3B",
-            "bold": true,
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "TRABALHOS RELACIONADOS",
-              "fontSize": 18,
-              "typeface": "Arial",
-              "color": "#075D3B",
-              "bold": true
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 5,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/1orytsvu",
-      "id": "5",
       "bbox": [
         1190,
         650,
@@ -245,20 +159,20 @@
       "lineWidth": 0
     },
     {
-      "order": 6,
+      "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/u18jqh0f",
-      "id": "6",
+      "aid": "sh/25kb6xkf",
+      "id": "4",
       "bbox": [
         76,
-        82,
+        58,
         1080,
         110
       ],
       "geometry": "rect",
-      "text": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
-      "textPreview": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
+      "text": "Comparação com trabalhos relacionados",
+      "textPreview": "Comparação com trabalhos relacionados",
       "resolvedFontSize": 37,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -276,22 +190,18 @@
         }
       },
       "textLayout": {
-        "lineCount": 2,
+        "lineCount": 1,
         "lines": [
           {
             "index": 1,
-            "text": "A literatura fundamenta RFID e middleware, com cautela na"
-          },
-          {
-            "index": 2,
-            "text": "validação física."
+            "text": "Comparação com trabalhos relacionados"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
+          "text": "Comparação com trabalhos relacionados",
           "resolvedTextStyle": {
             "fontSize": 37,
             "typeface": "Arial",
@@ -302,7 +212,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "A literatura fundamenta RFID e middleware, com cautela na validação física.",
+              "text": "Comparação com trabalhos relacionados",
               "fontSize": 37,
               "typeface": "Arial",
               "color": "#17202A",
@@ -317,14 +227,79 @@
       "lineWidth": 0
     },
     {
-      "order": 7,
+      "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/jm1cfa9w",
-      "id": "7",
+      "aid": "sh/rqd4vmtw",
+      "id": "5",
+      "bbox": [
+        78,
+        126,
+        980,
+        46
+      ],
+      "geometry": "rect",
+      "text": "A literatura sustenta RFID, integração com sistemas e cautela na avaliação física da tecnologia.",
+      "textPreview": "A literatura sustenta RFID, integração com sistemas e cautela na avaliação física da tecnologia.",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "A literatura sustenta RFID, integração com sistemas e cautela na avaliação física da tecnologia."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "A literatura sustenta RFID, integração com sistemas e cautela na avaliação física da tecnologia.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "A literatura sustenta RFID, integração com sistemas e cautela na avaliação física da tecnologia.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#51606F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kb6xkf6d",
+      "id": "6",
       "bbox": [
         112,
-        286,
+        300,
         288,
         178
       ],
@@ -334,14 +309,14 @@
       "lineWidth": 1
     },
     {
-      "order": 8,
+      "order": 7,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/cvixczed",
-      "id": "8",
+      "aid": "sh/9w3m94fu",
+      "id": "7",
       "bbox": [
         134,
-        312,
+        326,
         232,
         34
       ],
@@ -402,20 +377,20 @@
       "lineWidth": 0
     },
     {
-      "order": 9,
+      "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/5gbq1ory",
-      "id": "9",
+      "aid": "sh/2hwfyxob",
+      "id": "8",
       "bbox": [
         134,
-        366,
+        380,
         232,
         68
       ],
       "geometry": "rect",
-      "text": "base conceitual para automação",
-      "textPreview": "base conceitual para automação",
+      "text": "identificação automática de bens",
+      "textPreview": "identificação automática de bens",
       "resolvedFontSize": 21,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -436,18 +411,18 @@
         "lines": [
           {
             "index": 1,
-            "text": "base conceitual para"
+            "text": "identificação automática"
           },
           {
             "index": 2,
-            "text": "automação"
+            "text": "de bens"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "base conceitual para automação",
+          "text": "identificação automática de bens",
           "resolvedTextStyle": {
             "fontSize": 21,
             "typeface": "Arial",
@@ -457,7 +432,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "base conceitual para automação",
+              "text": "identificação automática de bens",
               "fontSize": 21,
               "typeface": "Arial",
               "color": "#17202A"
@@ -471,14 +446,14 @@
       "lineWidth": 0
     },
     {
-      "order": 10,
+      "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/18jqh0fe",
-      "id": "10",
+      "aid": "sh/r2p8nqxs",
+      "id": "9",
       "bbox": [
         462,
-        286,
+        300,
         288,
         178
       ],
@@ -488,20 +463,20 @@
       "lineWidth": 1
     },
     {
-      "order": 11,
+      "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/8nqxs72x",
-      "id": "11",
+      "aid": "sh/7ed8bat4",
+      "id": "10",
       "bbox": [
         484,
-        312,
+        326,
         232,
         34
       ],
       "geometry": "rect",
-      "text": "Middleware/IoT",
-      "textPreview": "Middleware/IoT",
+      "text": "Middleware e IoT",
+      "textPreview": "Middleware e IoT",
       "resolvedFontSize": 24,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -523,14 +498,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "Middleware/IoT"
+            "text": "Middleware e IoT"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Middleware/IoT",
+          "text": "Middleware e IoT",
           "resolvedTextStyle": {
             "fontSize": 24,
             "typeface": "Arial",
@@ -541,11 +516,80 @@
           "runs": [
             {
               "index": 1,
-              "text": "Middleware/IoT",
+              "text": "Middleware e IoT",
               "fontSize": 24,
               "typeface": "Arial",
               "color": "#075D3B",
               "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/itgfmlkj",
+      "id": "11",
+      "bbox": [
+        484,
+        380,
+        232,
+        68
+      ],
+      "geometry": "rect",
+      "text": "integração de eventos a sistemas",
+      "textPreview": "integração de eventos a sistemas",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 21,
+        "typeface": "Arial",
+        "color": "#17202A",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "integração de eventos a"
+          },
+          {
+            "index": 2,
+            "text": "sistemas"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "integração de eventos a sistemas",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "typeface": "Arial",
+            "color": "#17202A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "integração de eventos a sistemas",
+              "fontSize": 21,
+              "typeface": "Arial",
+              "color": "#17202A"
             }
           ],
           "marginLeft": 0
@@ -559,80 +603,11 @@
       "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/j2t83itg",
+      "aid": "sh/pkzupwb2",
       "id": "12",
       "bbox": [
-        484,
-        366,
-        232,
-        68
-      ],
-      "geometry": "rect",
-      "text": "eventos, normalização e integração",
-      "textPreview": "eventos, normalização e integração",
-      "resolvedFontSize": 21,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 21,
-        "typeface": "Arial",
-        "color": "#17202A",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 2,
-        "lines": [
-          {
-            "index": 1,
-            "text": "eventos, normalização e"
-          },
-          {
-            "index": 2,
-            "text": "integração"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "eventos, normalização e integração",
-          "resolvedTextStyle": {
-            "fontSize": 21,
-            "typeface": "Arial",
-            "color": "#17202A",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "eventos, normalização e integração",
-              "fontSize": 21,
-              "typeface": "Arial",
-              "color": "#17202A"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 13,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/qh0fepkz",
-      "id": "13",
-      "bbox": [
         812,
-        286,
+        300,
         288,
         178
       ],
@@ -642,20 +617,20 @@
       "lineWidth": 1
     },
     {
-      "order": 14,
+      "order": 13,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1w7mp0bi",
-      "id": "14",
+      "aid": "sh/0z61032l",
+      "id": "13",
       "bbox": [
         834,
-        312,
+        326,
         232,
         34
       ],
       "geometry": "rect",
-      "text": "Este protótipo",
-      "textPreview": "Este protótipo",
+      "text": "InventoryRFID",
+      "textPreview": "InventoryRFID",
       "resolvedFontSize": 24,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -677,14 +652,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "Este protótipo"
+            "text": "InventoryRFID"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Este protótipo",
+          "text": "InventoryRFID",
           "resolvedTextStyle": {
             "fontSize": 24,
             "typeface": "Arial",
@@ -695,7 +670,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Este protótipo",
+              "text": "InventoryRFID",
               "fontSize": 24,
               "typeface": "Arial",
               "color": "#075D3B",
@@ -710,20 +685,20 @@
       "lineWidth": 0
     },
     {
-      "order": 15,
+      "order": 14,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/8bat47y1",
-      "id": "15",
+      "aid": "sh/72x4nap4",
+      "id": "14",
       "bbox": [
         834,
-        366,
+        380,
         232,
         68
       ],
       "geometry": "rect",
-      "text": "auditoria patrimonial entre esperado e observado",
-      "textPreview": "auditoria patrimonial entre esperado e observado",
+      "text": "auditoria e resolução de inconsistências",
+      "textPreview": "auditoria e resolução de inconsistências",
       "resolvedFontSize": 21,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -740,26 +715,22 @@
         }
       },
       "textLayout": {
-        "lineCount": 3,
+        "lineCount": 2,
         "lines": [
           {
             "index": 1,
-            "text": "auditoria patrimonial"
+            "text": "auditoria e resolução de"
           },
           {
             "index": 2,
-            "text": "entre esperado e"
-          },
-          {
-            "index": 3,
-            "text": "observado"
+            "text": "inconsistências"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "auditoria patrimonial entre esperado e observado",
+          "text": "auditoria e resolução de inconsistências",
           "resolvedTextStyle": {
             "fontSize": 21,
             "typeface": "Arial",
@@ -769,7 +740,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "auditoria patrimonial entre esperado e observado",
+              "text": "auditoria e resolução de inconsistências",
               "fontSize": 21,
               "typeface": "Arial",
               "color": "#17202A"
@@ -783,20 +754,20 @@
       "lineWidth": 0
     },
     {
-      "order": 16,
+      "order": 15,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/jqh0fepk",
-      "id": "16",
+      "aid": "sh/ih4byhgn",
+      "id": "15",
       "bbox": [
         126,
-        510,
+        524,
         880,
         54
       ],
       "geometry": "rect",
-      "text": "Síntese: o trabalho adota RFID e middleware como base, mas mantém explícito que a validação física foi limitada ao hardware disponível.",
-      "textPreview": "Síntese: o trabalho adota RFID e middleware como base, mas mantém explícito que a validação física foi limitada ao hardware disponível.",
+      "text": "Diferencial: a leitura RFID não fica restrita à identificação; ela alimenta auditoria patrimonial, registro e resolução de inconsistências e histórico operacional.",
+      "textPreview": "Diferencial: a leitura RFID não fica restrita à identificação; ela alimenta auditoria patrimonial, registro e resolução de inconsistência...",
       "resolvedFontSize": 21,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -817,18 +788,18 @@
         "lines": [
           {
             "index": 1,
-            "text": "Síntese: o trabalho adota RFID e middleware como base, mas mantém explícito que a"
+            "text": "Diferencial: a leitura RFID não fica restrita à identificação; ela alimenta auditoria patrimonial,"
           },
           {
             "index": 2,
-            "text": "validação física foi limitada ao hardware disponível."
+            "text": "registro e resolução de inconsistências e histórico operacional."
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Síntese: o trabalho adota RFID e middleware como base, mas mantém explícito que a validação física foi limitada ao hardware disponível.",
+          "text": "Diferencial: a leitura RFID não fica restrita à identificação; ela alimenta auditoria patrimonial, registro e resolução de inconsistências e histórico operacional.",
           "resolvedTextStyle": {
             "fontSize": 21,
             "typeface": "Arial",
@@ -838,7 +809,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Síntese: o trabalho adota RFID e middleware como base, mas mantém explícito que a validação física foi limitada ao hardware disponível.",
+              "text": "Diferencial: a leitura RFID não fica restrita à identificação; ela alimenta auditoria patrimonial, registro e resolução de inconsistências e histórico operacional.",
               "fontSize": 21,
               "typeface": "Arial",
               "color": "#51606F"

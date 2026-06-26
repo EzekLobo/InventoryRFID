@@ -1,7 +1,7 @@
 {
   "output": "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\docs\\tcc\\apresentacao-inventoryrfid-15min.pptx",
-  "outputBytes": 1033258,
-  "slideCount": 18,
+  "outputBytes": 674170,
+  "slideCount": 17,
   "slideSize": {
     "width": 1280,
     "height": 720
@@ -24,8 +24,7 @@
     "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\preview\\slide-14.png",
     "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\preview\\slide-15.png",
     "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\preview\\slide-16.png",
-    "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\preview\\slide-17.png",
-    "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\preview\\slide-18.png"
+    "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\preview\\slide-17.png"
   ],
   "layoutDir": "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\layout\\final",
   "layoutResults": [
@@ -79,9 +78,6 @@
     },
     {
       "layoutPath": "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\layout\\final\\slide-17.layout.json"
-    },
-    {
-      "layoutPath": "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\layout\\final\\slide-18.layout.json"
     }
   ],
   "contactSheet": "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\preview\\contact-sheet.png",
@@ -187,12 +183,6 @@
       "requestedSlideNumber": 17,
       "modulePath": "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\slides\\slide-17.mjs",
       "exportName": "slide17"
-    },
-    {
-      "index": 18,
-      "requestedSlideNumber": 18,
-      "modulePath": "C:\\Users\\ezequiel.oliveira\\Documents\\InventoryRFID\\outputs\\manual-inventoryrfid-slides\\presentations\\inventoryrfid-tcc\\slides\\slide-18.mjs",
-      "exportName": "slide18"
     }
   ]
 }

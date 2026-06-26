@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/pksmbd",
-    "id": "pksmbd",
+    "aid": "sl/99ua9s",
+    "id": "99ua9s",
     "slide": 1,
-    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+    "layoutId": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+    "masterLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+      "id": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "parentLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "id": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/f6dcbulw",
+      "aid": "sh/a5gbq1or",
       "id": "1",
       "bbox": [
         0,
@@ -72,7 +72,7 @@
         720
       ],
       "geometry": "rect",
-      "fillColor": "#075D3B",
+      "fillColor": "#FFFFFF",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/4r65wjud",
+      "aid": "sh/lszqtcj6",
       "id": "2",
       "bbox": [
         0,
@@ -89,7 +89,7 @@
         720
       ],
       "geometry": "rect",
-      "fillColor": "rgba(0, 0, 0, 0)",
+      "fillColor": "#F7F9FB",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -97,13 +97,30 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/xc3ylc7u",
+      "aid": "sh/s72x4nap",
       "id": "3",
       "bbox": [
-        78,
-        76,
-        52,
-        6
+        0,
+        0,
+        18,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#0E7A4F",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3ylc7u54",
+      "id": "4",
+      "bbox": [
+        46,
+        48,
+        36,
+        4
       ],
       "geometry": "rect",
       "fillColor": "#D8A21B",
@@ -111,47 +128,81 @@
       "lineWidth": 0
     },
     {
-      "order": 4,
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/adsji5sn",
+      "id": "5",
+      "bbox": [
+        92,
+        136,
+        956,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#D7DEE6",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/h4byhgn2",
+      "id": "6",
+      "bbox": [
+        92,
+        622,
+        1094,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#D7DEE6",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
       "kind": "image",
       "scope": "slide",
-      "aid": "im/jm1cfa9w",
-      "id": "4",
+      "aid": "im/1cfa9w3m",
+      "id": "7",
       "bbox": [
-        1038,
-        58,
-        98,
-        110
+        1056,
+        46,
+        72,
+        82
       ],
       "alt": "Brasão da UESC",
       "contentType": "image/png",
       "imageFit": "contain",
       "asset": {
-        "assetId": "a6c7da96-4dcf-42f5-83d7-1d5947c4be3c",
+        "assetId": "3412b353-f724-457c-b9f2-fed67112a678",
         "contentType": "image/png",
-        "byteLength": 60608
+        "byteLength": 101110
       }
     },
     {
-      "order": 5,
+      "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/fepkzupw",
-      "id": "5",
+      "aid": "sh/za1gvy90",
+      "id": "8",
       "bbox": [
-        78,
-        100,
-        300,
-        32
+        92,
+        96,
+        720,
+        34
       ],
       "geometry": "rect",
-      "text": "TCC",
-      "textPreview": "TCC",
-      "resolvedFontSize": 20,
+      "text": "Universidade Estadual de Santa Cruz - UESC",
+      "textPreview": "Universidade Estadual de Santa Cruz - UESC",
+      "resolvedFontSize": 22,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 20,
+        "fontSize": 22,
         "typeface": "Arial",
-        "color": "#FFF4CF",
+        "color": "#17202A",
         "bold": true,
         "alignment": "left",
         "verticalAlignment": "top",
@@ -167,28 +218,28 @@
         "lines": [
           {
             "index": 1,
-            "text": "TCC"
+            "text": "Universidade Estadual de Santa Cruz - UESC"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "TCC",
+          "text": "Universidade Estadual de Santa Cruz - UESC",
           "resolvedTextStyle": {
-            "fontSize": 20,
+            "fontSize": 22,
             "typeface": "Arial",
-            "color": "#FFF4CF",
+            "color": "#17202A",
             "bold": true,
             "alignment": "left"
           },
           "runs": [
             {
               "index": 1,
-              "text": "TCC",
-              "fontSize": 20,
+              "text": "Universidade Estadual de Santa Cruz - UESC",
+              "fontSize": 22,
               "typeface": "Arial",
-              "color": "#FFF4CF",
+              "color": "#17202A",
               "bold": true
             }
           ],
@@ -200,28 +251,28 @@
       "lineWidth": 0
     },
     {
-      "order": 6,
+      "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/4zidonyd",
-      "id": "6",
+      "aid": "sh/ap4r65wj",
+      "id": "9",
       "bbox": [
-        76,
-        188,
-        850,
-        168
+        86,
+        228,
+        1044,
+        126
       ],
       "geometry": "rect",
-      "text": "Sistema de Inventário Baseado em Tecnologia RFID",
-      "textPreview": "Sistema de Inventário Baseado em Tecnologia RFID",
-      "resolvedFontSize": 50,
+      "text": "Sistema de inventário baseado em tecnologia RFID para o Colegiado de Ciência da Computação",
+      "textPreview": "Sistema de inventário baseado em tecnologia RFID para o Colegiado de Ciência da Computação",
+      "resolvedFontSize": 32,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 50,
+        "fontSize": 32,
         "typeface": "Arial",
-        "color": "#FFFFFF",
+        "color": "#17202A",
         "bold": true,
-        "alignment": "left",
+        "alignment": "center",
         "verticalAlignment": "top",
         "insets": {
           "top": 0,
@@ -235,32 +286,32 @@
         "lines": [
           {
             "index": 1,
-            "text": "Sistema de Inventário Baseado em"
+            "text": "Sistema de inventário baseado em tecnologia RFID para o"
           },
           {
             "index": 2,
-            "text": "Tecnologia RFID"
+            "text": "Colegiado de Ciência da Computação"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Sistema de Inventário Baseado em Tecnologia RFID",
+          "text": "Sistema de inventário baseado em tecnologia RFID para o Colegiado de Ciência da Computação",
           "resolvedTextStyle": {
-            "fontSize": 50,
+            "fontSize": 32,
             "typeface": "Arial",
-            "color": "#FFFFFF",
+            "color": "#17202A",
             "bold": true,
-            "alignment": "left"
+            "alignment": "center"
           },
           "runs": [
             {
               "index": 1,
-              "text": "Sistema de Inventário Baseado em Tecnologia RFID",
-              "fontSize": 50,
+              "text": "Sistema de inventário baseado em tecnologia RFID para o Colegiado de Ciência da Computação",
+              "fontSize": 32,
               "typeface": "Arial",
-              "color": "#FFFFFF",
+              "color": "#17202A",
               "bold": true
             }
           ],
@@ -272,93 +323,28 @@
       "lineWidth": 0
     },
     {
-      "order": 7,
+      "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/xkf6dcbu",
-      "id": "7",
+      "aid": "sh/0je9cvix",
+      "id": "10",
       "bbox": [
-        80,
-        378,
-        760,
-        44
-      ],
-      "geometry": "rect",
-      "text": "Aplicado ao Colegiado de Ciência da Computação",
-      "textPreview": "Aplicado ao Colegiado de Ciência da Computação",
-      "resolvedFontSize": 26,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 26,
-        "typeface": "Arial",
-        "color": "#DDEDE5",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "Aplicado ao Colegiado de Ciência da Computação"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "Aplicado ao Colegiado de Ciência da Computação",
-          "resolvedTextStyle": {
-            "fontSize": 26,
-            "typeface": "Arial",
-            "color": "#DDEDE5",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "Aplicado ao Colegiado de Ciência da Computação",
-              "fontSize": 26,
-              "typeface": "Arial",
-              "color": "#DDEDE5"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 8,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/qxs72x4n",
-      "id": "8",
-      "bbox": [
-        82,
-        520,
-        720,
-        28
+        330,
+        414,
+        560,
+        38
       ],
       "geometry": "rect",
       "text": "Ezequiel Lobo Oliveira",
       "textPreview": "Ezequiel Lobo Oliveira",
-      "resolvedFontSize": 22,
+      "resolvedFontSize": 30,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 22,
+        "fontSize": 30,
         "typeface": "Arial",
-        "color": "#FFFFFF",
+        "color": "#17202A",
         "bold": true,
-        "alignment": "left",
+        "alignment": "center",
         "verticalAlignment": "top",
         "insets": {
           "top": 0,
@@ -381,19 +367,19 @@
           "index": 1,
           "text": "Ezequiel Lobo Oliveira",
           "resolvedTextStyle": {
-            "fontSize": 22,
+            "fontSize": 30,
             "typeface": "Arial",
-            "color": "#FFFFFF",
+            "color": "#17202A",
             "bold": true,
-            "alignment": "left"
+            "alignment": "center"
           },
           "runs": [
             {
               "index": 1,
               "text": "Ezequiel Lobo Oliveira",
-              "fontSize": 22,
+              "fontSize": 30,
               "typeface": "Arial",
-              "color": "#FFFFFF",
+              "color": "#17202A",
               "bold": true
             }
           ],
@@ -405,27 +391,28 @@
       "lineWidth": 0
     },
     {
-      "order": 9,
+      "order": 11,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/fil0rqd4",
-      "id": "9",
+      "aid": "sh/t47y1kre",
+      "id": "11",
       "bbox": [
-        82,
-        556,
-        720,
-        28
+        282,
+        484,
+        660,
+        34
       ],
       "geometry": "rect",
-      "text": "Orientador: Prof. Jorge Lima",
-      "textPreview": "Orientador: Prof. Jorge Lima",
-      "resolvedFontSize": 22,
+      "text": "Orientador: Jorge Lima de Oliveira Filho",
+      "textPreview": "Orientador: Jorge Lima de Oliveira Filho",
+      "resolvedFontSize": 28,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 22,
+        "fontSize": 28,
         "typeface": "Arial",
-        "color": "#DDEDE5",
-        "alignment": "left",
+        "color": "#17202A",
+        "bold": true,
+        "alignment": "center",
         "verticalAlignment": "top",
         "insets": {
           "top": 0,
@@ -439,27 +426,29 @@
         "lines": [
           {
             "index": 1,
-            "text": "Orientador: Prof. Jorge Lima"
+            "text": "Orientador: Jorge Lima de Oliveira Filho"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Orientador: Prof. Jorge Lima",
+          "text": "Orientador: Jorge Lima de Oliveira Filho",
           "resolvedTextStyle": {
-            "fontSize": 22,
+            "fontSize": 28,
             "typeface": "Arial",
-            "color": "#DDEDE5",
-            "alignment": "left"
+            "color": "#17202A",
+            "bold": true,
+            "alignment": "center"
           },
           "runs": [
             {
               "index": 1,
-              "text": "Orientador: Prof. Jorge Lima",
-              "fontSize": 22,
+              "text": "Orientador: Jorge Lima de Oliveira Filho",
+              "fontSize": 28,
               "typeface": "Arial",
-              "color": "#DDEDE5"
+              "color": "#17202A",
+              "bold": true
             }
           ],
           "marginLeft": 0
@@ -470,26 +459,27 @@
       "lineWidth": 0
     },
     {
-      "order": 10,
+      "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/fepkzupw",
-      "id": "10",
+      "aid": "sh/idonyd0z",
+      "id": "12",
       "bbox": [
-        82,
-        592,
-        720,
-        28
+        92,
+        646,
+        470,
+        30
       ],
       "geometry": "rect",
-      "text": "UESC · 2026",
-      "textPreview": "UESC · 2026",
+      "text": "Bacharelado em Ciência da Computação",
+      "textPreview": "Bacharelado em Ciência da Computação",
       "resolvedFontSize": 22,
       "resolvedTextStyle": {
         "anchor": 1,
         "fontSize": 22,
         "typeface": "Arial",
-        "color": "#DDEDE5",
+        "color": "#17202A",
+        "bold": true,
         "alignment": "left",
         "verticalAlignment": "top",
         "insets": {
@@ -504,27 +494,97 @@
         "lines": [
           {
             "index": 1,
-            "text": "UESC · 2026"
+            "text": "Bacharelado em Ciência da Computação"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "UESC · 2026",
+          "text": "Bacharelado em Ciência da Computação",
           "resolvedTextStyle": {
             "fontSize": 22,
             "typeface": "Arial",
-            "color": "#DDEDE5",
+            "color": "#17202A",
+            "bold": true,
             "alignment": "left"
           },
           "runs": [
             {
               "index": 1,
-              "text": "UESC · 2026",
+              "text": "Bacharelado em Ciência da Computação",
               "fontSize": 22,
               "typeface": "Arial",
-              "color": "#DDEDE5"
+              "color": "#17202A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/byhgn29g",
+      "id": "13",
+      "bbox": [
+        908,
+        646,
+        250,
+        30
+      ],
+      "geometry": "rect",
+      "text": "Ilhéus - Bahia, 2026",
+      "textPreview": "Ilhéus - Bahia, 2026",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 22,
+        "typeface": "Arial",
+        "color": "#17202A",
+        "bold": true,
+        "alignment": "right",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Ilhéus - Bahia, 2026"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ilhéus - Bahia, 2026",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "typeface": "Arial",
+            "color": "#17202A",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ilhéus - Bahia, 2026",
+              "fontSize": 22,
+              "typeface": "Arial",
+              "color": "#17202A",
+              "bold": true
             }
           ],
           "marginLeft": 0

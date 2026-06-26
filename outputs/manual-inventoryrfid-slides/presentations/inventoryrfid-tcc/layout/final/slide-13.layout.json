@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/h8o5th",
-    "id": "h8o5th",
+    "aid": "sl/u55w72",
+    "id": "u55w72",
     "slide": 13,
-    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+    "layoutId": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+    "masterLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+      "id": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "parentLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "id": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/at47y1kr",
+      "aid": "sh/z25kb6xk",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/lkjm1cfa",
+      "aid": "sh/onyd0z61",
       "id": "2",
       "bbox": [
         0,
@@ -97,94 +97,8 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/szqtcj6t",
+      "aid": "sh/d8v6psfi",
       "id": "3",
-      "bbox": [
-        46,
-        48,
-        36,
-        4
-      ],
-      "geometry": "rect",
-      "fillColor": "#D8A21B",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 4,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/32lszqtc",
-      "id": "4",
-      "name": "kicker-13-label",
-      "bbox": [
-        92,
-        34,
-        360,
-        34
-      ],
-      "geometry": "rect",
-      "text": "INTERFACE",
-      "textPreview": "INTERFACE",
-      "resolvedFontSize": 18,
-      "resolvedTextStyle": {
-        "anchor": 2,
-        "fontSize": 18,
-        "typeface": "Arial",
-        "color": "#075D3B",
-        "bold": true,
-        "alignment": "left",
-        "verticalAlignment": "middle",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "INTERFACE"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "INTERFACE",
-          "resolvedTextStyle": {
-            "fontSize": 18,
-            "typeface": "Arial",
-            "color": "#075D3B",
-            "bold": true,
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "INTERFACE",
-              "fontSize": 18,
-              "typeface": "Arial",
-              "color": "#075D3B",
-              "bold": true
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 5,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/ahoza1gv",
-      "id": "5",
       "bbox": [
         1190,
         650,
@@ -245,20 +159,20 @@
       "lineWidth": 0
     },
     {
-      "order": 6,
+      "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/l87ed8ba",
-      "id": "6",
+      "aid": "sh/6tovahoz",
+      "id": "4",
       "bbox": [
         76,
-        82,
+        58,
         1080,
         110
       ],
       "geometry": "rect",
-      "text": "O painel inicial resume o estado operacional do inventário.",
-      "textPreview": "O painel inicial resume o estado operacional do inventário.",
+      "text": "Auditoria patrimonial",
+      "textPreview": "Auditoria patrimonial",
       "resolvedFontSize": 37,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -280,14 +194,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "O painel inicial resume o estado operacional do inventário."
+            "text": "Auditoria patrimonial"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "O painel inicial resume o estado operacional do inventário.",
+          "text": "Auditoria patrimonial",
           "resolvedTextStyle": {
             "fontSize": 37,
             "typeface": "Arial",
@@ -298,7 +212,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "O painel inicial resume o estado operacional do inventário.",
+              "text": "Auditoria patrimonial",
               "fontSize": 37,
               "typeface": "Arial",
               "color": "#17202A",
@@ -313,16 +227,81 @@
       "lineWidth": 0
     },
     {
-      "order": 7,
+      "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/sneloj2t",
-      "id": "7",
+      "aid": "sh/vahoza1g",
+      "id": "5",
+      "bbox": [
+        78,
+        126,
+        980,
+        46
+      ],
+      "geometry": "rect",
+      "text": "A auditoria compara o inventário lógico com o inventário físico formado pelas leituras.",
+      "textPreview": "A auditoria compara o inventário lógico com o inventário físico formado pelas leituras.",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "A auditoria compara o inventário lógico com o inventário físico formado pelas leituras."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "A auditoria compara o inventário lógico com o inventário físico formado pelas leituras.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "A auditoria compara o inventário lógico com o inventário físico formado pelas leituras.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#51606F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ovahoza1",
+      "id": "6",
       "bbox": [
         86,
-        204,
+        218,
         1110,
-        396
+        382
       ],
       "geometry": "rect",
       "fillColor": "#FFFFFF",
@@ -330,32 +309,32 @@
       "lineWidth": 1
     },
     {
-      "order": 8,
+      "order": 7,
       "kind": "image",
       "scope": "slide",
-      "aid": "im/e1w7mp0b",
-      "id": "8",
+      "aid": "im/cbulwval",
+      "id": "7",
       "bbox": [
         100,
-        218,
+        232,
         1082,
-        368
+        354
       ],
-      "alt": "Indicadores de leitores, itens, inconsistências e eventos recentes.",
+      "alt": "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos.",
       "contentType": "image/png",
       "imageFit": "contain",
       "asset": {
-        "assetId": "ede83792-ad22-46f3-95f0-8d0bc41d08ec",
+        "assetId": "4c88af94-47d1-4693-8766-de63c502f381",
         "contentType": "image/png",
-        "byteLength": 329100
+        "byteLength": 20344
       }
     },
     {
-      "order": 9,
+      "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/e9cvixcz",
-      "id": "9",
+      "aid": "sh/61032lsz",
+      "id": "8",
       "bbox": [
         94,
         616,
@@ -363,8 +342,8 @@
         32
       ],
       "geometry": "rect",
-      "text": "Indicadores de leitores, itens, inconsistências e eventos recentes.",
-      "textPreview": "Indicadores de leitores, itens, inconsistências e eventos recentes.",
+      "text": "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos.",
+      "textPreview": "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos.",
       "resolvedFontSize": 18,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -385,14 +364,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "Indicadores de leitores, itens, inconsistências e eventos recentes."
+            "text": "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos."
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Indicadores de leitores, itens, inconsistências e eventos recentes.",
+          "text": "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos.",
           "resolvedTextStyle": {
             "fontSize": 18,
             "typeface": "Arial",
@@ -402,7 +381,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Indicadores de leitores, itens, inconsistências e eventos recentes.",
+              "text": "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos.",
               "fontSize": 18,
               "typeface": "Arial",
               "color": "#51606F"

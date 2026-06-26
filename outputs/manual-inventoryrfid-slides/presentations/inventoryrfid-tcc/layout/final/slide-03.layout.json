@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/ijitu6",
-    "id": "ijitu6",
+    "aid": "sl/7km0r0",
+    "id": "7km0r0",
     "slide": 3,
-    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+    "layoutId": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+    "masterLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+      "id": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "parentLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "id": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/tgfmlkjm",
+      "aid": "sh/5wjudg7a",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/mp0bi9s3",
+      "aid": "sh/y90je9cv",
       "id": "2",
       "bbox": [
         0,
@@ -97,94 +97,8 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/bat47y1k",
+      "aid": "sh/nuxc3ylc",
       "id": "3",
-      "bbox": [
-        46,
-        48,
-        36,
-        4
-      ],
-      "geometry": "rect",
-      "fillColor": "#D8A21B",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 4,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/47y1kre1",
-      "id": "4",
-      "name": "kicker-3-label",
-      "bbox": [
-        92,
-        34,
-        360,
-        34
-      ],
-      "geometry": "rect",
-      "text": "INTRODUÇÃO",
-      "textPreview": "INTRODUÇÃO",
-      "resolvedFontSize": 18,
-      "resolvedTextStyle": {
-        "anchor": 2,
-        "fontSize": 18,
-        "typeface": "Arial",
-        "color": "#075D3B",
-        "bold": true,
-        "alignment": "left",
-        "verticalAlignment": "middle",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "INTRODUÇÃO"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "INTRODUÇÃO",
-          "resolvedTextStyle": {
-            "fontSize": 18,
-            "typeface": "Arial",
-            "color": "#075D3B",
-            "bold": true,
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "INTRODUÇÃO",
-              "fontSize": 18,
-              "typeface": "Arial",
-              "color": "#075D3B",
-              "bold": true
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 5,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/tsvu9kni",
-      "id": "5",
       "bbox": [
         1190,
         650,
@@ -245,20 +159,20 @@
       "lineWidth": 0
     },
     {
-      "order": 6,
+      "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/m1cfa9w3",
-      "id": "6",
+      "aid": "sh/gn29gr2p",
+      "id": "4",
       "bbox": [
         76,
-        82,
+        58,
         1080,
         110
       ],
       "geometry": "rect",
-      "text": "O controle manual dificulta manter o inventário físico alinhado ao registro lógico.",
-      "textPreview": "O controle manual dificulta manter o inventário físico alinhado ao registro lógico.",
+      "text": "Problema observado",
+      "textPreview": "Problema observado",
       "resolvedFontSize": 37,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -276,22 +190,18 @@
         }
       },
       "textLayout": {
-        "lineCount": 2,
+        "lineCount": 1,
         "lines": [
           {
             "index": 1,
-            "text": "O controle manual dificulta manter o inventário físico"
-          },
-          {
-            "index": 2,
-            "text": "alinhado ao registro lógico."
+            "text": "Problema observado"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "O controle manual dificulta manter o inventário físico alinhado ao registro lógico.",
+          "text": "Problema observado",
           "resolvedTextStyle": {
             "fontSize": 37,
             "typeface": "Arial",
@@ -302,7 +212,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "O controle manual dificulta manter o inventário físico alinhado ao registro lógico.",
+              "text": "Problema observado",
               "fontSize": 37,
               "typeface": "Arial",
               "color": "#17202A",
@@ -317,19 +227,153 @@
       "lineWidth": 0
     },
     {
-      "order": 7,
+      "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/bm58z25k",
-      "id": "7",
+      "aid": "sh/58z25kb6",
+      "id": "5",
+      "bbox": [
+        78,
+        126,
+        980,
+        46
+      ],
+      "geometry": "rect",
+      "text": "A dificuldade central está em manter os registros patrimoniais alinhados à situação real dos bens.",
+      "textPreview": "A dificuldade central está em manter os registros patrimoniais alinhados à situação real dos bens.",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "A dificuldade central está em manter os registros patrimoniais alinhados à situação real dos bens."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "A dificuldade central está em manter os registros patrimoniais alinhados à situação real dos bens.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "A dificuldade central está em manter os registros patrimoniais alinhados à situação real dos bens.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#51606F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/yhgn29gr",
+      "id": "6",
       "bbox": [
         84,
-        238,
+        252,
         14,
         14
       ],
       "geometry": "ellipse",
       "fillColor": "#0E7A4F",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/n29gr2p8",
+      "id": "7",
+      "bbox": [
+        112,
+        244,
+        520,
+        64
+      ],
+      "geometry": "rect",
+      "text": "A conferência visual ou manual depende de verificação individual e atualização constante.",
+      "textPreview": "A conferência visual ou manual depende de verificação individual e atualização constante.",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 23,
+        "typeface": "Arial",
+        "color": "#17202A",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "A conferência visual ou manual depende de"
+          },
+          {
+            "index": 2,
+            "text": "verificação individual e atualização constante."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "A conferência visual ou manual depende de verificação individual e atualização constante.",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Arial",
+            "color": "#17202A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "A conferência visual ou manual depende de verificação individual e atualização constante.",
+              "fontSize": 23,
+              "typeface": "Arial",
+              "color": "#17202A"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -337,68 +381,16 @@
       "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/4byhgn29",
+      "aid": "sh/czed8v6p",
       "id": "8",
       "bbox": [
-        112,
-        230,
-        520,
-        64
+        84,
+        344,
+        14,
+        14
       ],
-      "geometry": "rect",
-      "text": "Ambientes acadêmicos concentram equipamentos em laboratórios, salas e espaços compartilhados.",
-      "textPreview": "Ambientes acadêmicos concentram equipamentos em laboratórios, salas e espaços compartilhados.",
-      "resolvedFontSize": 23,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 23,
-        "typeface": "Arial",
-        "color": "#17202A",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 2,
-        "lines": [
-          {
-            "index": 1,
-            "text": "Ambientes acadêmicos concentram equipamentos"
-          },
-          {
-            "index": 2,
-            "text": "em laboratórios, salas e espaços compartilhados."
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "Ambientes acadêmicos concentram equipamentos em laboratórios, salas e espaços compartilhados.",
-          "resolvedTextStyle": {
-            "fontSize": 23,
-            "typeface": "Arial",
-            "color": "#17202A",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "Ambientes acadêmicos concentram equipamentos em laboratórios, salas e espaços compartilhados.",
-              "fontSize": 23,
-              "typeface": "Arial",
-              "color": "#17202A"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
+      "geometry": "ellipse",
+      "fillColor": "#0E7A4F",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -406,16 +398,68 @@
       "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/twra5gbq",
+      "aid": "sh/5kb6xkf6",
       "id": "9",
       "bbox": [
-        84,
-        330,
-        14,
-        14
+        112,
+        336,
+        520,
+        64
       ],
-      "geometry": "ellipse",
-      "fillColor": "#0E7A4F",
+      "geometry": "rect",
+      "text": "Bens podem não ser localizados ou aparecer em local diferente do registrado.",
+      "textPreview": "Bens podem não ser localizados ou aparecer em local diferente do registrado.",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 23,
+        "typeface": "Arial",
+        "color": "#17202A",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Bens podem não ser localizados ou aparecer em"
+          },
+          {
+            "index": 2,
+            "text": "local diferente do registrado."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Bens podem não ser localizados ou aparecer em local diferente do registrado.",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Arial",
+            "color": "#17202A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Bens podem não ser localizados ou aparecer em local diferente do registrado.",
+              "fontSize": 23,
+              "typeface": "Arial",
+              "color": "#17202A"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -423,80 +467,11 @@
       "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1cfa9w3m",
+      "aid": "sh/x4nap4r6",
       "id": "10",
       "bbox": [
-        112,
-        322,
-        520,
-        64
-      ],
-      "geometry": "rect",
-      "text": "A conferência visual depende de tempo, atenção e atualização manual.",
-      "textPreview": "A conferência visual depende de tempo, atenção e atualização manual.",
-      "resolvedFontSize": 23,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 23,
-        "typeface": "Arial",
-        "color": "#17202A",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 2,
-        "lines": [
-          {
-            "index": 1,
-            "text": "A conferência visual depende de tempo, atenção e"
-          },
-          {
-            "index": 2,
-            "text": "atualização manual."
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "A conferência visual depende de tempo, atenção e atualização manual.",
-          "resolvedTextStyle": {
-            "fontSize": 23,
-            "typeface": "Arial",
-            "color": "#17202A",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "A conferência visual depende de tempo, atenção e atualização manual.",
-              "fontSize": 23,
-              "typeface": "Arial",
-              "color": "#17202A"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 11,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/crmhk3q5",
-      "id": "11",
-      "bbox": [
         84,
-        422,
+        436,
         14,
         14
       ],
@@ -506,20 +481,20 @@
       "lineWidth": 0
     },
     {
-      "order": 12,
+      "order": 11,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/j6tovaho",
-      "id": "12",
+      "aid": "sh/8jqh0fep",
+      "id": "11",
       "bbox": [
         112,
-        414,
+        428,
         520,
         64
       ],
       "geometry": "rect",
-      "text": "Divergências de localização comprometem rastreabilidade e tomada de decisão.",
-      "textPreview": "Divergências de localização comprometem rastreabilidade e tomada de decisão.",
+      "text": "Sem tratamento organizado, essas divergências dificultam a conferência e a tomada de decisão patrimonial.",
+      "textPreview": "Sem tratamento organizado, essas divergências dificultam a conferência e a tomada de decisão patrimonial.",
       "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -536,22 +511,26 @@
         }
       },
       "textLayout": {
-        "lineCount": 2,
+        "lineCount": 3,
         "lines": [
           {
             "index": 1,
-            "text": "Divergências de localização comprometem"
+            "text": "Sem tratamento organizado, essas divergências"
           },
           {
             "index": 2,
-            "text": "rastreabilidade e tomada de decisão."
+            "text": "dificultam a conferência e a tomada de decisão"
+          },
+          {
+            "index": 3,
+            "text": "patrimonial."
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Divergências de localização comprometem rastreabilidade e tomada de decisão.",
+          "text": "Sem tratamento organizado, essas divergências dificultam a conferência e a tomada de decisão patrimonial.",
           "resolvedTextStyle": {
             "fontSize": 23,
             "typeface": "Arial",
@@ -561,7 +540,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Divergências de localização comprometem rastreabilidade e tomada de decisão.",
+              "text": "Sem tratamento organizado, essas divergências dificultam a conferência e a tomada de decisão patrimonial.",
               "fontSize": 23,
               "typeface": "Arial",
               "color": "#17202A"
@@ -575,14 +554,14 @@
       "lineWidth": 0
     },
     {
-      "order": 13,
+      "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ulwval87",
-      "id": "13",
+      "aid": "sh/fyxobm58",
+      "id": "12",
       "bbox": [
         718,
-        238,
+        252,
         420,
         76
       ],
@@ -592,20 +571,20 @@
       "lineWidth": 1
     },
     {
-      "order": 14,
+      "order": 13,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1kre1w7m",
-      "id": "14",
+      "aid": "sh/qd4vmtwr",
+      "id": "13",
       "bbox": [
         744,
-        249,
+        263,
         360,
         28
       ],
       "geometry": "rect",
-      "text": "Inventário lógico",
-      "textPreview": "Inventário lógico",
+      "text": "Registro",
+      "textPreview": "Registro",
       "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -627,14 +606,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "Inventário lógico"
+            "text": "Registro"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Inventário lógico",
+          "text": "Registro",
           "resolvedTextStyle": {
             "fontSize": 23,
             "typeface": "Arial",
@@ -645,11 +624,76 @@
           "runs": [
             {
               "index": 1,
-              "text": "Inventário lógico",
+              "text": "Registro",
               "fontSize": 23,
               "typeface": "Arial",
               "color": "#075D3B",
               "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xczed8v6",
+      "id": "14",
+      "bbox": [
+        744,
+        295,
+        350,
+        24
+      ],
+      "geometry": "rect",
+      "text": "informação administrativa do bem",
+      "textPreview": "informação administrativa do bem",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "informação administrativa do bem"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "informação administrativa do bem",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "informação administrativa do bem",
+              "fontSize": 18,
+              "typeface": "Arial",
+              "color": "#51606F"
             }
           ],
           "marginLeft": 0
@@ -663,76 +707,11 @@
       "order": 15,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/c3ylc7u5",
+      "aid": "sh/8v6psfil",
       "id": "15",
       "bbox": [
-        744,
-        281,
-        350,
-        24
-      ],
-      "geometry": "rect",
-      "text": "registro esperado no sistema",
-      "textPreview": "registro esperado no sistema",
-      "resolvedFontSize": 18,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 18,
-        "typeface": "Arial",
-        "color": "#51606F",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "registro esperado no sistema"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "registro esperado no sistema",
-          "resolvedTextStyle": {
-            "fontSize": 18,
-            "typeface": "Arial",
-            "color": "#51606F",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "registro esperado no sistema",
-              "fontSize": 18,
-              "typeface": "Arial",
-              "color": "#51606F"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 16,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/ji5snelo",
-      "id": "16",
-      "bbox": [
         718,
-        342,
+        356,
         420,
         76
       ],
@@ -742,20 +721,20 @@
       "lineWidth": 1
     },
     {
-      "order": 17,
+      "order": 16,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/uxc3ylc7",
-      "id": "17",
+      "aid": "sh/fa9w3m94",
+      "id": "16",
       "bbox": [
         744,
-        353,
+        367,
         360,
         28
       ],
       "geometry": "rect",
-      "text": "Inventário físico",
-      "textPreview": "Inventário físico",
+      "text": "Localização",
+      "textPreview": "Localização",
       "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -777,14 +756,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "Inventário físico"
+            "text": "Localização"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Inventário físico",
+          "text": "Localização",
           "resolvedTextStyle": {
             "fontSize": 23,
             "typeface": "Arial",
@@ -795,11 +774,76 @@
           "runs": [
             {
               "index": 1,
-              "text": "Inventário físico",
+              "text": "Localização",
               "fontSize": 23,
               "typeface": "Arial",
               "color": "#075D3B",
               "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qpg3ex0n",
+      "id": "17",
+      "bbox": [
+        744,
+        399,
+        350,
+        24
+      ],
+      "geometry": "rect",
+      "text": "situação observada na conferência",
+      "textPreview": "situação observada na conferência",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "situação observada na conferência"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "situação observada na conferência",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "situação observada na conferência",
+              "fontSize": 18,
+              "typeface": "Arial",
+              "color": "#51606F"
             }
           ],
           "marginLeft": 0
@@ -813,76 +857,11 @@
       "order": 18,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/1w7mp0bi",
+      "aid": "sh/1gvy90je",
       "id": "18",
       "bbox": [
-        744,
-        385,
-        350,
-        24
-      ],
-      "geometry": "rect",
-      "text": "situação observada no ambiente",
-      "textPreview": "situação observada no ambiente",
-      "resolvedFontSize": 18,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 18,
-        "typeface": "Arial",
-        "color": "#51606F",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "situação observada no ambiente"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "situação observada no ambiente",
-          "resolvedTextStyle": {
-            "fontSize": 18,
-            "typeface": "Arial",
-            "color": "#51606F",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "situação observada no ambiente",
-              "fontSize": 18,
-              "typeface": "Arial",
-              "color": "#51606F"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 19,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/8bat47y1",
-      "id": "19",
-      "bbox": [
         718,
-        446,
+        460,
         420,
         76
       ],
@@ -892,20 +871,20 @@
       "lineWidth": 1
     },
     {
-      "order": 20,
+      "order": 19,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/o7qpg3ex",
-      "id": "20",
+      "aid": "sh/8z25kb6x",
+      "id": "19",
       "bbox": [
         744,
-        457,
+        471,
         360,
         28
       ],
       "geometry": "rect",
-      "text": "Inconsistência",
-      "textPreview": "Inconsistência",
+      "text": "Divergência",
+      "textPreview": "Divergência",
       "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -927,14 +906,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "Inconsistência"
+            "text": "Divergência"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Inconsistência",
+          "text": "Divergência",
           "resolvedTextStyle": {
             "fontSize": 23,
             "typeface": "Arial",
@@ -945,7 +924,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Inconsistência",
+              "text": "Divergência",
               "fontSize": 23,
               "typeface": "Arial",
               "color": "#075D3B",
@@ -960,20 +939,20 @@
       "lineWidth": 0
     },
     {
-      "order": 21,
+      "order": 20,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/dsji5sne",
-      "id": "21",
+      "aid": "sh/83itgfml",
+      "id": "20",
       "bbox": [
         744,
-        489,
+        503,
         350,
         24
       ],
       "geometry": "rect",
-      "text": "diferença entre esperado e detectado",
-      "textPreview": "diferença entre esperado e detectado",
+      "text": "diferença a ser analisada",
+      "textPreview": "diferença a ser analisada",
       "resolvedFontSize": 18,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -994,14 +973,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "diferença entre esperado e detectado"
+            "text": "diferença a ser analisada"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "diferença entre esperado e detectado",
+          "text": "diferença a ser analisada",
           "resolvedTextStyle": {
             "fontSize": 18,
             "typeface": "Arial",
@@ -1011,7 +990,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "diferença entre esperado e detectado",
+              "text": "diferença a ser analisada",
               "fontSize": 18,
               "typeface": "Arial",
               "color": "#51606F"

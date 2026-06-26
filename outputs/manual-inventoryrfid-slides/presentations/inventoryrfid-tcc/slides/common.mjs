@@ -7,6 +7,9 @@ const COLORS = {
   bg: "#F7F9FB",
   ink: "#17202A",
   muted: "#51606F",
+  blue: "#0A4265",
+  blueSoft: "#DCEAF2",
+  blueMid: "#7EA0B4",
   green: "#0E7A4F",
   greenDark: "#075D3B",
   gold: "#D8A21B",
@@ -18,14 +21,17 @@ const COLORS = {
 };
 
 const ASSETS = {
-  brasao: img("docs/tcc/figs/brasao_uesc.png"),
+  brasao: img("docs/tcc/figs/brasao_uesc_transparente.png"),
   casosUso: img("docs/tcc/figs/casos_uso_rfid.png"),
   fluxo: img("docs/tcc/figs/fluxo_atividade_rfid.png"),
   arquitetura: img("outputs/manual-inventoryrfid-slides/presentations/inventoryrfid-tcc/assets/arquitetura_geral_rfid.png"),
   dashboard: img("docs/tcc/figs/sistema/sistema-dashboard.png"),
+  dashboardRecorte: img("docs/tcc/figs/sistema/sistema-dashboard-recorte.png"),
   itens: img("docs/tcc/figs/sistema/sistema-itens.png"),
   auditoria: img("docs/tcc/figs/sistema/sistema-auditoria.png"),
+  auditoriaRecorte: img("docs/tcc/figs/sistema/sistema-auditoria-recorte.png"),
   inconsistencias: img("docs/tcc/figs/sistema/sistema-inconsistencias.png"),
+  inconsistenciasRecorte: img("docs/tcc/figs/sistema/sistema-inconsistencias-recorte.png"),
   log: img("docs/tcc/figs/sistema/sistema-log.png"),
 };
 
@@ -33,185 +39,211 @@ const slides = [
   {
     kind: "cover",
     section: "TCC",
-    title: "Sistema de Inventário Baseado em Tecnologia RFID",
-    subtitle: "Aplicado ao Colegiado de Ciência da Computação",
-    meta: ["Ezequiel Lobo Oliveira", "Orientador: Prof. Jorge Lima", "UESC · 2026"],
-  },
-  {
-    section: "ROTEIRO",
-    title: "A defesa segue o fluxo recomendado para 15 minutos.",
-    bullets: [
-      "Introdução, motivação e objetivos em até 5 minutos.",
-      "Metodologia, implementação, resultados e discussão como núcleo da apresentação.",
-      "Conclusão com contribuição, limites e continuidade da proposta.",
-    ],
-    callouts: [
-      { value: "15 min", label: "tempo total" },
-      { value: "16", label: "slides de conteúdo" },
-      { value: "ênfase", label: "resultados e discussão" },
-    ],
+    title: "Sistema de inventário baseado em tecnologia RFID para o Colegiado de Ciência da Computação",
+    subtitle: "",
+    meta: ["Ezequiel Lobo Oliveira", "Orientador: Jorge Lima de Oliveira Filho", "UESC · 2026"],
   },
   {
     section: "INTRODUÇÃO",
-    title: "O controle manual dificulta manter o inventário físico alinhado ao registro lógico.",
+    title: "Contexto do trabalho",
+    description: "O controle patrimonial no colegiado exige rastreabilidade entre registros administrativos e bens fisicamente encontrados.",
     bullets: [
-      "Ambientes acadêmicos concentram equipamentos em laboratórios, salas e espaços compartilhados.",
-      "A conferência visual depende de tempo, atenção e atualização manual.",
-      "Divergências de localização comprometem rastreabilidade e tomada de decisão.",
+      "Equipamentos ficam distribuídos entre laboratórios, salas administrativas e espaços compartilhados.",
+      "A conferência patrimonial precisa indicar onde o bem deveria estar e o que foi observado no ambiente.",
+      "Essa relação exige organização para apoiar inventário, auditoria e acompanhamento patrimonial.",
     ],
     proof: [
-      ["Inventário lógico", "registro esperado no sistema"],
-      ["Inventário físico", "situação observada no ambiente"],
-      ["Inconsistência", "diferença entre esperado e detectado"],
+      ["Registro administrativo", "informação esperada sobre o bem"],
+      ["Conferência física", "situação observada no ambiente"],
+      ["Rastreabilidade", "histórico para análise patrimonial"],
     ],
   },
   {
-    section: "MOTIVAÇÃO",
-    title: "RFID foi adotado como meio para transformar identificação física em evento computacional.",
+    section: "PROBLEMA",
+    title: "Problema observado",
+    description: "A dificuldade central está em manter os registros patrimoniais alinhados à situação real dos bens.",
     bullets: [
-      "Etiquetas associam bens físicos a identificadores digitais.",
-      "Leitores capturam tags e enviam eventos ao sistema.",
-      "A aplicação interpreta leituras como evidência para auditoria patrimonial.",
+      "A conferência visual ou manual depende de verificação individual e atualização constante.",
+      "Bens podem não ser localizados ou aparecer em local diferente do registrado.",
+      "Sem tratamento organizado, essas divergências dificultam a conferência e a tomada de decisão patrimonial.",
     ],
     proof: [
-      ["Menos dependência", "de conferência visual item a item"],
-      ["Mais rastreabilidade", "com histórico e auditoria por evento"],
-      ["Cautela experimental", "sem extrapolar alcance físico"],
+      ["Registro", "informação administrativa do bem"],
+      ["Localização", "situação observada na conferência"],
+      ["Divergência", "diferença a ser analisada"],
+    ],
+  },
+  {
+    section: "PROPOSTA",
+    title: "Proposta do protótipo",
+    description: "O protótipo integra sistema web, API e eventos RFID para apoiar a auditoria patrimonial.",
+    bullets: [
+      "Locais, leitores, bens e tags formam a base do inventário lógico.",
+      "O leitor de proximidade envia a tag ao sistema por meio de um comunicador intermediário.",
+      "A API processa o evento e registra histórico, auditoria ou inconsistência conforme o caso.",
+    ],
+    proof: [
+      ["Sistema web", "cadastro e acompanhamento"],
+      ["API REST", "entrada padronizada de eventos"],
+      ["RFID", "evidência física em cenário controlado"],
     ],
   },
   {
     section: "OBJETIVOS",
-    title: "O objetivo foi construir e validar funcionalmente um protótipo web de inventário com RFID.",
+    title: "Objetivos do trabalho",
+    description: "Desenvolver e validar funcionalmente um protótipo web de inventário patrimonial baseado em RFID.",
     bullets: [
-      "Cadastrar ativos, locais, leitores RFID e eventos de leitura.",
-      "Processar tags para atualizar localização física e apoiar auditorias.",
-      "Validar o fluxo de leitura, API, persistência e registro de inconsistências.",
+      "Implementar cadastros, consulta, auditoria, histórico e tratamento de inconsistências.",
+      "Projetar uma arquitetura modular para receber e processar eventos RFID.",
+      "Verificar o fluxo de leitura, processamento e atualização do inventário em ambiente controlado.",
     ],
     callouts: [
-      { value: "API REST", label: "entrada padronizada" },
-      { value: "RFID", label: "identificação física" },
-      { value: "Auditoria", label: "comparação entre lógico e físico" },
+      { value: "Construir", label: "protótipo web funcional" },
+      { value: "Integrar", label: "leitura RFID e API" },
+      { value: "Validar", label: "fluxo funcional do sistema" },
     ],
   },
   {
     section: "TRABALHOS RELACIONADOS",
-    title: "A literatura fundamenta RFID e middleware, com cautela na validação física.",
+    title: "Comparação com trabalhos relacionados",
+    description: "A literatura sustenta RFID, integração com sistemas e cautela na avaliação física da tecnologia.",
     comparison: [
-      ["RFID em inventário", "base conceitual para automação"],
-      ["Middleware/IoT", "eventos, normalização e integração"],
-      ["Este protótipo", "auditoria patrimonial entre esperado e observado"],
+      ["RFID em inventário", "identificação automática de bens"],
+      ["Middleware e IoT", "integração de eventos a sistemas"],
+      ["InventoryRFID", "auditoria e resolução de inconsistências"],
     ],
   },
   {
     section: "METODOLOGIA",
-    title: "A pesquisa foi aplicada e concentrou a avaliação no fluxo funcional do software.",
+    title: "Percurso metodológico",
+    description: "A pesquisa foi organizada para sair do problema patrimonial, construir o protótipo e verificar o fluxo implementado.",
     steps: [
-      ["1", "Revisão e requisitos", "Controle patrimonial, RFID, IoT, auditoria e trabalhos relacionados."],
-      ["2", "Modelagem e implementação", "Entidades, API, regras de leitura, interface e persistência."],
-      ["3", "Validação funcional", "Cenários controlados com leitor de proximidade, tag e comunicador."],
+      ["1", "Entender o contexto", "Revisão sobre controle patrimonial, RFID, integração e trabalhos relacionados."],
+      ["2", "Desenvolver a solução", "Modelagem, arquitetura, telas, API e regras de processamento das leituras."],
+      ["3", "Validar o fluxo", "Cenários controlados com leitor de proximidade, uma tag, comunicador e API."],
     ],
   },
   {
-    section: "MATERIAIS",
-    title: "O protótipo separa aplicação web, API e integração RFID.",
+    section: "DESENVOLVIMENTO",
+    title: "Tecnologias e materiais",
+    description: "O protótipo combina interface web, backend, banco local e entrada RFID controlada.",
     bullets: [
-      "Frontend: Next.js, React e TypeScript para operação e acompanhamento.",
-      "Backend: Django REST Framework para regras, endpoints e autenticação.",
-      "Hardware: leitor RFID USB/OTG de 13,56 MHz, uma tag física e comunicador intermediário.",
+      "Frontend web para operação, consulta e acompanhamento do inventário.",
+      "Backend com API REST para autenticação, cadastros, eventos, auditoria e inconsistências.",
+      "SQLite local para prototipação e leitor RFID de proximidade com uma tag física.",
+      "Comunicador intermediário para enviar a leitura ao backend no formato esperado.",
     ],
     callouts: [
-      { value: "SQLite", label: "persistência local" },
-      { value: "Token", label: "ingestão RFID" },
-      { value: "USB/OTG", label: "leitor validado" },
+      { value: "Interface", label: "uso e acompanhamento" },
+      { value: "API", label: "processamento central" },
+      { value: "RFID", label: "captura controlada" },
     ],
   },
   {
     section: "ARQUITETURA",
-    title: "A API atua como ponto comum entre interface, leitores e regras de inventário.",
+    title: "Arquitetura do protótipo",
+    description: "A arquitetura separa interface, API, regras de negócio, persistência e fontes de eventos RFID.",
     image: ASSETS.arquitetura,
-    caption: "Arquitetura geral proposta para o InventoryRFID.",
-  },
-  {
-    section: "MODELAGEM",
-    title: "A solução foi modelada para conectar usuário, cadastros e integração RFID.",
-    image: ASSETS.casosUso,
-    caption: "Casos de uso principais do sistema.",
+    caption: "Visão geral da integração entre interface web, backend, banco local e entrada de eventos RFID.",
   },
   {
     section: "FLUXO RFID",
-    title: "O fluxo distingue validação física real e caminho escalável com sensores e gateways.",
+    title: "Fluxo RFID e limite experimental",
+    description: "O slide separa o que foi validado fisicamente do que permanece como caminho escalável da arquitetura.",
     flowLanes: [
       {
-        title: "Rota validada fisicamente",
+        title: "Validado fisicamente",
         accent: COLORS.green,
-        steps: ["Leitor USB/OTG", "Comunicador intermediário", "Evento tags_read", "API processa auditoria"],
-        note: "Comprovada com leitor de proximidade, uma tag e requisição HTTP ao backend.",
+        steps: ["Tag aproximada do leitor", "Comunicador envia evento", "API processa a leitura", "Auditoria registra resultado"],
+        note: "Leitor de proximidade, uma tag, comunicador intermediário e API.",
       },
       {
-        title: "Rota escalável verificada por software",
+        title: "Previsto ou verificado por software",
         accent: COLORS.gold,
-        steps: ["Sensor ou gateway", "Evento motion_detected", "Janela start_reading", "tags_read enviado à API"],
-        note: "Preserva o desenho para sensores e leitores em rede, sem afirmar validação física completa.",
+        steps: ["Sensor ou gateway aciona", "Sistema abre janela", "Leitor envia tags", "Backend processa evento"],
+        note: "Fluxo arquitetural para expansão, sem validação física completa.",
       },
     ],
   },
   {
     section: "PROCESSAMENTO",
-    title: "Cada leitura é validada, normalizada e convertida em consequência operacional.",
+    title: "Processamento das leituras",
+    description: "Depois que a leitura chega à API, o sistema decide se ela confirma, altera ou questiona o inventário.",
     steps: [
-      ["1", "Receber evento", "tags_read enviado pelo comunicador ou por dispositivo conectado à rede."],
-      ["2", "Aplicar regras", "autenticação, janela ativa, deduplicação e validação da tag."],
-      ["3", "Registrar efeito", "atualização de local, histórico, auditoria ou inconsistência."],
+      ["1", "Receber evento", "A API recebe a tag enviada pelo comunicador ou por uma fonte compatível."],
+      ["2", "Interpretar leitura", "O backend valida tag, leitor, janela ativa e possíveis duplicidades."],
+      ["3", "Registrar consequência", "O sistema atualiza histórico, auditoria ou inconsistência conforme o resultado."],
     ],
   },
   {
     section: "INTERFACE",
-    title: "O painel inicial resume o estado operacional do inventário.",
-    image: ASSETS.dashboard,
-    caption: "Indicadores de leitores, itens, inconsistências e eventos recentes.",
+    title: "Interface de acompanhamento",
+    description: "A interface transforma o processamento em informação acompanhável para o usuário.",
+    image: ASSETS.dashboardRecorte,
+    caption: "Painel com indicadores, leitores, pendências e eventos recentes do inventário.",
   },
   {
-    section: "AUDITORIA",
-    title: "A auditoria compara itens esperados com tags detectadas durante a janela de leitura.",
-    image: ASSETS.auditoria,
-    caption: "Tela de auditoria patrimonial com RFID.",
+    section: "RESULTADOS",
+    title: "Auditoria patrimonial",
+    description: "A auditoria compara o inventário lógico com o inventário físico formado pelas leituras.",
+    image: ASSETS.auditoriaRecorte,
+    caption: "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos.",
   },
   {
-    section: "INCONSISTÊNCIAS",
-    title: "Divergências deixam de ser registros avulsos e passam a ter acompanhamento.",
-    image: ASSETS.inconsistencias,
-    caption: "Acompanhamento de pendências como item ausente, local divergente e tag desconhecida.",
+    section: "RESULTADOS",
+    title: "Tratamento de inconsistências",
+    description: "As inconsistências registram divergências operacionais que precisam de análise ou regularização.",
+    image: ASSETS.inconsistenciasRecorte,
+    caption: "Recorte das pendências abertas após auditoria, com totalizadores por situação.",
   },
   {
-    section: "VALIDAÇÃO",
-    title: "Seis cenários confirmaram o comportamento funcional em dois ambientes.",
+    section: "RESULTADOS",
+    title: "Validação funcional",
+    description: "Cada cenário foi repetido seis vezes para confirmar o comportamento funcional, sem caráter estatístico.",
     validation: [
       ["Leitura conhecida", "6/6", "item detectado e itens ausentes classificados"],
-      ["Resolução de inconsistência", "6/6", "pendência encerrada com histórico"],
-      ["Tag desconhecida", "6/6", "inconsistência registrada"],
-      ["Local divergente", "6/6", "divergência identificada"],
-      ["Duplicidade", "6/6", "leituras consolidadas"],
-      ["Leitor sem resposta", "6/6", "estado sinalizado no sistema"],
+      ["Correção de pendência", "6/6", "problema encerrado com registro no histórico"],
+      ["Tag desconhecida", "6/6", "problema registrado para análise"],
+      ["Local divergente", "6/6", "bem marcado fora do local esperado"],
+      ["Leitura repetida", "6/6", "repetições tratadas sem duplicar o resultado"],
+      ["Leitor sem resposta", "6/6", "falha sinalizada para o usuário"],
     ],
   },
   {
-    section: "DISCUSSÃO E CONCLUSÃO",
-    title: "O resultado principal é a validação da arquitetura de software para inventário com RFID.",
+    section: "CONCLUSÃO",
+    title: "Conclusão e limites",
+    description: "O resultado defendido é a validação funcional do fluxo de software, não o desempenho físico do RFID.",
     bullets: [
-      "O protótipo integra cadastro patrimonial, eventos RFID, auditoria, histórico e inconsistências.",
-      "A contribuição está em transformar leitura RFID em evidência para comparar inventário lógico e físico.",
-      "Os limites permanecem explícitos: não foram medidos alcance, taxa de leitura, múltiplas tags ou interferência ambiental.",
+      "O protótipo integra cadastro patrimonial, eventos RFID, API, auditoria, histórico e inconsistências.",
+      "Os testes confirmaram que leituras e cenários controlados geram consequências rastreáveis no sistema.",
+      "Não foram avaliados alcance, leitura simultânea, interferência ambiental ou operação institucional em escala.",
     ],
     proof: [
-      ["Contribuição", "base funcional extensível para rotinas patrimoniais"],
-      ["Limite", "validação física restrita ao leitor de proximidade e uma tag"],
-      ["Futuro", "antenas de maior alcance, sensores, múltiplas tags e relatórios"],
+      ["Contribuição", "comparação entre inventário esperado e observado"],
+      ["Limite", "leitor de proximidade, uma tag e cenários controlados"],
+      ["Continuidade", "múltiplas tags, sensores físicos e antenas de maior alcance"],
+    ],
+  },
+  {
+    section: "CONTINUIDADE",
+    title: "Melhorias futuras",
+    description: "As melhorias futuras partem dos limites assumidos na validação e ampliam o protótipo para uso mais próximo de uma operação real.",
+    bullets: [
+      "Testar múltiplas tags e leitores RFID físicos em ambientes reais do colegiado.",
+      "Avaliar alcance, leitura simultânea, interferência ambiental e taxa de leitura.",
+      "Integrar sensores ou gateways físicos ao fluxo de eventos já previsto na arquitetura.",
+      "Ampliar relatórios, filtros e trilhas de auditoria para apoiar decisões patrimoniais.",
+    ],
+    proof: [
+      ["Escala física", "testes com mais tags e leitores"],
+      ["Medição técnica", "alcance, interferência e simultaneidade"],
+      ["Uso institucional", "relatórios e auditoria ampliada"],
     ],
   },
   {
     kind: "refs",
     section: "REFERÊNCIAS",
-    title: "Principais referências usadas na apresentação.",
+    title: "Referências principais",
     bullets: [
       "ALWADI et al. RFID smart inventory management system: A survey.",
       "ABIJÁUDE et al. Plataforma InventoryIoT para inventário automatizado.",
@@ -227,20 +259,6 @@ const slides = [
 function base(slide, ctx, section, page) {
   ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: COLORS.bg });
   ctx.addShape(slide, { x: 0, y: 0, w: 18, h: ctx.H, fill: COLORS.green });
-  ctx.addShape(slide, { x: 46, y: 48, w: 36, h: 4, fill: COLORS.gold });
-  ctx.addText(slide, {
-    text: section,
-    x: 92,
-    y: 34,
-    w: 360,
-    h: 34,
-    fontSize: 18,
-    color: COLORS.greenDark,
-    bold: true,
-    typeface: "Arial",
-    valign: "middle",
-    name: `kicker-${page}-label`,
-  });
   ctx.addText(slide, {
     text: String(page).padStart(2, "0"),
     x: 1190,
@@ -254,7 +272,7 @@ function base(slide, ctx, section, page) {
   });
 }
 
-function title(slide, ctx, text, y = 82, width = 1080) {
+function title(slide, ctx, text, y = 58, width = 1080) {
   ctx.addText(slide, {
     text,
     x: 76,
@@ -269,7 +287,22 @@ function title(slide, ctx, text, y = 82, width = 1080) {
   });
 }
 
-function bulletList(slide, ctx, bullets, x = 84, y = 230, w = 520, gap = 92) {
+function description(slide, ctx, text) {
+  if (!text) return;
+  ctx.addText(slide, {
+    text,
+    x: 78,
+    y: 126,
+    w: 980,
+    h: 46,
+    fontSize: 20,
+    color: COLORS.muted,
+    typeface: "Arial",
+    insets: { left: 0, right: 0, top: 0, bottom: 0 },
+  });
+}
+
+function bulletList(slide, ctx, bullets, x = 84, y = 244, w = 520, gap = 92) {
   bullets.forEach((item, index) => {
     const top = y + index * gap;
     ctx.addShape(slide, { x, y: top + 8, w: 14, h: 14, fill: COLORS.green, geometry: "ellipse" });
@@ -289,16 +322,16 @@ function bulletList(slide, ctx, bullets, x = 84, y = 230, w = 520, gap = 92) {
 
 function calloutRail(slide, ctx, callouts) {
   callouts.forEach((item, index) => {
-    const y = 236 + index * 112;
+    const y = 250 + index * 112;
     ctx.addShape(slide, { x: 720, y, w: 408, h: 82, fill: index === 1 ? COLORS.softGold : COLORS.white, line: ctx.line(COLORS.line, 1) });
-    ctx.addText(slide, { text: item.value, x: 746, y: y + 10, w: 170, h: 34, fontSize: 30, color: COLORS.greenDark, bold: true, typeface: "Arial" });
+    ctx.addText(slide, { text: item.value, x: 746, y: y + 10, w: 330, h: 34, fontSize: 30, color: COLORS.greenDark, bold: true, typeface: "Arial" });
     ctx.addText(slide, { text: item.label, x: 746, y: y + 48, w: 340, h: 24, fontSize: 19, color: COLORS.muted, typeface: "Arial" });
   });
 }
 
 function proofCards(slide, ctx, proof) {
   proof.forEach((item, index) => {
-    const y = 238 + index * 104;
+    const y = 252 + index * 104;
     ctx.addShape(slide, { x: 718, y, w: 420, h: 76, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
     ctx.addText(slide, { text: item[0], x: 744, y: y + 11, w: 360, h: 28, fontSize: 23, color: COLORS.greenDark, bold: true, typeface: "Arial" });
     ctx.addText(slide, { text: item[1], x: 744, y: y + 43, w: 350, h: 24, fontSize: 18, color: COLORS.muted, typeface: "Arial" });
@@ -308,25 +341,25 @@ function proofCards(slide, ctx, proof) {
 function steps(slide, ctx, data) {
   data.forEach((item, index) => {
     const x = 92 + index * 374;
-    ctx.addShape(slide, { x, y: 260, w: 312, h: 288, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
-    ctx.addShape(slide, { x: x + 24, y: 286, w: 58, h: 58, geometry: "ellipse", fill: COLORS.softGreen, line: ctx.line(COLORS.green, 1) });
-    ctx.addText(slide, { text: item[0], x: x + 24, y: 296, w: 58, h: 38, fontSize: 28, color: COLORS.greenDark, bold: true, typeface: "Arial", align: "center" });
-    ctx.addText(slide, { text: item[1], x: x + 24, y: 368, w: 250, h: 42, fontSize: 25, color: COLORS.ink, bold: true, typeface: "Arial" });
-    ctx.addText(slide, { text: item[2], x: x + 24, y: 424, w: 250, h: 84, fontSize: 20, color: COLORS.muted, typeface: "Arial" });
+    ctx.addShape(slide, { x, y: 274, w: 312, h: 288, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
+    ctx.addShape(slide, { x: x + 24, y: 318, w: 34, h: 34, geometry: "ellipse", fill: COLORS.softGreen, line: ctx.line(COLORS.green, 1) });
+    ctx.addText(slide, { text: item[0], x: x + 24, y: 324, w: 34, h: 22, fontSize: 17, color: COLORS.greenDark, bold: true, typeface: "Arial", align: "center", valign: "middle" });
+    ctx.addText(slide, { text: item[1], x: x + 72, y: 312, w: 198, h: 54, fontSize: 22, color: COLORS.ink, bold: true, typeface: "Arial", valign: "middle" });
+    ctx.addText(slide, { text: item[2], x: x + 24, y: 400, w: 250, h: 110, fontSize: 20, color: COLORS.muted, typeface: "Arial" });
   });
 }
 
 function comparison(slide, ctx, data) {
   data.forEach((item, index) => {
     const x = 112 + index * 350;
-    ctx.addShape(slide, { x, y: 286, w: 288, h: 178, fill: index === 2 ? COLORS.softGreen : COLORS.white, line: ctx.line(index === 2 ? COLORS.green : COLORS.line, 1) });
-    ctx.addText(slide, { text: item[0], x: x + 22, y: 312, w: 232, h: 34, fontSize: 24, color: COLORS.greenDark, bold: true, typeface: "Arial" });
-    ctx.addText(slide, { text: item[1], x: x + 22, y: 366, w: 232, h: 68, fontSize: 21, color: COLORS.ink, typeface: "Arial" });
+    ctx.addShape(slide, { x, y: 300, w: 288, h: 178, fill: index === 2 ? COLORS.softGreen : COLORS.white, line: ctx.line(index === 2 ? COLORS.green : COLORS.line, 1) });
+    ctx.addText(slide, { text: item[0], x: x + 22, y: 326, w: 232, h: 34, fontSize: 24, color: COLORS.greenDark, bold: true, typeface: "Arial" });
+    ctx.addText(slide, { text: item[1], x: x + 22, y: 380, w: 232, h: 68, fontSize: 21, color: COLORS.ink, typeface: "Arial" });
   });
   ctx.addText(slide, {
-    text: "Síntese: o trabalho adota RFID e middleware como base, mas mantém explícito que a validação física foi limitada ao hardware disponível.",
+    text: "Diferencial: a leitura RFID não fica restrita à identificação; ela alimenta auditoria patrimonial, registro e resolução de inconsistências e histórico operacional.",
     x: 126,
-    y: 510,
+    y: 524,
     w: 880,
     h: 54,
     fontSize: 21,
@@ -336,7 +369,7 @@ function comparison(slide, ctx, data) {
 }
 
 async function imageSlide(slide, ctx, item) {
-  const imageBox = { x: 86, y: 204, w: 1110, h: 396 };
+  const imageBox = { x: 86, y: 218, w: 1110, h: 382 };
   ctx.addShape(slide, { ...imageBox, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
   await ctx.addImage(slide, { path: item.image, x: imageBox.x + 14, y: imageBox.y + 14, w: imageBox.w - 28, h: imageBox.h - 28, fit: "contain", alt: item.caption });
   ctx.addText(slide, { text: item.caption, x: 94, y: 616, w: 1080, h: 32, fontSize: 18, color: COLORS.muted, typeface: "Arial", align: "center" });
@@ -344,7 +377,7 @@ async function imageSlide(slide, ctx, item) {
 
 function validation(slide, ctx, rows) {
   const x = 82;
-  const y = 214;
+  const y = 230;
   const widths = [330, 130, 650];
   ["Cenário", "Execuções", "Evidência"].forEach((header, index) => {
     const left = x + widths.slice(0, index).reduce((a, b) => a + b, 0);
@@ -376,7 +409,7 @@ function validation(slide, ctx, rows) {
 function flowLanes(slide, ctx, lanes) {
   lanes.forEach((lane, laneIndex) => {
     const x = laneIndex === 0 ? 86 : 662;
-    const y = 238;
+    const y = 252;
     const w = 520;
     ctx.addShape(slide, { x, y, w, h: 360, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
     ctx.addShape(slide, { x, y, w, h: 58, fill: laneIndex === 0 ? COLORS.softGreen : COLORS.softGold, line: ctx.line(COLORS.line, 1) });
@@ -393,16 +426,34 @@ function flowLanes(slide, ctx, lanes) {
 }
 
 async function cover(slide, ctx, item) {
-  ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: COLORS.greenDark });
-  ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: "#00000000" });
-  ctx.addShape(slide, { x: 78, y: 76, w: 52, h: 6, fill: COLORS.gold });
-  await ctx.addImage(slide, { path: ASSETS.brasao, x: 1038, y: 58, w: 98, h: 110, fit: "contain", alt: "Brasão da UESC" });
-  ctx.addText(slide, { text: item.section, x: 78, y: 100, w: 300, h: 32, fontSize: 20, color: COLORS.softGold, bold: true, typeface: "Arial" });
-  ctx.addText(slide, { text: item.title, x: 76, y: 188, w: 850, h: 168, fontSize: 50, color: COLORS.white, bold: true, typeface: "Arial" });
-  ctx.addText(slide, { text: item.subtitle, x: 80, y: 378, w: 760, h: 44, fontSize: 26, color: "#DDEDE5", typeface: "Arial" });
-  item.meta.forEach((line, index) => {
-    ctx.addText(slide, { text: line, x: 82, y: 520 + index * 36, w: 720, h: 28, fontSize: 22, color: index === 0 ? COLORS.white : "#DDEDE5", typeface: "Arial", bold: index === 0 });
+  ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: COLORS.white });
+  ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: COLORS.bg });
+  ctx.addShape(slide, { x: 0, y: 0, w: 18, h: ctx.H, fill: COLORS.green });
+  ctx.addShape(slide, { x: 46, y: 48, w: 36, h: 4, fill: COLORS.gold });
+  ctx.addShape(slide, { x: 92, y: 136, w: 956, h: 1, fill: COLORS.line });
+  ctx.addShape(slide, { x: 92, y: 622, w: 1094, h: 1, fill: COLORS.line });
+  await ctx.addImage(slide, { path: ASSETS.brasao, x: 1056, y: 46, w: 72, h: 82, fit: "contain", alt: "Brasão da UESC" });
+
+  ctx.addText(slide, { text: "Universidade Estadual de Santa Cruz - UESC", x: 92, y: 96, w: 720, h: 34, fontSize: 22, color: COLORS.ink, bold: true, typeface: "Arial" });
+  ctx.addText(slide, {
+    text: item.title,
+    x: 86,
+    y: 228,
+    w: 1044,
+    h: 126,
+    fontSize: 32,
+    color: COLORS.ink,
+    bold: true,
+    typeface: "Arial",
+    align: "center",
   });
+  if (item.subtitle) {
+    ctx.addText(slide, { text: item.subtitle, x: 340, y: 376, w: 540, h: 28, fontSize: 19, color: COLORS.muted, typeface: "Arial", align: "center" });
+  }
+  ctx.addText(slide, { text: item.meta[0], x: 330, y: 414, w: 560, h: 38, fontSize: 30, color: COLORS.ink, bold: true, typeface: "Arial", align: "center" });
+  ctx.addText(slide, { text: item.meta[1], x: 282, y: 484, w: 660, h: 34, fontSize: 28, color: COLORS.ink, bold: true, typeface: "Arial", align: "center" });
+  ctx.addText(slide, { text: "Bacharelado em Ciência da Computação", x: 92, y: 646, w: 470, h: 30, fontSize: 22, color: COLORS.ink, bold: true, typeface: "Arial" });
+  ctx.addText(slide, { text: "Ilhéus - Bahia, 2026", x: 908, y: 646, w: 250, h: 30, fontSize: 22, color: COLORS.ink, bold: true, typeface: "Arial", align: "right" });
 }
 
 function refs(slide, ctx, item, page) {
@@ -438,6 +489,7 @@ export async function buildSlide(presentation, ctx, index) {
   }
   base(slide, ctx, item.section, page);
   title(slide, ctx, item.title);
+  description(slide, ctx, item.description);
   if (item.bullets) bulletList(slide, ctx, item.bullets);
   if (item.callouts) calloutRail(slide, ctx, item.callouts);
   if (item.proof) proofCards(slide, ctx, item.proof);

@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/w4fuh2",
-    "id": "w4fuh2",
+    "aid": "sl/b208i9",
+    "id": "b208i9",
     "slide": 14,
-    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+    "layoutId": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+    "masterLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+      "id": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "parentLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "id": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ahoza1gv",
+      "aid": "sh/w7mp0bi9",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/l87ed8ba",
+      "aid": "sh/7mp0bi9s",
       "id": "2",
       "bbox": [
         0,
@@ -97,94 +97,8 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/sneloj2t",
+      "aid": "sh/e1w7mp0b",
       "id": "3",
-      "bbox": [
-        46,
-        48,
-        36,
-        4
-      ],
-      "geometry": "rect",
-      "fillColor": "#D8A21B",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 4,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/3ex0nuxc",
-      "id": "4",
-      "name": "kicker-14-label",
-      "bbox": [
-        92,
-        34,
-        360,
-        34
-      ],
-      "geometry": "rect",
-      "text": "AUDITORIA",
-      "textPreview": "AUDITORIA",
-      "resolvedFontSize": 18,
-      "resolvedTextStyle": {
-        "anchor": 2,
-        "fontSize": 18,
-        "typeface": "Arial",
-        "color": "#075D3B",
-        "bold": true,
-        "alignment": "left",
-        "verticalAlignment": "middle",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "AUDITORIA"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "AUDITORIA",
-          "resolvedTextStyle": {
-            "fontSize": 18,
-            "typeface": "Arial",
-            "color": "#075D3B",
-            "bold": true,
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "AUDITORIA",
-              "fontSize": 18,
-              "typeface": "Arial",
-              "color": "#075D3B",
-              "bold": true
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 5,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/at47y1kr",
-      "id": "5",
       "bbox": [
         1190,
         650,
@@ -245,20 +159,20 @@
       "lineWidth": 0
     },
     {
-      "order": 6,
+      "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/lkjm1cfa",
-      "id": "6",
+      "aid": "sh/pg3ex0nu",
+      "id": "4",
       "bbox": [
         76,
-        82,
+        58,
         1080,
         110
       ],
       "geometry": "rect",
-      "text": "A auditoria compara itens esperados com tags detectadas durante a janela de leitura.",
-      "textPreview": "A auditoria compara itens esperados com tags detectadas durante a janela de leitura.",
+      "text": "Tratamento de inconsistências",
+      "textPreview": "Tratamento de inconsistências",
       "resolvedFontSize": 37,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -276,22 +190,18 @@
         }
       },
       "textLayout": {
-        "lineCount": 2,
+        "lineCount": 1,
         "lines": [
           {
             "index": 1,
-            "text": "A auditoria compara itens esperados com tags detectadas"
-          },
-          {
-            "index": 2,
-            "text": "durante a janela de leitura."
+            "text": "Tratamento de inconsistências"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "A auditoria compara itens esperados com tags detectadas durante a janela de leitura.",
+          "text": "Tratamento de inconsistências",
           "resolvedTextStyle": {
             "fontSize": 37,
             "typeface": "Arial",
@@ -302,7 +212,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "A auditoria compara itens esperados com tags detectadas durante a janela de leitura.",
+              "text": "Tratamento de inconsistências",
               "fontSize": 37,
               "typeface": "Arial",
               "color": "#17202A",
@@ -317,16 +227,81 @@
       "lineWidth": 0
     },
     {
-      "order": 7,
+      "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/szqtcj6t",
-      "id": "7",
+      "aid": "sh/wval87ed",
+      "id": "5",
+      "bbox": [
+        78,
+        126,
+        980,
+        46
+      ],
+      "geometry": "rect",
+      "text": "As inconsistências registram divergências operacionais que precisam de análise ou regularização.",
+      "textPreview": "As inconsistências registram divergências operacionais que precisam de análise ou regularização.",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "As inconsistências registram divergências operacionais que precisam de análise ou regularização."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "As inconsistências registram divergências operacionais que precisam de análise ou regularização.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "As inconsistências registram divergências operacionais que precisam de análise ou regularização.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#51606F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7adsji5s",
+      "id": "6",
       "bbox": [
         86,
-        204,
+        218,
         1110,
-        396
+        382
       ],
       "geometry": "rect",
       "fillColor": "#FFFFFF",
@@ -334,32 +309,32 @@
       "lineWidth": 1
     },
     {
-      "order": 8,
+      "order": 7,
       "kind": "image",
       "scope": "slide",
-      "aid": "im/u9knih4b",
-      "id": "8",
+      "aid": "im/fyxobm58",
+      "id": "7",
       "bbox": [
         100,
-        218,
+        232,
         1082,
-        368
+        354
       ],
-      "alt": "Tela de auditoria patrimonial com RFID.",
+      "alt": "Recorte das pendências abertas após auditoria, com totalizadores por situação.",
       "contentType": "image/png",
       "imageFit": "contain",
       "asset": {
-        "assetId": "525573df-3b2c-4d53-b180-04c899977ebe",
+        "assetId": "254b4775-8701-49b7-a18f-429c8ad161b0",
         "contentType": "image/png",
-        "byteLength": 99797
+        "byteLength": 14272
       }
     },
     {
-      "order": 9,
+      "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/ex0nuxc3",
-      "id": "9",
+      "aid": "sh/lc7u54zi",
+      "id": "8",
       "bbox": [
         94,
         616,
@@ -367,8 +342,8 @@
         32
       ],
       "geometry": "rect",
-      "text": "Tela de auditoria patrimonial com RFID.",
-      "textPreview": "Tela de auditoria patrimonial com RFID.",
+      "text": "Recorte das pendências abertas após auditoria, com totalizadores por situação.",
+      "textPreview": "Recorte das pendências abertas após auditoria, com totalizadores por situação.",
       "resolvedFontSize": 18,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -389,14 +364,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "Tela de auditoria patrimonial com RFID."
+            "text": "Recorte das pendências abertas após auditoria, com totalizadores por situação."
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Tela de auditoria patrimonial com RFID.",
+          "text": "Recorte das pendências abertas após auditoria, com totalizadores por situação.",
           "resolvedTextStyle": {
             "fontSize": 18,
             "typeface": "Arial",
@@ -406,7 +381,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Tela de auditoria patrimonial com RFID.",
+              "text": "Recorte das pendências abertas após auditoria, com totalizadores por situação.",
               "fontSize": 18,
               "typeface": "Arial",
               "color": "#51606F"

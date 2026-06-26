@@ -2,13 +2,13 @@
   "schema": "openai.presentation.layout/v4",
   "unit": "px",
   "slide": {
-    "aid": "sl/l2afzk",
-    "id": "l2afzk",
+    "aid": "sl/3dzhza",
+    "id": "3dzhza",
     "slide": 2,
-    "layoutId": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+    "layoutId": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
     "layoutName": "Title Slide",
     "layoutType": "title",
-    "masterLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+    "masterLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
     "masterLayoutName": "Master",
     "frame": {
       "left": 0,
@@ -44,15 +44,15 @@
   "inheritedLayers": [
     {
       "scope": "layout",
-      "id": "ce63315a-257d-40f3-bea8-93dcba090c8e",
+      "id": "67dec9d4-1cc7-4cc1-ba42-5509c30a005f",
       "name": "Title Slide",
       "type": "title",
-      "parentLayoutId": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "parentLayoutId": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "elements": []
     },
     {
       "scope": "master",
-      "id": "19939bf2-9769-4711-a6f3-acb1e5b930d2",
+      "id": "a2daabfc-e4be-40b4-999b-7f3a1d06f8f8",
       "name": "Master",
       "type": "master",
       "elements": []
@@ -63,7 +63,7 @@
       "order": 1,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/w7mp0bi9",
+      "aid": "sh/adsji5sn",
       "id": "1",
       "bbox": [
         0,
@@ -80,7 +80,7 @@
       "order": 2,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/7mp0bi9s",
+      "aid": "sh/h4byhgn2",
       "id": "2",
       "bbox": [
         0,
@@ -97,94 +97,8 @@
       "order": 3,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/e1w7mp0b",
+      "aid": "sh/sji5snel",
       "id": "3",
-      "bbox": [
-        46,
-        48,
-        36,
-        4
-      ],
-      "geometry": "rect",
-      "fillColor": "#D8A21B",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 4,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/pg3ex0nu",
-      "id": "4",
-      "name": "kicker-2-label",
-      "bbox": [
-        92,
-        34,
-        360,
-        34
-      ],
-      "geometry": "rect",
-      "text": "ROTEIRO",
-      "textPreview": "ROTEIRO",
-      "resolvedFontSize": 18,
-      "resolvedTextStyle": {
-        "anchor": 2,
-        "fontSize": 18,
-        "typeface": "Arial",
-        "color": "#075D3B",
-        "bold": true,
-        "alignment": "left",
-        "verticalAlignment": "middle",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "ROTEIRO"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "ROTEIRO",
-          "resolvedTextStyle": {
-            "fontSize": 18,
-            "typeface": "Arial",
-            "color": "#075D3B",
-            "bold": true,
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "ROTEIRO",
-              "fontSize": 18,
-              "typeface": "Arial",
-              "color": "#075D3B",
-              "bold": true
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 5,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/wval87ed",
-      "id": "5",
       "bbox": [
         1190,
         650,
@@ -245,20 +159,20 @@
       "lineWidth": 0
     },
     {
-      "order": 6,
+      "order": 4,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/7adsji5s",
-      "id": "6",
+      "aid": "sh/3m94fu18",
+      "id": "4",
       "bbox": [
         76,
-        82,
+        58,
         1080,
         110
       ],
       "geometry": "rect",
-      "text": "A defesa segue o fluxo recomendado para 15 minutos.",
-      "textPreview": "A defesa segue o fluxo recomendado para 15 minutos.",
+      "text": "Contexto do trabalho",
+      "textPreview": "Contexto do trabalho",
       "resolvedFontSize": 37,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -280,14 +194,14 @@
         "lines": [
           {
             "index": 1,
-            "text": "A defesa segue o fluxo recomendado para 15 minutos."
+            "text": "Contexto do trabalho"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "A defesa segue o fluxo recomendado para 15 minutos.",
+          "text": "Contexto do trabalho",
           "resolvedTextStyle": {
             "fontSize": 37,
             "typeface": "Arial",
@@ -298,7 +212,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "A defesa segue o fluxo recomendado para 15 minutos.",
+              "text": "Contexto do trabalho",
               "fontSize": 37,
               "typeface": "Arial",
               "color": "#17202A",
@@ -313,19 +227,161 @@
       "lineWidth": 0
     },
     {
-      "order": 7,
+      "order": 5,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/epkzupwb",
-      "id": "7",
+      "aid": "sh/a5gbq1or",
+      "id": "5",
+      "bbox": [
+        78,
+        126,
+        980,
+        46
+      ],
+      "geometry": "rect",
+      "text": "O controle patrimonial no colegiado exige rastreabilidade entre registros administrativos e bens fisicamente encontrados.",
+      "textPreview": "O controle patrimonial no colegiado exige rastreabilidade entre registros administrativos e bens fisicamente encontrados.",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 20,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "O controle patrimonial no colegiado exige rastreabilidade entre registros administrativos e bens fisicamente"
+          },
+          {
+            "index": 2,
+            "text": "encontrados."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "O controle patrimonial no colegiado exige rastreabilidade entre registros administrativos e bens fisicamente encontrados.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "O controle patrimonial no colegiado exige rastreabilidade entre registros administrativos e bens fisicamente encontrados.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#51606F"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lszqtcj6",
+      "id": "6",
       "bbox": [
         84,
-        238,
+        252,
         14,
         14
       ],
       "geometry": "ellipse",
       "fillColor": "#0E7A4F",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s72x4nap",
+      "id": "7",
+      "bbox": [
+        112,
+        244,
+        520,
+        64
+      ],
+      "geometry": "rect",
+      "text": "Equipamentos ficam distribuídos entre laboratórios, salas administrativas e espaços compartilhados.",
+      "textPreview": "Equipamentos ficam distribuídos entre laboratórios, salas administrativas e espaços compartilhados.",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 23,
+        "typeface": "Arial",
+        "color": "#17202A",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Equipamentos ficam distribuídos entre"
+          },
+          {
+            "index": 2,
+            "text": "laboratórios, salas administrativas e espaços"
+          },
+          {
+            "index": 3,
+            "text": "compartilhados."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Equipamentos ficam distribuídos entre laboratórios, salas administrativas e espaços compartilhados.",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Arial",
+            "color": "#17202A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Equipamentos ficam distribuídos entre laboratórios, salas administrativas e espaços compartilhados.",
+              "fontSize": 23,
+              "typeface": "Arial",
+              "color": "#17202A"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -333,68 +389,16 @@
       "order": 8,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/lc7u54zi",
+      "aid": "sh/zidonyd0",
       "id": "8",
       "bbox": [
-        112,
-        230,
-        520,
-        64
+        84,
+        344,
+        14,
+        14
       ],
-      "geometry": "rect",
-      "text": "Introdução, motivação e objetivos em até 5 minutos.",
-      "textPreview": "Introdução, motivação e objetivos em até 5 minutos.",
-      "resolvedFontSize": 23,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 23,
-        "typeface": "Arial",
-        "color": "#17202A",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 2,
-        "lines": [
-          {
-            "index": 1,
-            "text": "Introdução, motivação e objetivos em até 5"
-          },
-          {
-            "index": 2,
-            "text": "minutos."
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "Introdução, motivação e objetivos em até 5 minutos.",
-          "resolvedTextStyle": {
-            "fontSize": 23,
-            "typeface": "Arial",
-            "color": "#17202A",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "Introdução, motivação e objetivos em até 5 minutos.",
-              "fontSize": 23,
-              "typeface": "Arial",
-              "color": "#17202A"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
+      "geometry": "ellipse",
+      "fillColor": "#0E7A4F",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -402,16 +406,72 @@
       "order": 9,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/wra5gbq1",
+      "aid": "sh/a1gvy90j",
       "id": "9",
       "bbox": [
-        84,
-        330,
-        14,
-        14
+        112,
+        336,
+        520,
+        64
       ],
-      "geometry": "ellipse",
-      "fillColor": "#0E7A4F",
+      "geometry": "rect",
+      "text": "A conferência patrimonial precisa indicar onde o bem deveria estar e o que foi observado no ambiente.",
+      "textPreview": "A conferência patrimonial precisa indicar onde o bem deveria estar e o que foi observado no ambiente.",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 23,
+        "typeface": "Arial",
+        "color": "#17202A",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "A conferência patrimonial precisa indicar onde o"
+          },
+          {
+            "index": 2,
+            "text": "bem deveria estar e o que foi observado no"
+          },
+          {
+            "index": 3,
+            "text": "ambiente."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "A conferência patrimonial precisa indicar onde o bem deveria estar e o que foi observado no ambiente.",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Arial",
+            "color": "#17202A",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "A conferência patrimonial precisa indicar onde o bem deveria estar e o que foi observado no ambiente.",
+              "fontSize": 23,
+              "typeface": "Arial",
+              "color": "#17202A"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
       "lineColor": "rgba(0, 0, 0, 0)",
       "lineWidth": 0
     },
@@ -419,80 +479,11 @@
       "order": 10,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/upwb2hwf",
+      "aid": "sh/8nqxs72x",
       "id": "10",
       "bbox": [
-        112,
-        322,
-        520,
-        64
-      ],
-      "geometry": "rect",
-      "text": "Metodologia, implementação, resultados e discussão como núcleo da apresentação.",
-      "textPreview": "Metodologia, implementação, resultados e discussão como núcleo da apresentação.",
-      "resolvedFontSize": 23,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 23,
-        "typeface": "Arial",
-        "color": "#17202A",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 2,
-        "lines": [
-          {
-            "index": 1,
-            "text": "Metodologia, implementação, resultados e"
-          },
-          {
-            "index": 2,
-            "text": "discussão como núcleo da apresentação."
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "Metodologia, implementação, resultados e discussão como núcleo da apresentação.",
-          "resolvedTextStyle": {
-            "fontSize": 23,
-            "typeface": "Arial",
-            "color": "#17202A",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "Metodologia, implementação, resultados e discussão como núcleo da apresentação.",
-              "fontSize": 23,
-              "typeface": "Arial",
-              "color": "#17202A"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 11,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/nap4r65w",
-      "id": "11",
-      "bbox": [
         84,
-        422,
+        436,
         14,
         14
       ],
@@ -502,20 +493,20 @@
       "lineWidth": 0
     },
     {
-      "order": 12,
+      "order": 11,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/cvixczed",
-      "id": "12",
+      "aid": "sh/18jqh0fe",
+      "id": "11",
       "bbox": [
         112,
-        414,
+        428,
         520,
         64
       ],
       "geometry": "rect",
-      "text": "Conclusão com contribuição, limites e continuidade da proposta.",
-      "textPreview": "Conclusão com contribuição, limites e continuidade da proposta.",
+      "text": "Essa relação exige organização para apoiar inventário, auditoria e acompanhamento patrimonial.",
+      "textPreview": "Essa relação exige organização para apoiar inventário, auditoria e acompanhamento patrimonial.",
       "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
@@ -532,22 +523,26 @@
         }
       },
       "textLayout": {
-        "lineCount": 2,
+        "lineCount": 3,
         "lines": [
           {
             "index": 1,
-            "text": "Conclusão com contribuição, limites e"
+            "text": "Essa relação exige organização para apoiar"
           },
           {
             "index": 2,
-            "text": "continuidade da proposta."
+            "text": "inventário, auditoria e acompanhamento"
+          },
+          {
+            "index": 3,
+            "text": "patrimonial."
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "Conclusão com contribuição, limites e continuidade da proposta.",
+          "text": "Essa relação exige organização para apoiar inventário, auditoria e acompanhamento patrimonial.",
           "resolvedTextStyle": {
             "fontSize": 23,
             "typeface": "Arial",
@@ -557,7 +552,7 @@
           "runs": [
             {
               "index": 1,
-              "text": "Conclusão com contribuição, limites e continuidade da proposta.",
+              "text": "Essa relação exige organização para apoiar inventário, auditoria e acompanhamento patrimonial.",
               "fontSize": 23,
               "typeface": "Arial",
               "color": "#17202A"
@@ -571,16 +566,16 @@
       "lineWidth": 0
     },
     {
-      "order": 13,
+      "order": 12,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/5gbq1ory",
-      "id": "13",
+      "aid": "sh/qh0fepkz",
+      "id": "12",
       "bbox": [
-        720,
-        236,
-        408,
-        82
+        718,
+        252,
+        420,
+        76
       ],
       "geometry": "rect",
       "fillColor": "#FFFFFF",
@@ -588,24 +583,24 @@
       "lineWidth": 1
     },
     {
-      "order": 14,
+      "order": 13,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/udg7adsj",
-      "id": "14",
+      "aid": "sh/j2t83itg",
+      "id": "13",
       "bbox": [
-        746,
-        246,
-        170,
-        34
+        744,
+        263,
+        360,
+        28
       ],
       "geometry": "rect",
-      "text": "15 min",
-      "textPreview": "15 min",
-      "resolvedFontSize": 30,
+      "text": "Registro administrativo",
+      "textPreview": "Registro administrativo",
+      "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 30,
+        "fontSize": 23,
         "typeface": "Arial",
         "color": "#075D3B",
         "bold": true,
@@ -623,16 +618,16 @@
         "lines": [
           {
             "index": 1,
-            "text": "15 min"
+            "text": "Registro administrativo"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "15 min",
+          "text": "Registro administrativo",
           "resolvedTextStyle": {
-            "fontSize": 30,
+            "fontSize": 23,
             "typeface": "Arial",
             "color": "#075D3B",
             "bold": true,
@@ -641,11 +636,76 @@
           "runs": [
             {
               "index": 1,
-              "text": "15 min",
-              "fontSize": 30,
+              "text": "Registro administrativo",
+              "fontSize": 23,
               "typeface": "Arial",
               "color": "#075D3B",
               "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8bat47y1",
+      "id": "14",
+      "bbox": [
+        744,
+        295,
+        350,
+        24
+      ],
+      "geometry": "rect",
+      "text": "informação esperada sobre o bem",
+      "textPreview": "informação esperada sobre o bem",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "informação esperada sobre o bem"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "informação esperada sobre o bem",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "informação esperada sobre o bem",
+              "fontSize": 18,
+              "typeface": "Arial",
+              "color": "#51606F"
             }
           ],
           "marginLeft": 0
@@ -659,103 +719,38 @@
       "order": 15,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/nyd0z610",
+      "aid": "sh/1w7mp0bi",
       "id": "15",
       "bbox": [
-        746,
-        284,
-        340,
-        24
+        718,
+        356,
+        420,
+        76
       ],
       "geometry": "rect",
-      "text": "tempo total",
-      "textPreview": "tempo total",
-      "resolvedFontSize": 19,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 19,
-        "typeface": "Arial",
-        "color": "#51606F",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "tempo total"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "tempo total",
-          "resolvedTextStyle": {
-            "fontSize": 19,
-            "typeface": "Arial",
-            "color": "#51606F",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "tempo total",
-              "fontSize": 19,
-              "typeface": "Arial",
-              "color": "#51606F"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D7DEE6",
+      "lineWidth": 1
     },
     {
       "order": 16,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/cj6tovah",
+      "aid": "sh/q5o7qpg3",
       "id": "16",
       "bbox": [
-        720,
-        348,
-        408,
-        82
+        744,
+        367,
+        360,
+        28
       ],
       "geometry": "rect",
-      "fillColor": "#FFF4CF",
-      "lineColor": "#D7DEE6",
-      "lineWidth": 1
-    },
-    {
-      "order": 17,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/54zidony",
-      "id": "17",
-      "bbox": [
-        746,
-        358,
-        170,
-        34
-      ],
-      "geometry": "rect",
-      "text": "16",
-      "textPreview": "16",
-      "resolvedFontSize": 30,
+      "text": "Conferência física",
+      "textPreview": "Conferência física",
+      "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 30,
+        "fontSize": 23,
         "typeface": "Arial",
         "color": "#075D3B",
         "bold": true,
@@ -773,16 +768,16 @@
         "lines": [
           {
             "index": 1,
-            "text": "16"
+            "text": "Conferência física"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "16",
+          "text": "Conferência física",
           "resolvedTextStyle": {
-            "fontSize": 30,
+            "fontSize": 23,
             "typeface": "Arial",
             "color": "#075D3B",
             "bold": true,
@@ -791,11 +786,76 @@
           "runs": [
             {
               "index": 1,
-              "text": "16",
-              "fontSize": 30,
+              "text": "Conferência física",
+              "fontSize": 23,
               "typeface": "Arial",
               "color": "#075D3B",
               "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jqh0fepk",
+      "id": "17",
+      "bbox": [
+        744,
+        399,
+        350,
+        24
+      ],
+      "geometry": "rect",
+      "text": "situação observada no ambiente",
+      "textPreview": "situação observada no ambiente",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 18,
+        "typeface": "Arial",
+        "color": "#51606F",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "situação observada no ambiente"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "situação observada no ambiente",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Arial",
+            "color": "#51606F",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "situação observada no ambiente",
+              "fontSize": 18,
+              "typeface": "Arial",
+              "color": "#51606F"
             }
           ],
           "marginLeft": 0
@@ -809,78 +869,13 @@
       "order": 18,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/u9knih4b",
+      "aid": "sh/c3ylc7u5",
       "id": "18",
       "bbox": [
-        746,
-        396,
-        340,
-        24
-      ],
-      "geometry": "rect",
-      "text": "slides de conteúdo",
-      "textPreview": "slides de conteúdo",
-      "resolvedFontSize": 19,
-      "resolvedTextStyle": {
-        "anchor": 1,
-        "fontSize": 19,
-        "typeface": "Arial",
-        "color": "#51606F",
-        "alignment": "left",
-        "verticalAlignment": "top",
-        "insets": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      },
-      "textLayout": {
-        "lineCount": 1,
-        "lines": [
-          {
-            "index": 1,
-            "text": "slides de conteúdo"
-          }
-        ]
-      },
-      "paragraphs": [
-        {
-          "index": 1,
-          "text": "slides de conteúdo",
-          "resolvedTextStyle": {
-            "fontSize": 19,
-            "typeface": "Arial",
-            "color": "#51606F",
-            "alignment": "left"
-          },
-          "runs": [
-            {
-              "index": 1,
-              "text": "slides de conteúdo",
-              "fontSize": 19,
-              "typeface": "Arial",
-              "color": "#51606F"
-            }
-          ],
-          "marginLeft": 0
-        }
-      ],
-      "fillColor": "rgba(0, 0, 0, 0)",
-      "lineColor": "rgba(0, 0, 0, 0)",
-      "lineWidth": 0
-    },
-    {
-      "order": 19,
-      "kind": "shape",
-      "scope": "slide",
-      "aid": "sh/judg7ads",
-      "id": "19",
-      "bbox": [
-        720,
+        718,
         460,
-        408,
-        82
+        420,
+        76
       ],
       "geometry": "rect",
       "fillColor": "#FFFFFF",
@@ -888,24 +883,24 @@
       "lineWidth": 1
     },
     {
-      "order": 20,
+      "order": 19,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/fil0rqd4",
-      "id": "20",
+      "aid": "sh/1kre1w7m",
+      "id": "19",
       "bbox": [
-        746,
-        470,
-        170,
-        34
+        744,
+        471,
+        360,
+        28
       ],
       "geometry": "rect",
-      "text": "ênfase",
-      "textPreview": "ênfase",
-      "resolvedFontSize": 30,
+      "text": "Rastreabilidade",
+      "textPreview": "Rastreabilidade",
+      "resolvedFontSize": 23,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 30,
+        "fontSize": 23,
         "typeface": "Arial",
         "color": "#075D3B",
         "bold": true,
@@ -923,16 +918,16 @@
         "lines": [
           {
             "index": 1,
-            "text": "ênfase"
+            "text": "Rastreabilidade"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "ênfase",
+          "text": "Rastreabilidade",
           "resolvedTextStyle": {
-            "fontSize": 30,
+            "fontSize": 23,
             "typeface": "Arial",
             "color": "#075D3B",
             "bold": true,
@@ -941,8 +936,8 @@
           "runs": [
             {
               "index": 1,
-              "text": "ênfase",
-              "fontSize": 30,
+              "text": "Rastreabilidade",
+              "fontSize": 23,
               "typeface": "Arial",
               "color": "#075D3B",
               "bold": true
@@ -956,24 +951,24 @@
       "lineWidth": 0
     },
     {
-      "order": 21,
+      "order": 20,
       "kind": "shape",
       "scope": "slide",
-      "aid": "sh/qxs72x4n",
-      "id": "21",
+      "aid": "sh/58z25kb6",
+      "id": "20",
       "bbox": [
-        746,
-        508,
-        340,
+        744,
+        503,
+        350,
         24
       ],
       "geometry": "rect",
-      "text": "resultados e discussão",
-      "textPreview": "resultados e discussão",
-      "resolvedFontSize": 19,
+      "text": "histórico para análise patrimonial",
+      "textPreview": "histórico para análise patrimonial",
+      "resolvedFontSize": 18,
       "resolvedTextStyle": {
         "anchor": 1,
-        "fontSize": 19,
+        "fontSize": 18,
         "typeface": "Arial",
         "color": "#51606F",
         "alignment": "left",
@@ -990,16 +985,16 @@
         "lines": [
           {
             "index": 1,
-            "text": "resultados e discussão"
+            "text": "histórico para análise patrimonial"
           }
         ]
       },
       "paragraphs": [
         {
           "index": 1,
-          "text": "resultados e discussão",
+          "text": "histórico para análise patrimonial",
           "resolvedTextStyle": {
-            "fontSize": 19,
+            "fontSize": 18,
             "typeface": "Arial",
             "color": "#51606F",
             "alignment": "left"
@@ -1007,8 +1002,8 @@
           "runs": [
             {
               "index": 1,
-              "text": "resultados e discussão",
-              "fontSize": 19,
+              "text": "histórico para análise patrimonial",
+              "fontSize": 18,
               "typeface": "Arial",
               "color": "#51606F"
             }
