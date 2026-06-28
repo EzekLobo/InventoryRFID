@@ -124,27 +124,19 @@ const slides = [
     ],
   },
   {
-    section: "DESENVOLVIMENTO",
-    title: "Tecnologias e materiais",
-    description: "O protótipo combina interface web, backend, banco local e entrada RFID controlada.",
-    bullets: [
-      "Frontend web para operação, consulta e acompanhamento do inventário.",
-      "Backend com API REST para autenticação, cadastros, eventos, auditoria e inconsistências.",
-      "SQLite local para prototipação e leitor RFID de proximidade com uma tag física.",
-      "Comunicador intermediário para enviar a leitura ao backend no formato esperado.",
-    ],
-    callouts: [
-      { value: "Interface", label: "uso e acompanhamento" },
-      { value: "API", label: "processamento central" },
-      { value: "RFID", label: "captura controlada" },
-    ],
-  },
-  {
     section: "ARQUITETURA",
-    title: "Arquitetura do protótipo",
-    description: "A arquitetura separa interface, API, regras de negócio, persistência e fontes de eventos RFID.",
+    title: "Arquitetura e tecnologias",
+    description: "A aplicação combina interface web, API REST, banco local e middleware para processar eventos RFID.",
     image: ASSETS.arquitetura,
-    caption: "Visão geral da integração entre interface web, backend, banco local e entrada de eventos RFID.",
+    caption: "Diagrama da arquitetura e tecnologias usadas no protótipo.",
+    techBadges: [
+      ["Next.js", "interface web"],
+      ["React", "componentes da UI"],
+      ["Django", "backend e regras"],
+      ["DRF", "API REST"],
+      ["SQLite", "persistência local"],
+      ["RFID", "eventos de leitura"],
+    ],
   },
   {
     section: "FLUXO RFID",
@@ -166,35 +158,11 @@ const slides = [
     ],
   },
   {
-    section: "PROCESSAMENTO",
-    title: "Processamento das leituras",
-    description: "Depois que a leitura chega à API, o sistema decide se ela confirma, altera ou questiona o inventário.",
-    steps: [
-      ["1", "Receber evento", "A API recebe a tag enviada pelo comunicador ou por uma fonte compatível."],
-      ["2", "Interpretar leitura", "O backend valida tag, leitor, janela ativa e possíveis duplicidades."],
-      ["3", "Registrar consequência", "O sistema atualiza histórico, auditoria ou inconsistência conforme o resultado."],
-    ],
-  },
-  {
-    section: "INTERFACE",
-    title: "Interface de acompanhamento",
-    description: "A interface transforma o processamento em informação acompanhável para o usuário.",
-    image: ASSETS.dashboardRecorte,
-    caption: "Painel com indicadores, leitores, pendências e eventos recentes do inventário.",
-  },
-  {
-    section: "RESULTADOS",
-    title: "Auditoria patrimonial",
-    description: "A auditoria compara o inventário lógico com o inventário físico formado pelas leituras.",
-    image: ASSETS.auditoriaRecorte,
-    caption: "Recorte da auditoria com esperados, lidos, ausentes, divergentes e desconhecidos.",
-  },
-  {
-    section: "RESULTADOS",
-    title: "Tratamento de inconsistências",
-    description: "As inconsistências registram divergências operacionais que precisam de análise ou regularização.",
-    image: ASSETS.inconsistenciasRecorte,
-    caption: "Recorte das pendências abertas após auditoria, com totalizadores por situação.",
+    kind: "demo",
+    section: "DEMONSTRAÇÃO",
+    title: "Demostração do protótipo",
+    description: "Vídeo demonstrativo das interfaces principais no deploy da aplicação.",
+    url: "https://inventory-rfid.vercel.app/",
   },
   {
     section: "RESULTADOS",
@@ -211,33 +179,12 @@ const slides = [
   },
   {
     section: "CONCLUSÃO",
-    title: "Conclusão e limites",
-    description: "O resultado defendido é a validação funcional do fluxo de software, não o desempenho físico do RFID.",
-    bullets: [
-      "O protótipo integra cadastro patrimonial, eventos RFID, API, auditoria, histórico e inconsistências.",
-      "Os testes confirmaram que leituras e cenários controlados geram consequências rastreáveis no sistema.",
-      "Não foram avaliados alcance, leitura simultânea, interferência ambiental ou operação institucional em escala.",
-    ],
+    title: "Conclusão e trabalhos futuros",
+    description: "O protótipo demonstra viabilidade funcional e delimita sua continuidade experimental.",
     proof: [
-      ["Contribuição", "comparação entre inventário esperado e observado"],
-      ["Limite", "leitor de proximidade, uma tag e cenários controlados"],
-      ["Continuidade", "múltiplas tags, sensores físicos e antenas de maior alcance"],
-    ],
-  },
-  {
-    section: "CONTINUIDADE",
-    title: "Melhorias futuras",
-    description: "As melhorias futuras partem dos limites assumidos na validação e ampliam o protótipo para uso mais próximo de uma operação real.",
-    bullets: [
-      "Testar múltiplas tags e leitores RFID físicos em ambientes reais do colegiado.",
-      "Avaliar alcance, leitura simultânea, interferência ambiental e taxa de leitura.",
-      "Integrar sensores ou gateways físicos ao fluxo de eventos já previsto na arquitetura.",
-      "Ampliar relatórios, filtros e trilhas de auditoria para apoiar decisões patrimoniais.",
-    ],
-    proof: [
-      ["Escala física", "testes com mais tags e leitores"],
-      ["Medição técnica", "alcance, interferência e simultaneidade"],
-      ["Uso institucional", "relatórios e auditoria ampliada"],
+      ["Contribuição", "cadastro patrimonial, eventos RFID, API, auditoria, histórico e inconsistências"],
+      ["Validação funcional", "processamento de eventos e registro de divergências em cenário controlado"],
+      ["Continuidade", "múltiplas tags, leitores de maior alcance, sensores/gateways e relatórios"],
     ],
   },
   {
@@ -253,6 +200,13 @@ const slides = [
       "KNAPP; WANG. Interference in RFID installations.",
       "Tribunal de Contas do Estado da Bahia. Orientações para controle patrimonial.",
     ],
+  },
+  {
+    kind: "thanks",
+    section: "ENCERRAMENTO",
+    title: "Obrigado",
+    subtitle: "Dúvidas e contribuições",
+    author: "Ezequiel Lobo Oliveira",
   },
 ];
 
@@ -369,6 +323,38 @@ function comparison(slide, ctx, data) {
 }
 
 async function imageSlide(slide, ctx, item) {
+  if (item.techBadges) {
+    const imageBox = { x: 66, y: 196, w: 706, h: 428 };
+    ctx.addShape(slide, { ...imageBox, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
+    await ctx.addImage(slide, { path: item.image, x: imageBox.x + 14, y: imageBox.y + 14, w: imageBox.w - 28, h: imageBox.h - 28, fit: "contain", alt: item.caption });
+
+    ctx.addShape(slide, { x: 802, y: 196, w: 398, h: 428, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
+    ctx.addText(slide, { text: "Tecnologias usadas", x: 828, y: 220, w: 340, h: 30, fontSize: 22, color: COLORS.greenDark, bold: true, typeface: "Arial" });
+    ctx.addText(slide, { text: "Camadas do protótipo", x: 828, y: 256, w: 318, h: 22, fontSize: 15, color: COLORS.muted, typeface: "Arial" });
+    item.techBadges.forEach((badge, index) => {
+      const col = index % 2;
+      const row = Math.floor(index / 2);
+      const x = 828 + col * 182;
+      const y = 306 + row * 102;
+      const fill = index < 2 ? COLORS.softBlue : index < 4 ? COLORS.softGreen : COLORS.softGold;
+      ctx.addShape(slide, { x, y, w: 156, h: 75, fill, line: ctx.line(COLORS.line, 1) });
+      ctx.addText(slide, { text: badge[0], x: x + 10, y: y + 12, w: 136, h: 24, fontSize: 18, color: COLORS.greenDark, bold: true, typeface: "Arial", align: "center" });
+      ctx.addText(slide, { text: badge[1], x: x + 10, y: y + 42, w: 136, h: 20, fontSize: 10, color: COLORS.muted, typeface: "Arial", align: "center" });
+    });
+    ctx.addText(slide, {
+      text: "Middleware/API como núcleo de integração entre interface, banco e eventos RFID.",
+      x: 828,
+      y: 582,
+      w: 340,
+      h: 38,
+      fontSize: 14,
+      color: COLORS.muted,
+      typeface: "Arial",
+      align: "center",
+    });
+    ctx.addText(slide, { text: item.caption, x: 84, y: 638, w: 672, h: 28, fontSize: 16, color: COLORS.muted, typeface: "Arial", align: "center" });
+    return;
+  }
   const imageBox = { x: 86, y: 218, w: 1110, h: 382 };
   ctx.addShape(slide, { ...imageBox, fill: COLORS.white, line: ctx.line(COLORS.line, 1) });
   await ctx.addImage(slide, { path: item.image, x: imageBox.x + 14, y: imageBox.y + 14, w: imageBox.w - 28, h: imageBox.h - 28, fit: "contain", alt: item.caption });
@@ -475,6 +461,139 @@ function refs(slide, ctx, item, page) {
   });
 }
 
+function demo(slide, ctx, item, page) {
+  base(slide, ctx, item.section, page);
+  title(slide, ctx, item.title, 54);
+  description(slide, ctx, item.description);
+
+  const videoBox = { x: 120, y: 180, w: 1040, h: 380 };
+  ctx.addShape(slide, { ...videoBox, fill: COLORS.ink, line: ctx.line(COLORS.greenDark, 2) });
+  ctx.addShape(slide, {
+    x: videoBox.x + 22,
+    y: videoBox.y + 22,
+    w: videoBox.w - 44,
+    h: videoBox.h - 44,
+    fill: "#22303B",
+    line: ctx.line("#314657", 1),
+  });
+  ctx.addShape(slide, { x: 574, y: 302, w: 132, h: 132, geometry: "ellipse", fill: COLORS.green, line: ctx.line(COLORS.green, 1) });
+  ctx.addText(slide, {
+    text: ">",
+    x: 614,
+    y: 320,
+    w: 58,
+    h: 74,
+    fontSize: 60,
+    color: COLORS.white,
+    bold: true,
+    typeface: "Arial",
+    align: "center",
+    valign: "middle",
+  });
+  ctx.addText(slide, {
+    text: "Insira aqui o vídeo gravado do deploy",
+    x: 250,
+    y: 448,
+    w: 780,
+    h: 34,
+    fontSize: 24,
+    color: COLORS.white,
+    bold: true,
+    typeface: "Arial",
+    align: "center",
+  });
+  ctx.addText(slide, {
+    text: "Painel  •  Auditoria  •  Inconsistências",
+    x: 250,
+    y: 486,
+    w: 780,
+    h: 28,
+    fontSize: 19,
+    color: "#B8C7D3",
+    typeface: "Arial",
+    align: "center",
+  });
+
+  ctx.addShape(slide, { x: 456, y: 594, w: 368, h: 52, fill: COLORS.greenDark, line: ctx.line(COLORS.greenDark, 1) });
+  ctx.addText(slide, {
+    text: "Acessar deploy",
+    x: 456,
+    y: 607,
+    w: 368,
+    h: 28,
+    fontSize: 22,
+    color: COLORS.white,
+    bold: true,
+    typeface: "Arial",
+    align: "center",
+    hyperlink: item.url,
+  });
+  ctx.addText(slide, {
+    text: item.url,
+    x: 396,
+    y: 654,
+    w: 488,
+    h: 24,
+    fontSize: 16,
+    color: COLORS.muted,
+    typeface: "Arial",
+    align: "center",
+  });
+}
+
+async function thanks(slide, ctx, item, page) {
+  ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: COLORS.bg });
+  ctx.addShape(slide, { x: 0, y: 0, w: 18, h: ctx.H, fill: COLORS.green });
+  ctx.addShape(slide, { x: 92, y: 136, w: 1094, h: 1, fill: COLORS.line });
+  ctx.addShape(slide, { x: 92, y: 584, w: 1094, h: 1, fill: COLORS.line });
+  await ctx.addImage(slide, { path: ASSETS.brasao, x: 1056, y: 52, w: 72, h: 82, fit: "contain", alt: "Brasão da UESC" });
+  ctx.addText(slide, {
+    text: item.title,
+    x: 120,
+    y: 250,
+    w: 1040,
+    h: 96,
+    fontSize: 68,
+    color: COLORS.greenDark,
+    bold: true,
+    typeface: "Arial",
+    align: "center",
+  });
+  ctx.addText(slide, {
+    text: item.subtitle,
+    x: 260,
+    y: 356,
+    w: 760,
+    h: 44,
+    fontSize: 30,
+    color: COLORS.ink,
+    typeface: "Arial",
+    align: "center",
+  });
+  ctx.addText(slide, {
+    text: item.author,
+    x: 330,
+    y: 482,
+    w: 620,
+    h: 34,
+    fontSize: 24,
+    color: COLORS.muted,
+    typeface: "Arial",
+    align: "center",
+  });
+  ctx.addText(slide, {
+    text: String(page).padStart(2, "0"),
+    x: 1190,
+    y: 650,
+    w: 44,
+    h: 28,
+    fontSize: 18,
+    color: COLORS.muted,
+    typeface: "Arial",
+    align: "right",
+  });
+}
+
 export async function buildSlide(presentation, ctx, index) {
   const item = slides[index];
   const slide = presentation.slides.add();
@@ -485,6 +604,14 @@ export async function buildSlide(presentation, ctx, index) {
   }
   if (item.kind === "refs") {
     refs(slide, ctx, item, page);
+    return slide;
+  }
+  if (item.kind === "demo") {
+    demo(slide, ctx, item, page);
+    return slide;
+  }
+  if (item.kind === "thanks") {
+    await thanks(slide, ctx, item, page);
     return slide;
   }
   base(slide, ctx, item.section, page);
