@@ -180,11 +180,25 @@ const slides = [
   {
     section: "CONCLUSÃO",
     title: "Conclusão e trabalhos futuros",
-    description: "O protótipo demonstra viabilidade funcional e delimita sua continuidade experimental.",
-    proof: [
-      ["Contribuição", "cadastro patrimonial, eventos RFID, API, auditoria, histórico e inconsistências"],
-      ["Validação funcional", "processamento de eventos e registro de divergências em cenário controlado"],
-      ["Continuidade", "múltiplas tags, leitores de maior alcance, sensores/gateways e relatórios"],
+    description: "Síntese dos resultados alcançados e continuidade da pesquisa.",
+    conclusionBlocks: [
+      {
+        title: "Conclusão",
+        body: [
+          "O protótipo atingiu os objetivos propostos.",
+          "Demonstrou a viabilidade funcional do sistema de inventário baseado em RFID.",
+          "A arquitetura permitiu integrar interface, backend e persistência para apoiar a auditoria patrimonial.",
+        ],
+      },
+      {
+        title: "Trabalhos futuros",
+        body: [
+          "Testes com múltiplas tags.",
+          "Leitores de maior alcance.",
+          "Integração com gateways/sensores.",
+          "Relatórios e métricas de auditoria.",
+        ],
+      },
     ],
   },
   {
@@ -411,6 +425,50 @@ function flowLanes(slide, ctx, lanes) {
   });
 }
 
+function conclusionBlocks(slide, ctx, blocks) {
+  const fills = [COLORS.softGreen, COLORS.softBlue];
+  blocks.forEach((block, index) => {
+    const x = index === 0 ? 88 : 660;
+    const y = 216;
+    const w = index === 0 ? 542 : 532;
+    ctx.addShape(slide, { x, y, w, h: 331, fill: fills[index], line: ctx.line(COLORS.line, 1) });
+    ctx.addText(slide, {
+      text: block.title,
+      x: x + 32,
+      y: y + 28,
+      w: w - 64,
+      h: 42,
+      fontSize: 28,
+      color: COLORS.greenDark,
+      bold: true,
+      typeface: "Arial",
+      align: "center",
+    });
+    ctx.addText(slide, {
+      text: block.body.join("\n\n"),
+      x: x + 32,
+      y: y + 86,
+      w: w - 64,
+      h: 214,
+      fontSize: index === 0 ? 18 : 19,
+      color: COLORS.ink,
+      typeface: "Arial",
+      align: "center",
+    });
+  });
+  ctx.addText(slide, {
+    text: "O limite experimental permanece restrito ao cenário controlado; a ampliação física fica como continuidade do trabalho.",
+    x: 134,
+    y: 580,
+    w: 1018,
+    h: 42,
+    fontSize: 19,
+    color: COLORS.muted,
+    typeface: "Arial",
+    align: "center",
+  });
+}
+
 async function cover(slide, ctx, item) {
   ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: COLORS.white });
   ctx.addShape(slide, { x: 0, y: 0, w: ctx.W, h: ctx.H, fill: COLORS.bg });
@@ -625,6 +683,7 @@ export async function buildSlide(presentation, ctx, index) {
   if (item.image) await imageSlide(slide, ctx, item);
   if (item.flowLanes) flowLanes(slide, ctx, item.flowLanes);
   if (item.validation) validation(slide, ctx, item.validation);
+  if (item.conclusionBlocks) conclusionBlocks(slide, ctx, item.conclusionBlocks);
   return slide;
 }
 
