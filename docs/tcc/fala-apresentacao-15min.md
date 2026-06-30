@@ -1,43 +1,172 @@
-# Fala contínua da apresentação - InventoryRFID
 
-Boa tarde. Inicialmente, cumprimento os membros da banca examinadora e agradeço pela presença e pela disponibilidade em avaliar este trabalho. Eu sou Ezequiel Lobo Oliveira e vou apresentar meu Trabalho de Conclusão de Curso, intitulado "Sistema de inventário baseado em tecnologia RFID para o Colegiado de Ciência da Computação".
+# Roteiro de apresentacao - modelo atual dos slides
 
-Antes de entrar no problema, é importante situar o contexto do trabalho. O controle patrimonial em um colegiado envolve bens distribuídos entre laboratórios, salas administrativas e espaços compartilhados. Nessa rotina, a conferência precisa relacionar o que está registrado administrativamente com aquilo que é encontrado fisicamente no ambiente. Portanto, a rastreabilidade entre registro, localização esperada, leitura observada e histórico de auditoria é um ponto central para organizar o inventário.
+## Ideia central
 
-O problema está na dificuldade de manter os registros patrimoniais atualizados em relação à situação real dos bens no colegiado. Os equipamentos ficam distribuídos entre laboratórios, salas administrativas e espaços compartilhados, e a conferência depende de verificação individual, atualização manual e acompanhamento constante. Nesse contexto, podem surgir divergências entre o que está registrado e o que é encontrado durante a conferência, como bens não localizados ou bens em local diferente do esperado.
+O trabalho valida funcionalmente um prototipo que transforma eventos RFID em
+informacoes rastreaveis para apoiar a auditoria patrimonial, respeitando o
+limite de validacao fisica: leitor RFID USB/de proximidade, uma tag,
+comunicador intermediario e API.
 
-A proposta deste trabalho foi construir um protótipo que integra sistema web, API e eventos RFID. A ideia não é vender RFID como solução automática para todos os problemas de inventário, mas usá-lo como apoio à conferência. No protótipo, locais, leitores, bens e tags formam a base do inventário lógico. A leitura da tag chega ao backend por meio de um comunicador intermediário e o sistema registra histórico, auditoria ou inconsistência conforme o resultado encontrado.
+## Distribuicao de tempo
 
-Com isso, o objetivo geral foi desenvolver e validar funcionalmente um protótipo web de inventário patrimonial baseado em RFID. Para alcançar esse objetivo, foram implementados cadastros, consulta, auditoria, histórico e tratamento de inconsistências. Também foi projetada uma arquitetura modular para receber eventos RFID e verificar o fluxo de leitura, processamento e atualização do inventário em ambiente controlado.
+- Slide 1: abertura - 30s.
+- Slide 2: contextualizacao e problema - 1min40s.
+- Slides 3 e 4: solucao proposta e objetivos - 2min.
+- Slides 5 e 6: trabalhos relacionados e metodologia - 2min.
+- Slide 7: arquitetura e tecnologias - 1min20s.
+- Slide 8: demonstracao do deploy - 3min30s.
+- Slides 9 e 10: resultados, limitacoes, conclusao e futuros - 3min.
+- Slides 11 e 12: referencias e encerramento - 30s.
+- Margem tecnica: cerca de 30s a 1min.
 
-Na fundamentação, os trabalhos relacionados ajudam a sustentar três pontos. O primeiro é o uso de RFID como tecnologia de identificação automática e apoio à rastreabilidade. O segundo é a integração de dispositivos e sistemas por meio de eventos, middleware ou APIs. O diferencial deste protótipo está em aplicar essas bases ao fluxo de auditoria patrimonial. A leitura RFID não é usada apenas para identificar um item; ela entra como evento, é comparada com o esperado, pode gerar uma inconsistência e permite que essa pendência seja analisada e resolvida com registro no histórico operacional.
+## Slide 1 - Capa
 
-A metodologia foi organizada em três etapas. Primeiro, foi feita a compreensão do contexto, com revisão sobre controle patrimonial, RFID, integração e trabalhos relacionados. Depois, ocorreu o desenvolvimento da solução, envolvendo modelagem, arquitetura, telas, API e regras de processamento das leituras. Por fim, foi feita a validação funcional do fluxo em cenários controlados, com leitor de proximidade, uma tag física, comunicador intermediário e API.
+Boa tarde. Eu sou Ezequiel Lobo Oliveira e vou apresentar o trabalho "Sistema de
+inventario baseado em tecnologia RFID para o Colegiado de Ciencia da
+Computacao", desenvolvido sob orientacao do professor Jorge Lima de Oliveira
+Filho, no Bacharelado em Ciencia da Computacao da UESC.
 
-Em relação às tecnologias e materiais, o protótipo combina uma interface web para operação e acompanhamento, um backend com API REST para autenticação, cadastros, eventos, auditoria e inconsistências, e um banco SQLite local para prototipação. A parte física validada utilizou leitor RFID de proximidade com uma tag, além de um comunicador responsável por enviar a leitura ao backend no formato esperado.
+Transicao: Antes de falar da solucao, eu comeco situando o contexto e o problema
+que motivaram o desenvolvimento do prototipo.
 
-A arquitetura separa a interface, o backend, as regras de negócio, a persistência e as fontes de eventos RFID. Essa separação é importante porque deixa claro onde a leitura entra, onde as regras são aplicadas e onde os resultados ficam armazenados. O ponto central da arquitetura é o processamento do evento que chega ao sistema, e não o modelo específico do leitor utilizado no experimento.
+## Slide 2 - Contextualizacão
 
-No fluxo RFID, há uma distinção importante para a defesa. O caminho validado fisicamente foi composto pela aproximação da tag ao leitor, envio pelo comunicador, processamento pela API e registro do resultado na auditoria. Já o caminho com sensor ou gateway deve ser entendido como possibilidade arquitetural ou fluxo verificado por software, não como validação física completa. Essa distinção evita ampliar a evidência além do que foi efetivamente testado.
+O trabalho parte do controle patrimonial no colegiado. Quando falo em patrimônio, estou me referindo aos bens físicos pertencentes ou sob responsabilidade do colegiado, como computadores, projetores, bancadas e outros equipamentos distribuídos entre laboratórios, salas administrativas e espaços compartilhados.
 
-Depois que a leitura chega à API, o sistema interpreta o evento. Ele valida a tag, o leitor, a janela ativa e possíveis duplicidades. Em seguida, registra a consequência adequada. Dependendo do caso, essa consequência pode ser atualização de histórico, confirmação em auditoria ou abertura de inconsistência para análise posterior.
+Para que haja controle e auditoria desses bens, é necessário realizar o processo de inventário, que relaciona o que está registrado administrativamente com aquilo que é encontrado fisicamente no ambiente.
 
-Na interface de acompanhamento, o processamento passa a ser visível para o usuário. O painel reúne indicadores, leitores, pendências e eventos recentes do inventário. Ele funciona como uma visão operacional para acompanhar a situação geral antes de entrar nas telas específicas de auditoria e inconsistências.
+À primeira vista, parece um processo simples. Porém, quando esse inventário depende de uma conferência manual e unitária dos códigos, feita visualmente para atualizar a situação de cada item, ele tende a consumir mais tempo e fica mais suscetível a falhas humanas, como erro de anotação, esquecimento de registro ou dificuldade de acompanhar divergências.
 
-A auditoria patrimonial é o ponto mais diretamente ligado ao objetivo do trabalho. Nessa etapa, o sistema compara o inventário lógico com o inventário físico formado pelas leituras. Assim, a leitura RFID deixa de ser apenas um código capturado e passa a gerar uma evidência para classificar itens esperados, lidos, ausentes, divergentes ou desconhecidos.
+Transicao: A partir desse problema, a proposta do trabalho foi usar RFID como
+apoio a conferencia, sem tratar a tecnologia como uma automacao completa do
+inventario.
 
-Quando essa comparação aponta diferença entre o esperado e o observado, o sistema registra uma inconsistência. Essa inconsistência não é apenas um erro técnico; ela é uma informação operacional que precisa ser analisada ou regularizada. Com isso, situações como bem ausente, local divergente ou tag desconhecida podem ser acompanhadas com histórico.
+## Slide 3 - Solucao proposta
 
-A validação funcional foi feita em cenários controlados. Cada cenário foi repetido seis vezes para confirmar o comportamento do sistema. Esse número não deve ser interpretado como amostragem estatística, mas como repetição funcional para verificar se as regras se mantinham. Entre os cenários avaliados estão leitura conhecida, correção de pendência, tag desconhecida, local divergente, leitura repetida e leitor sem resposta.
+A solução proposta foi usar RFID para auxiliar a conferência dos bens durante o inventário. Em vez de depender apenas da leitura visual dos códigos patrimoniais, o sistema passa a receber a identificação da tag RFID e usa essa informação para registrar a presença do bem, apoiar a auditoria e indicar possíveis divergências.
 
-O foco da validação não foi medir desempenho físico do RFID, como alcance, leitura simultânea de múltiplas tags, interferência ambiental ou operação institucional em escala. O foco foi verificar se o software recebe os eventos, processa as leituras e registra corretamente histórico, auditoria e inconsistências.
+## Slide 4 - Objetivos do trabalho
 
-Como conclusão, o protótipo cumpre o objetivo funcional proposto. Ele integra cadastro patrimonial, eventos RFID, API, auditoria, histórico e tratamento de inconsistências. A contribuição principal é transformar leituras RFID em evidências rastreáveis para apoiar auditoria patrimonial, comparando o inventário esperado com aquilo que foi observado no fluxo de conferência.
+Com isso, o objetivo geral do trabalho foi desenvolver um protótipo funcional de software para inventário patrimonial no contexto do Colegiado de Ciência da Computação da UESC. A proposta foi integrar a leitura RFID ao sistema para apoiar o cadastro dos bens, a auditoria, o registro histórico e o tratamento de inconsistências patrimoniais.
 
-Ao mesmo tempo, os limites permanecem explícitos. A validação física ficou restrita ao leitor de proximidade, uma tag, um comunicador intermediário e a API. Não foram avaliados alcance, leitura simultânea, interferência ambiental nem implantação real com múltiplos leitores físicos.
+Para alcançar esse objetivo, o trabalho foi dividido em etapas menores. Primeiro, foi feito o levantamento de requisitos, para entender as necessidades do controle patrimonial. Em seguida, foi projetada uma arquitetura modular, pensada para organizar melhor os componentes da solução e permitir sua evolução. A partir disso, passou-se ao desenvolvimento da aplicação web, à integração da leitura RFID com a API e, por fim, à validação funcional do fluxo implementado.
 
-Como melhorias futuras, o protótipo pode ser ampliado em quatro frentes. A primeira é testar múltiplas tags e leitores RFID físicos em ambientes reais do colegiado. A segunda é medir alcance, leitura simultânea, interferência ambiental e taxa de leitura. A terceira é integrar sensores ou gateways físicos ao fluxo de eventos previsto na arquitetura. A quarta é ampliar relatórios, filtros e trilhas de auditoria para apoiar melhor a decisão patrimonial.
+Transicao: Esses objetivos se apoiam em trabalhos relacionados que discutem RFID
+em inventario, integracao com sistemas e limites fisicos da tecnologia.
 
-Por fim, estas são as principais referências utilizadas para fundamentar o trabalho, incluindo inventário com RFID, integração entre dispositivos e sistemas, controle patrimonial e limitações técnicas da leitura RFID.
+## Slide 5 - Trabalhos relacionados
 
-Com isso, encerro a apresentação e fico à disposição para as perguntas.
+Transicao: A partir dessa base teorica, a pesquisa seguiu um percurso
+
+Esses objetivos também se apoiam em trabalhos relacionados que já apresentam funcionalidades importantes para inventário com RFID, como identificação de bens, apoio à auditoria, integração com sistemas e registro de informações operacionais.
+
+O diferencial do InventoryRFID não está em tratar cada uma dessas funcionalidades como algo isoladamente inédito, mas em reunir esses elementos em uma solução integrada e aplicada ao contexto do Colegiado de Ciência da Computação da UESC. A partir da arquitetura proposta, a leitura RFID é recebida pela API REST, relacionada aos dados patrimoniais cadastrados e utilizada para apoiar o fluxo de auditoria, histórico e tratamento de inconsistências.
+
+## Slide 6 - Percurso metodologico
+
+Para chegar a esse objetivo, o processo metodológico foi organizado em três partes principais.
+
+A primeira foi o entendimento do problema. Nessa etapa, foram levantadas as necessidades do controle patrimonial no contexto do colegiado e também foi construído o referencial teórico, com base em trabalhos sobre RFID, inventário patrimonial e integração entre dispositivos e sistemas.
+
+A segunda parte foi a construção do protótipo. Com base nos requisitos levantados, foi desenvolvida uma aplicação web organizada em uma arquitetura modular, envolvendo interface, API REST, banco de dados e integração com a leitura RFID. Essa organização buscou atender às necessidades identificadas e, ao mesmo tempo, manter uma base que pudesse evoluir futuramente.
+
+Por fim, a terceira parte foi a validação. O fluxo principal do sistema foi submetido a testes experimentais controlados, considerando as limitações do hardware disponível. Por isso, a validação física ficou concentrada no leitor RFID de proximidade, em uma tag e no comunicador intermediário, enquanto o sistema foi avaliado principalmente quanto ao funcionamento do fluxo de software.
+
+Transicao: Depois da metodologia, a arquitetura mostra como essas partes foram
+organizadas no prototipo.
+
+## Slide 7 - Arquitetura e tecnologias
+
+Eu escolhi essas tecnologias porque elas eram adequadas ao escopo de um protótipo funcional e também por familiaridade, o que reduziu o risco de desenvolvimento. Next.js e React facilitaram a interface web, Django REST Framework ajudou na construção da API e das regras de negócio, e o SQLite foi suficiente para validar o protótipo sem aumentar a complexidade da infraestrutura.
+
+A ideia de usar RFID para receber eventos é permitir que a leitura física do bem alimente automaticamente o sistema. Cada leitura vira um evento que pode ser registrado, processado e comparado com o inventário esperado, apoiando a auditoria e o tratamento de inconsistências.
+
+Se quiser deixar ainda mais simples:
+
+> O RFID foi usado porque aproxima o inventário físico do sistema. Quando a tag é lida, essa leitura vira um evento que informa ao sistema que aquele bem foi detectado naquele contexto de auditoria.
+>
+
+Transicao: Com essa arquitetura apresentada, eu passo para a demonstracao do
+deploy, mostrando como o fluxo aparece na interface.
+
+## Slide 8 - Demonstracao do prototipo
+
+Na demonstracao, o foco e mostrar como uma leitura deixa de ser apenas um codigo
+capturado e se transforma em informacao operacional para auditoria patrimonial.
+
+Sequencia sugerida para a demo:
+
+1. Abrir o deploy: https://inventory-rfid.vercel.app/
+2. Mostrar o painel inicial e situar os indicadores principais.
+3. Mostrar leitores, eventos recentes ou pendencias, sem gastar tempo em todos
+   os detalhes da tela.
+4. Entrar na auditoria e explicar a comparacao entre inventario logico e
+   inventario observado.
+5. Abrir inconsistencias e destacar exemplos como tag desconhecida, local
+   divergente ou item ausente.
+
+Fala de fechamento da demo: Essa demonstracao resume o papel do prototipo. A
+leitura RFID entra como evento, o sistema aplica as regras e o resultado fica
+rastreavel para auditoria, historico ou tratamento de inconsistencia.
+
+Transicao: Depois de mostrar o sistema em execucao, eu volto aos resultados da
+validacao funcional e aos limites do experimento.
+
+## Slide 9 - Resultados e limitacoes
+
+A avaliacao foi feita em cenario controlado. O prototipo operou com leitor RFID
+USB/de proximidade, uma tag fisica, comunicador intermediario e API. A validacao
+verificou captura, envio, processamento, classificacao e registro dos eventos
+RFID.
+
+Os cenarios tiveram execucao 6/6, indicando repeticao funcional do comportamento
+esperado. Isso inclui leitura RFID real, processamento do evento, comparacao
+entre inventario logico e fisico, registro operacional, resolucao de
+inconsistencias e tratamento de excecoes.
+
+E importante destacar que esse numero nao representa uma avaliacao estatistica
+nem desempenho fisico em escala. O trabalho nao mediu alcance, leitura
+simultanea de muitas tags, interferencia ambiental ou operacao institucional com
+multiplos leitores fisicos.
+
+Transicao: Com esses resultados e limites claros, a conclusao sintetiza a
+contribuicao do prototipo e aponta continuidades possiveis.
+
+## Slide 10 - Conclusao e trabalhos futuros
+
+Como conclusao, o sistema transforma eventos RFID em informacoes rastreaveis
+para apoiar o controle patrimonial. O prototipo atingiu os objetivos definidos,
+demonstrou viabilidade funcional e integrou interface, backend e persistencia
+para apoiar a auditoria patrimonial.
+
+Como trabalhos futuros, ficam testes com multiplas tags, leitores de maior
+alcance, integracao fisica com gateways ou sensores, alem de relatorios e
+metricas de auditoria mais completas.
+
+Transicao: Para finalizar, apresento as principais referencias usadas para
+fundamentar o trabalho.
+
+## Slide 11 - Referencias
+
+Estas sao as principais referencias que sustentaram a discussao sobre RFID,
+inventario automatizado, gestao patrimonial, IoT, middleware e limitacoes
+tecnicas de instalacoes RFID.
+
+Transicao: Com isso, eu encerro a apresentacao.
+
+## Slide 12 - Obrigado
+
+Obrigado pela atencao. Fico a disposicao para duvidas e contribuicoes.
+
+## Dicas para treinar sem ficar engessado
+
+- Decore principalmente as transicoes, nao o texto inteiro.
+- No slide 2, explique patrimonio e inventario com naturalidade, porque isso
+  ajuda a banca a entrar no problema.
+- Na demo, evite narrar cada clique. Mostre o fluxo: painel, auditoria,
+  inconsistencias e rastreabilidade.
+- Se a demo atrasar, pule detalhes da tela e preserve o slide 9, porque ele
+  delimita os resultados e evita promessa alem da evidencia.
+- Se o tempo apertar, resuma os trabalhos relacionados em uma unica frase e siga
+  para metodologia.
