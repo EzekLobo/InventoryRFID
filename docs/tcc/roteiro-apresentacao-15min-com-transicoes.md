@@ -1,4 +1,3 @@
-
 # Roteiro de apresentacao - modelo atual dos slides
 
 ## Ideia central
@@ -30,7 +29,7 @@ Filho, no Bacharelado em Ciencia da Computacao da UESC.
 Transicao: Antes de falar da solucao, eu comeco situando o contexto e o problema
 que motivaram o desenvolvimento do prototipo.
 
-## Slide 2 - Contextualizacão
+## Slide 2 - Contextualizacao
 
 O trabalho parte do controle patrimonial no colegiado. Quando falo em patrimônio, estou me referindo aos bens físicos pertencentes ou sob responsabilidade do colegiado, como computadores, projetores, bancadas e outros equipamentos distribuídos entre laboratórios, salas administrativas e espaços compartilhados.
 
@@ -44,48 +43,61 @@ inventario.
 
 ## Slide 3 - Solucao proposta
 
-A solução proposta foi usar RFID para auxiliar a conferência dos bens durante o inventário. Em vez de depender apenas da leitura visual dos códigos patrimoniais, o sistema passa a receber a identificação da tag RFID e usa essa informação para registrar a presença do bem, apoiar a auditoria e indicar possíveis divergências.
+Diante desse problema, a solução proposta foi usar RFID para auxiliar a conferência dos bens durante o inventário. Em vez de depender apenas da leitura visual dos códigos patrimoniais, o sistema passa a receber a identificação da tag RFID e usa essa informação para registrar a presença do bem, apoiar a auditoria e indicar possíveis divergências.
 
 ## Slide 4 - Objetivos do trabalho
 
-Com isso, o objetivo geral do trabalho foi desenvolver um protótipo funcional de software para inventário patrimonial no contexto do Colegiado de Ciência da Computação da UESC. A proposta foi integrar a leitura RFID ao sistema para apoiar o cadastro dos bens, a auditoria, o registro histórico e o tratamento de inconsistências patrimoniais.
+O objetivo geral foi desenvolver um protótipo funcional de software para inventário patrimonial baseado em RFID, no contexto do Colegiado de Ciência da Computação da UESC. A proposta foi integrar a leitura RFID ao sistema para apoiar o cadastro, a auditoria, o histórico e o tratamento de inconsistências patrimoniais.
 
-Para alcançar esse objetivo, o trabalho foi dividido em etapas menores. Primeiro, foi feito o levantamento de requisitos, para entender as necessidades do controle patrimonial. Em seguida, foi projetada uma arquitetura modular, pensada para organizar melhor os componentes da solução e permitir sua evolução. A partir disso, passou-se ao desenvolvimento da aplicação web, à integração da leitura RFID com a API e, por fim, à validação funcional do fluxo implementado.
+O objetivo geral foi desenvolver um prototipo web para inventario patrimonial
+baseado em RFID, voltado ao apoio da auditoria patrimonial no Colegiado de
+Ciencia da Computacao da UESC.
+
+Os objetivos especificos passam por pesquisar requisitos essenciais, projetar uma
+arquitetura modular, construir o prototipo web funcional, integrar a leitura RFID
+com a API e validar o fluxo funcional do sistema.
 
 Transicao: Esses objetivos se apoiam em trabalhos relacionados que discutem RFID
 em inventario, integracao com sistemas e limites fisicos da tecnologia.
 
 ## Slide 5 - Trabalhos relacionados
 
+A literatura ajudou a sustentar tres pontos. Primeiro, o uso de RFID como
+tecnologia de identificacao automatica de bens. Segundo, o papel de middleware,
+IoT e APIs na integracao de eventos a sistemas. Terceiro, a necessidade de
+cautela na avaliacao fisica da tecnologia RFID.
+
+O diferencial do InventoryRFID e que a leitura RFID nao fica restrita a
+identificacao. Ela alimenta auditoria patrimonial, registro operacional,
+resolucao de inconsistencias e historico.
+
 Transicao: A partir dessa base teorica, a pesquisa seguiu um percurso
-
-Esses objetivos também se apoiam em trabalhos relacionados que já apresentam funcionalidades importantes para inventário com RFID, como identificação de bens, apoio à auditoria, integração com sistemas e registro de informações operacionais.
-
-O diferencial do InventoryRFID não está em tratar cada uma dessas funcionalidades como algo isoladamente inédito, mas em reunir esses elementos em uma solução integrada e aplicada ao contexto do Colegiado de Ciência da Computação da UESC. A partir da arquitetura proposta, a leitura RFID é recebida pela API REST, relacionada aos dados patrimoniais cadastrados e utilizada para apoiar o fluxo de auditoria, histórico e tratamento de inconsistências.
+metodologico em tres etapas.
 
 ## Slide 6 - Percurso metodologico
 
-Para chegar a esse objetivo, o processo metodológico foi organizado em três partes principais.
+O percurso metodologico comecou pela compreensao do contexto, com revisao sobre
+controle patrimonial, RFID, integracao e trabalhos relacionados.
 
-A primeira foi o entendimento do problema. Nessa etapa, foram levantadas as necessidades do controle patrimonial no contexto do colegiado e também foi construído o referencial teórico, com base em trabalhos sobre RFID, inventário patrimonial e integração entre dispositivos e sistemas.
+Depois ocorreu o desenvolvimento do prototipo, envolvendo modelagem,
+arquitetura, telas, API e regras de processamento das leituras.
 
-A segunda parte foi a construção do protótipo. Com base nos requisitos levantados, foi desenvolvida uma aplicação web organizada em uma arquitetura modular, envolvendo interface, API REST, banco de dados e integração com a leitura RFID. Essa organização buscou atender às necessidades identificadas e, ao mesmo tempo, manter uma base que pudesse evoluir futuramente.
-
-Por fim, a terceira parte foi a validação. O fluxo principal do sistema foi submetido a testes experimentais controlados, considerando as limitações do hardware disponível. Por isso, a validação física ficou concentrada no leitor RFID de proximidade, em uma tag e no comunicador intermediário, enquanto o sistema foi avaliado principalmente quanto ao funcionamento do fluxo de software.
+Por fim, foi feita a validacao funcional do fluxo, em cenarios controlados, com
+leitor de proximidade, uma tag fisica, comunicador intermediario e API.
 
 Transicao: Depois da metodologia, a arquitetura mostra como essas partes foram
 organizadas no prototipo.
 
 ## Slide 7 - Arquitetura e tecnologias
 
-Eu escolhi essas tecnologias porque elas eram adequadas ao escopo de um protótipo funcional e também por familiaridade, o que reduziu o risco de desenvolvimento. Next.js e React facilitaram a interface web, Django REST Framework ajudou na construção da API e das regras de negócio, e o SQLite foi suficiente para validar o protótipo sem aumentar a complexidade da infraestrutura.
+A aplicacao combina interface web, API REST, banco local e middleware RFID. A
+interface foi desenvolvida com Next.js e React. O backend usa Django e Django
+REST Framework. A persistencia local foi feita com SQLite, adequado ao carater
+de prototipo.
 
-A ideia de usar RFID para receber eventos é permitir que a leitura física do bem alimente automaticamente o sistema. Cada leitura vira um evento que pode ser registrado, processado e comparado com o inventário esperado, apoiando a auditoria e o tratamento de inconsistências.
-
-Se quiser deixar ainda mais simples:
-
-> O RFID foi usado porque aproxima o inventário físico do sistema. Quando a tag é lida, essa leitura vira um evento que informa ao sistema que aquele bem foi detectado naquele contexto de auditoria.
->
+O middleware RFID atua como ponte entre a leitura fisica e a API. Essa separacao
+e importante porque deixa claro onde a leitura entra, onde as regras sao
+processadas e onde os resultados ficam registrados.
 
 Transicao: Com essa arquitetura apresentada, eu passo para a demonstracao do
 deploy, mostrando como o fluxo aparece na interface.
