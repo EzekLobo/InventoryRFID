@@ -12,6 +12,10 @@
   `fluxo_rfid_sequence.tex`.
 - Arquitetura geral: `docs/tcc/figs/arquitetura_geral_rfid.drawio`,
   `arquitetura_geral_rfid.pdf` e `arquitetura_geral_rfid.tex`.
+- Arquitetura dividida: `arquitetura_visao_geral_rfid.drawio`,
+  `arquitetura_fluxo_validado_rfid.drawio` e
+  `arquitetura_fluxo_api_rfid.drawio`, com PDFs e wrappers `.tex` de mesmo
+  nome.
 
 ## Fonte de Verdade Visual
 

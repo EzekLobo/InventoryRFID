@@ -22,7 +22,9 @@ Status sugeridos:
 
 ### Comentario 1
 
-- Status: `pendente`
+- Status: `corrigido`
+- Acao concluida: A figura unica foi dividida em tres visoes: componentes, fluxo validado fisicamente e fluxo suportado pela API para dispositivos em rede.
+- Verificacao concluida: PDF recompilado sem erros, referencias indefinidas ou avisos de compilacao.
 - Origem: banca
 - Trecho/arquivo afetado: Figura 4 Visªo geral da arquitetura proposta para o sistema de inventÆrio RFID
 - Comentario recebido: Dividir figura da arquitetura em 3 pq tem muita inforação

@@ -9,9 +9,29 @@ A implementação foi organizada de forma modular. O frontend concentra as telas
 
 Na validação com o leitor de proximidade, utilizou-se um adaptador intermediário de integração capaz de capturar a tag lida pelo dispositivo e encaminhar o evento ao sistema. Esse adaptador foi necessário porque o leitor empregado opera como dispositivo de entrada local e não possui comunicação HTTP nativa. Assim, sua utilização decorre de uma limitação de interface do equipamento disponível para o experimento, e não de uma restrição da API proposta. A mesma camada também favorece a compatibilidade com periféricos simples, enquanto dispositivos com rede podem enviar eventos diretamente à API, desde que respeitem o formato esperado.
 
-A Figura \ref{fig:arquitetura-geral-rfid} apresenta uma visão geral da arquitetura proposta. O sistema web permite que usuários gerenciem itens, locais, leitores e auditorias. A API recebe eventos RFID, aciona o processamento das regras de inventário e registra os dados necessários ao acompanhamento patrimonial. Na validação deste trabalho, utilizou-se um leitor RFID USB de curto alcance conectado a um computador intermediário, preservando-se o fluxo previsto para sensores e leitores com comunicação em rede.
+Para tornar a arquitetura legível, sua apresentação foi dividida em três visões complementares: os componentes do sistema, o fluxo validado fisicamente e o fluxo de eventos suportado pela API.
 
-\input{figs/arquitetura_geral_rfid.tex}
+\subsection{Componentes da arquitetura}
+
+A Figura \ref{fig:arquitetura-visao-geral-rfid} apresenta os componentes principais e suas relações. O sistema web concentra a interação de administradores e usuários com os cadastros, consultas e auditorias. A API REST é o ponto padronizado de entrada para essas requisições e para os eventos RFID. No backend, o \textit{middleware} encaminha os eventos para as regras de inventário, que validam as leituras e registram seus resultados no banco de dados, mantendo a separação entre a interface, o processamento e a persistência.
+
+\input{figs/arquitetura_visao_geral_rfid.tex}
+
+\clearpage
+\subsection{Fluxo validado fisicamente}
+
+A Figura \ref{fig:arquitetura-fluxo-validado-rfid} detalha o caminho empregado na validação prática. A tag é aproximada do leitor RFID USB de proximidade, que fornece seu identificador ao comunicador intermediário executado no computador local. Esse comunicador transforma a leitura em uma requisição HTTP do tipo \textit{tags\_read} para a API. O backend então valida a leitura e atualiza os registros de inventário, auditoria e histórico conforme as regras aplicáveis.
+
+\input{figs/arquitetura_fluxo_validado_rfid.tex}
+
+\clearpage
+\subsection{Fluxo suportado pela API para dispositivos em rede}
+
+A Figura \ref{fig:arquitetura-fluxo-api-rfid} apresenta o fluxo aceito pela API quando há sensor, gateway ou leitor com comunicação em rede. Um evento \textit{motion\_detected} pode iniciar uma janela de leitura; em seguida, a API disponibiliza o comando \textit{start\_reading} e recebe o evento \textit{tags\_read} com as identificações capturadas. Esse fluxo foi verificado por testes funcionais de software, sem validação física com esses dispositivos.
+
+\input{figs/arquitetura_fluxo_api_rfid.tex}
+
+\clearpage
 
 \section{Cadastro de locais, leitores e itens}
 

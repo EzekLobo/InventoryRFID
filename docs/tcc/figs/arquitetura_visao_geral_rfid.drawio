@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net" version="30.0.1" type="device">
+  <diagram name="Visao geral" id="arquitetura-visao-geral">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Visao geral da arquitetura do prototipo RFID" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontStyle=1;fontSize=24;" vertex="1" parent="1"><mxGeometry x="200" y="30" width="770" height="40" as="geometry"/></mxCell>
+        <mxCell id="core" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7fbff;strokeColor=#6c8ebf;arcSize=8;" vertex="1" parent="1"><mxGeometry x="300" y="120" width="570" height="470" as="geometry"/></mxCell>
+        <mxCell id="coreTitle" value="Nucleo do sistema" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=16;" vertex="1" parent="1"><mxGeometry x="475" y="140" width="220" height="38" as="geometry"/></mxCell>
+        <mxCell id="admin" value="Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="95" y="165" width="50" height="90" as="geometry"/></mxCell>
+        <mxCell id="adminPc" value="" style="shape=image;html=1;image=img/lib/clip_art/computers/Laptop_128x128.png;" vertex="1" parent="1"><mxGeometry x="160" y="145" width="95" height="95" as="geometry"/></mxCell>
+        <mxCell id="userPc" value="" style="shape=image;html=1;image=img/lib/clip_art/computers/Laptop_128x128.png;" vertex="1" parent="1"><mxGeometry x="915" y="145" width="95" height="95" as="geometry"/></mxCell>
+        <mxCell id="user" value="Usuario" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1"><mxGeometry x="1025" y="165" width="50" height="90" as="geometry"/></mxCell>
+        <mxCell id="server" value="" style="shape=image;html=1;image=img/lib/clip_art/computers/Server_Tower_128x128.png;" vertex="1" parent="1"><mxGeometry x="380" y="210" width="105" height="105" as="geometry"/></mxCell>
+        <mxCell id="serverLabel" value="Servidor web" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=14;" vertex="1" parent="1"><mxGeometry x="370" y="320" width="125" height="26" as="geometry"/></mxCell>
+        <mxCell id="middleware" value="" style="shape=image;html=1;image=img/lib/clip_art/computers/Software_128x128.png;" vertex="1" parent="1"><mxGeometry x="535" y="220" width="90" height="90" as="geometry"/></mxCell>
+        <mxCell id="middlewareLabel" value="Middleware" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=14;" vertex="1" parent="1"><mxGeometry x="520" y="320" width="120" height="26" as="geometry"/></mxCell>
+        <mxCell id="database" value="" style="shape=image;html=1;image=img/lib/clip_art/computers/Database_128x128.png;" vertex="1" parent="1"><mxGeometry x="690" y="205" width="110" height="110" as="geometry"/></mxCell>
+        <mxCell id="databaseLabel" value="Banco de dados" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=14;" vertex="1" parent="1"><mxGeometry x="675" y="320" width="140" height="26" as="geometry"/></mxCell>
+        <mxCell id="api" value="API REST&lt;br&gt;Middleware RFID" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;align=center;verticalAlign=middle;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="495" y="390" width="190" height="75" as="geometry"/></mxCell>
+        <mxCell id="source" value="Fontes de leitura: leitor USB com comunicador ou dispositivos em rede" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d79b00;fontSize=14;align=center;" vertex="1" parent="1"><mxGeometry x="240" y="650" width="690" height="55" as="geometry"/></mxCell>
+        <mxCell id="e1" value="" style="endArrow=block;html=1;strokeColor=#666666;" edge="1" parent="1" source="adminPc" target="server"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="" style="endArrow=block;html=1;strokeColor=#666666;" edge="1" parent="1" source="userPc" target="server"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="" style="endArrow=block;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="server" target="api"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="" style="endArrow=block;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="middleware" target="api"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="" style="endArrow=block;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="database" target="api"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" value="eventos RFID" style="endArrow=block;html=1;strokeColor=#d79b00;fontSize=12;" edge="1" parent="1" source="source" target="api"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
