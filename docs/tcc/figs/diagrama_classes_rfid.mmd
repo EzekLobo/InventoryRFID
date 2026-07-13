@@ -1,0 +1,66 @@
+---
+config:
+  theme: neutral
+---
+classDiagram
+    direction TB
+
+    class Local {
+        +String nome
+        +String codigo
+        +String __str__()
+    }
+
+    class AntenaRFID {
+        +String hardware_id
+        +TipoAntena tipo
+        +ModoComando modo_comando
+        +Boolean ativa
+        +Boolean online
+        +String __str__()
+    }
+
+    class ItemPatrimonial {
+        +String tag_id
+        +String nome
+        +Local local_logico
+        +Local local_fisico
+        +Boolean ativo
+        +String __str__()
+    }
+
+    class LeituraRFID {
+        +String tag_id
+        +Local local
+        +ClassificacaoLeitura classificacao
+        +DateTime criado_em
+    }
+
+    class NotificacaoInconsistencia {
+        +TipoInconsistencia tipo
+        +String tag_id
+        +Local local_logico
+        +Local local_fisico
+        +Boolean resolvida
+    }
+
+    class AntennaCommandService {
+        <<service>>
+        +send_start_reading(antenna: AntenaRFID, command: ActivationCommand) dict
+    }
+
+    class RFIDEventProcessor {
+        <<service>>
+        +process_ping(antenna: AntenaRFID) dict
+        +process_motion_detected(antenna: AntenaRFID) dict
+        +process_tags_read(antenna: AntenaRFID, tags: String[], payload: dict) dict
+    }
+
+    Local "1" --> "0..*" AntenaRFID : possui
+    AntenaRFID "0..1" <-- "0..*" LeituraRFID : captura
+    ItemPatrimonial "0..1" <-- "0..*" LeituraRFID : item
+    ItemPatrimonial "0..1" <-- "0..*" NotificacaoInconsistencia : item
+    AntennaCommandService ..> AntenaRFID : aciona
+    RFIDEventProcessor ..> AntennaCommandService : utiliza
+    RFIDEventProcessor ..> AntenaRFID : processa
+    RFIDEventProcessor ..> LeituraRFID : registra

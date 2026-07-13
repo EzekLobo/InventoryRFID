@@ -6,6 +6,9 @@
   `casos_uso_rfid.png` e `casos_uso_rfid.tex`.
 - Banco de dados: `docs/tcc/figs/diagrama_banco_rfid.mmd`,
   `diagrama_banco_rfid.png` e `diagrama_banco_rfid.tex`.
+- Classes do dominio: `docs/tcc/figs/diagrama_classes_rfid.mmd`,
+  `diagrama_classes_rfid.png` e `diagrama_classes_rfid.tex`, derivados das
+  associacoes principais em `backend/core/domain/models.py`.
 - Fluxo de atividade RFID: `docs/tcc/figs/fluxo_atividade_rfid.mmd`,
   `fluxo_atividade_rfid.png` e `fluxo_atividade_rfid.tex`.
 - Sequencia RFID: `docs/tcc/figs/fluxo_rfid_sequence.mmd` e

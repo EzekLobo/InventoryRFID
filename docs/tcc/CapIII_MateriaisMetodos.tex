@@ -30,22 +30,22 @@ O levantamento de requisitos foi orientado pelo problema de controle patrimonial
 \renewcommand{\arraystretch}{1.12}
 \caption{Requisitos funcionais do protótipo}
 \label{tab:requisitos-funcionais}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}X}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.35cm}}
 \toprule
-\textbf{Código} & \textbf{Descrição} \\
+\textbf{Código} & \textbf{Descrição} & \textbf{Referência} \\
 \midrule
-RF01 & Permitir autenticação de usuário para acesso às funcionalidades administrativas do sistema. \\
-RF02 & Permitir o cadastro, edição, remoção e consulta de locais físicos do colegiado. \\
-RF03 & Permitir o cadastro, edição, remoção e consulta de leitores RFID, associando cada leitor a um local e a um tipo de operação. \\
-RF04 & Permitir o cadastro, edição, remoção e consulta de itens patrimoniais associados a etiquetas RFID. \\
-RF05 & Permitir o acionamento de janelas de leitura ou auditoria para leitores RFID cadastrados. \\
-RF06 & Receber eventos RFID por interface padronizada, incluindo eventos \textit{motion\_detected} e \textit{tags\_read}. \\
-RF07 & Processar leituras RFID, validar tags, tratar duplicidades e atualizar o local físico dos itens quando aplicável. \\
-RF08 & Registrar histórico operacional das leituras, movimentações, auditorias e alterações relevantes. \\
-RF09 & Identificar e registrar inconsistências, como local divergente, item não encontrado e tag desconhecida. \\
-RF10 & Permitir a consulta do inventário, do log operacional, das auditorias e das inconsistências registradas. \\
-RF11 & Permitir o acompanhamento e a resolução de inconsistências registradas no processo de inventário. \\
-RF12 & Permitir configurações administrativas de usuários e permissões como apoio ao uso operacional do sistema. \\
+RF01 & Permitir autenticação de usuário para acesso às funcionalidades administrativas do sistema. & Seção \ref{sec:acesso-permissoes}. \\
+RF02 & Permitir o cadastro, edição, remoção e consulta de locais físicos do colegiado. & Seção \ref{sec:operacoes-cadastro}. \\
+RF03 & Permitir o cadastro, edição, remoção e consulta de leitores RFID, associando cada leitor a um local e a um tipo de operação. & Seção \ref{sec:operacoes-cadastro}. \\
+RF04 & Permitir o cadastro, edição, remoção e consulta de itens patrimoniais associados a etiquetas RFID. & Seção \ref{sec:operacoes-cadastro}. \\
+RF05 & Permitir o acionamento de janelas de leitura ou auditoria para leitores RFID cadastrados. & Seção \ref{sec:fluxo-eventos-rfid}. \\
+RF06 & Receber eventos RFID por interface padronizada, incluindo eventos \textit{motion\_detected} e \textit{tags\_read}. & Seção \ref{sec:fluxo-eventos-rfid}. \\
+RF07 & Processar leituras RFID, validar tags, tratar duplicidades e atualizar o local físico dos itens quando aplicável. & Seção \ref{sec:fluxo-eventos-rfid}. \\
+RF08 & Registrar histórico operacional das leituras, movimentações, auditorias e alterações relevantes. & Seção \ref{sec:auditoria-inconsistencias-log}. \\
+RF09 & Identificar e registrar inconsistências, como local divergente, item não encontrado e tag desconhecida. & Seção \ref{sec:auditoria-inconsistencias-log}. \\
+RF10 & Permitir a consulta do inventário, do log operacional, das auditorias e das inconsistências registradas. & Seção \ref{sec:interface-sistema}. \\
+RF11 & Permitir o acompanhamento e a resolução de inconsistências registradas no processo de inventário. & Seção \ref{sec:auditoria-inconsistencias-log}. \\
+RF12 & Permitir configurações administrativas de usuários e permissões como apoio ao uso operacional do sistema. & Seção \ref{sec:acesso-permissoes}. \\
 \bottomrule
 \end{tabularx}
 \legend{Fonte: Elaborado pelo autor (2026).}
@@ -74,11 +74,15 @@ RNF07 & A validação física do protótipo deve ser delimitada ao hardware disp
 \legend{Fonte: Elaborado pelo autor (2026).}
 \end{table}
 
-Os requisitos funcionais foram posteriormente verificados nas telas, endpoints e fluxos de leitura implementados, conforme discutido nos resultados. Com isso, evita-se repetir a mesma relação em uma matriz adicional, mantendo a rastreabilidade no encadeamento entre requisitos, modelagem, implementação e validação.
+Os requisitos funcionais foram relacionados às telas, endpoints e fluxos implementados, conforme indicado na própria Tabela \ref{tab:requisitos-funcionais} e discutido no Capítulo IV. A validação funcional experimental concentra-se nos cenários de RFID, auditoria, inconsistências e histórico, apresentados na Tabela \ref{tab:rastreabilidade-validacao}; os demais requisitos são apresentados como evidências de implementação, sem atribuição de validação experimental específica. Com isso, mantém-se a rastreabilidade entre requisitos, modelagem, implementação e validação sem ampliar o escopo das evidências.
 
 A Figura \ref{fig:casos-uso-rfid} apresenta os principais casos de uso funcionais do protótipo, incluindo as ações executadas por usuários, administradores e componentes de integração RFID. Regras internas de processamento, como deduplicação, validação de tags e atualização de localização, aparecem nos requisitos e nos fluxos de atividade, mas não são tratadas como casos de uso independentes por não representarem interação direta de um ator com o sistema. Os requisitos não funcionais não são representados como casos de uso, pois descrevem atributos de qualidade e restrições da solução, sendo por isso apresentados junto ao levantamento de requisitos.
 
 \input{figs/casos_uso_rfid.tex}
+
+O diagrama de classes da Figura \ref{fig:diagrama-classes-rfid} apresenta as classes centrais do domínio, suas associações conceituais e os serviços responsáveis pelo processamento dos eventos RFID. As entidades evidenciam a organização de locais, leitores RFID, itens patrimoniais, leituras e inconsistências, enquanto os serviços concentram as operações de acionamento e processamento implementadas no backend.
+
+\input{figs/diagrama_classes_rfid.tex}
 
 A Figura \ref{fig:diagrama-banco-rfid} apresenta uma visão simplificada das principais tabelas e campos persistidos pelo backend. O diagrama destaca as entidades centrais do invent\'ario RFID, como locais, leitores, itens patrimoniais, leituras, eventos de hist\'orico, auditorias e inconsist\^encias, bem como suas chaves e rela\c{c}\~oes principais, sem substituir a descrição completa do esquema implementado no código-fonte. Campos auxiliares, parâmetros operacionais e detalhes específicos de implementação permanecem documentados no modelo da aplicação e não são reproduzidos integralmente na figura, cujo objetivo é sintetizar a organização conceitual dos dados.
 
@@ -106,7 +110,7 @@ O processamento das leituras contempla normalização de tags, deduplicação de
 
 \section{Metodologia de validação}
 
-A validação foi definida como funcional e qualitativa, pois o objetivo foi verificar se os principais fluxos do sistema operam corretamente com o hardware disponível. Os testes observaram a leitura da tag, a captura pelo adaptador intermediário, o envio do evento à API REST, o processamento pelo backend, a persistência dos dados, a atualização do inventário e a geração de registros de auditoria. Métricas físicas, como alcance, leitura simultânea, taxa de leitura e influência do ambiente sobre o sinal RFID, foram mantidas fora do escopo experimental. A definição de cenários e resultados esperados aproxima-se de práticas de documentação e execução de testes de software, nas quais casos de teste são estruturados para verificar comportamentos esperados do sistema \cite{iso29119}.
+A validação foi definida como funcional e qualitativa, pois o objetivo foi verificar se os principais fluxos do sistema operam corretamente com o hardware disponível. Para cada cenário, foram definidos uma entrada controlada, o processamento esperado e um critério observável de êxito. Assim, o trabalho foi caracterizado como funcional pela verificação ponta a ponta da leitura da tag, da captura pelo adaptador intermediário, do envio do evento à API REST, do processamento pelo backend, da persistência dos dados, da atualização do inventário e da geração de registros de auditoria. Métricas físicas, como alcance, leitura simultânea, taxa de leitura e influência do ambiente sobre o sinal RFID, foram mantidas fora do escopo experimental. A definição de cenários e resultados esperados aproxima-se de práticas de documentação e execução de testes de software, nas quais casos de teste são estruturados para verificar comportamentos esperados do sistema \cite{iso29119}.
 
 Neste trabalho, o inventário lógico corresponde aos registros cadastrados no sistema, como item patrimonial, tag e local esperado. O inventário físico corresponde à situação identificada durante a leitura RFID, isto é, à presença, ausência ou localização detectada dos itens em uma janela de auditoria. Assim, a validação funcional verificou se o protótipo consegue comparar essas duas dimensões e registrar inconsistências quando há divergência entre o inventário lógico e o inventário físico.
 
@@ -142,4 +146,4 @@ Leitor sem resposta & Auditoria encerrada sem evento RFID processado & Ausência
 \normalsize
 \renewcommand{\arraystretch}{1}
 
-A validação deste trabalho foi apresentada como funcional, sem atribuir métricas quantitativas que dependeriam de ensaios específicos com maior quantidade de etiquetas, antenas RFID de longo alcance e condições controladas de ambiente. Portanto, os resultados concentram-se na repetição dos comportamentos esperados do sistema e na verificação do fluxo lógico implementado.
+A caracterização funcional do trabalho decorre da execução repetida dos cenários definidos, da observação dos critérios de êxito e da conferência dos registros produzidos pelo sistema. Não foram atribuídas métricas quantitativas que dependeriam de ensaios específicos com maior quantidade de etiquetas, antenas RFID de longo alcance e condições controladas de ambiente. Portanto, os resultados concentram-se na repetição dos comportamentos esperados do sistema e na verificação do fluxo lógico implementado.

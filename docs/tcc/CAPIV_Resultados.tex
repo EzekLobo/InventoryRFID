@@ -34,6 +34,7 @@ A Figura \ref{fig:arquitetura-fluxo-api-rfid} apresenta o fluxo aceito pela API 
 \clearpage
 
 \section{Cadastro de locais, leitores e itens}
+\label{sec:cadastro-locais-leitores-itens}
 
 O cadastro de locais representa os espaços nos quais os bens podem estar logicamente alocados ou fisicamente detectados. Cada local possui identificação própria e é utilizado como referência para leitores RFID e itens patrimoniais. Essa modelagem é relevante para a avaliação da proposta porque permite comparar a localização esperada de um item com a localização detectada em uma leitura.
 
@@ -41,11 +42,17 @@ Os leitores RFID são cadastrados com identificador de hardware, local associado
 
 Os itens patrimoniais são cadastrados com tag RFID, nome, local lógico, local físico e estado de atividade. A tag funciona como vínculo entre o objeto físico e sua representação no sistema. Quando uma leitura é recebida, o backend verifica se a tag está cadastrada e decide qual ação deve ser executada, como atualização de local, geração de histórico ou registro de inconsistência.
 
+\subsection{Operações de cadastro}
+\label{sec:operacoes-cadastro}
+
+As telas de configurações disponibilizam listagem e consulta dos locais, leitores e itens cadastrados. Para perfis autorizados a gerenciar cadastros, cada uma dessas entidades pode ser incluída, editada ou removida; os demais perfis permanecem com acesso de consulta. No cadastro de leitores, são informados o identificador de hardware, o local associado, o tipo de operação e os parâmetros de comunicação. No cadastro de itens, a tag é vinculada ao bem e aos seus locais lógico e físico. Dessa forma, as operações de cadastro mantêm os dados necessários para o processamento posterior das leituras RFID.
+
 \section{Fluxo de eventos RFID}
+\label{sec:fluxo-eventos-rfid}
 
 O fluxo principal inicia-se com a ativação de uma janela de leitura. Essa janela representa o intervalo no qual o sistema espera receber eventos de determinado leitor. Em uma implantação escalável, essa ativação poderia ser causada por um sensor de presença, que enviaria à API um evento para habilitar uma antena RFID em determinado ponto. No protótipo validado, a leitura foi realizada por um dispositivo de proximidade, e o adaptador intermediário de integração converteu a tag capturada em requisição HTTP enviada ao backend.
 
-A Figura \ref{fig:fluxo-eventos-rfid} resume a sequência dos dois fluxos tratados na arquitetura. O primeiro corresponde ao fluxo validado fisicamente com leitor USB de proximidade e comunicador intermediário. O segundo corresponde ao fluxo escalável, no qual um sensor ou gateway envia o evento \textit{motion\_detected}, a API abre a janela de leitura e o leitor conectado envia posteriormente o evento \textit{tags\_read}. Esse segundo fluxo foi verificado por testes funcionais de software.
+A Figura \ref{fig:fluxo-eventos-rfid} apresenta um diagrama de sequência dos dois fluxos tratados na arquitetura. O primeiro corresponde ao fluxo validado fisicamente com leitor USB de proximidade e comunicador intermediário. O segundo corresponde ao fluxo suportado pela API, no qual um sensor ou gateway envia o evento \textit{motion\_detected}, a API abre a janela de leitura e o leitor conectado envia posteriormente o evento \textit{tags\_read}. Esse segundo fluxo foi verificado por testes funcionais de software.
 
 \input{figs/fluxo_rfid_sequence.tex}
 
@@ -54,6 +61,7 @@ Ao receber um evento RFID, a API executa etapas de validação e processamento. 
 Esse fluxo evidencia a separação entre hardware e regra de negócio. O leitor é responsável apenas por capturar a identificação; a API concentra a interpretação do evento. Essa separação é um dos elementos que tornam a aplicação extensível, pois diferentes dispositivos podem atuar como fonte de eventos sem exigir reescrita completa das regras do sistema.
 
 \section{Auditoria, inconsistências e log operacional}
+\label{sec:auditoria-inconsistencias-log}
 
 A funcionalidade de auditoria permite comparar os itens esperados em um local com as tags efetivamente detectadas durante uma janela de leitura. A partir dessa comparação, o sistema pode classificar situações como item encontrado, item ausente, item em local divergente ou tag desconhecida. Essa classificação demonstra a contribuição do protótipo para a conferência patrimonial, pois transforma leituras isoladas em informações operacionais.
 
@@ -62,8 +70,14 @@ As inconsistências geradas pelo sistema registram divergências entre o invent�
 O log operacional mantém o histórico dos eventos relevantes do sistema, incluindo movimentações, leituras, auditorias e alterações de estado. Em um contexto de controle patrimonial, esse recurso reforça a rastreabilidade da solução, pois permite compreender quando uma situação foi detectada e como o estado de um item foi modificado ao longo do tempo.
 
 \section{Interface do sistema}
+\label{sec:interface-sistema}
 
 A interface web foi organizada para apoiar o uso prático do protótipo, reunindo as funções principais de consulta, conferência e acompanhamento do inventário. O objetivo não foi apenas disponibilizar cadastros, mas apresentar as informações de forma compreensível para quem precisa verificar a situação dos bens e acompanhar possíveis divergências. Para isso, as telas foram estruturadas com resumos, listas por local, indicadores de inconsistência e histórico de ações, evidenciando a ligação entre o processamento RFID e a tomada de decisão operacional.
+
+\subsection{Acesso e permissões}
+\label{sec:acesso-permissoes}
+
+O acesso à interface administrativa exige credenciais de usuário. Após a autenticação, o sistema disponibiliza as funções de acordo com o perfil e as permissões associadas: usuários autorizados podem gerenciar cadastros, acionar leitores, executar auditorias, resolver inconsistências e consultar o log operacional. A administração também dispõe de recursos para criar, editar, desativar ou remover usuários e para configurar as permissões atribuídas aos perfis técnicos. No backend, essas restrições são aplicadas às rotas correspondentes, de modo que a interface não seja a única barreira de controle.
 
 O painel inicial apresenta uma visão geral do inventário e das atividades recentes. Nele, o usuário consegue observar a quantidade de leitores, itens ativos e inconsistências abertas, além de consultar rapidamente leituras e eventos recentes. Essa tela funciona como ponto de entrada para a rotina de acompanhamento do sistema, conforme ilustrado na Figura \ref{fig:sistema-dashboard}.
 
@@ -116,6 +130,7 @@ Por fim, o log operacional reúne o histórico das ações relevantes realizadas
 \end{figure}
 
 \section{Resultados da validação funcional}
+\label{sec:resultados-validacao-funcional}
 
 A validação funcional foi realizada em ambiente controlado com um leitor RFID USB de proximidade, uma tag física e o comunicador intermediário responsável por enviar os eventos à API REST. Além dos testes exploratórios realizados durante o desenvolvimento, a etapa final de validação foi organizada em cenários funcionais previamente definidos. Cada cenário foi executado três vezes em cada um de dois ambientes computacionais distintos, totalizando seis execuções por cenário. Essa distribuição teve como finalidade verificar a repetibilidade do fluxo de software em mais de uma instalação, mantendo constantes o leitor RFID e a tag utilizados.
 
